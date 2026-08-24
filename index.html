@@ -3,648 +3,292 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#111827">
-<title>MASTER SPH — Legal & Project Control System</title>
+<meta name="theme-color" content="#0f172a">
+<title>LAND PROJECT CONTROL — GIA → BUMI | 56 Persil</title>
 
 <style>
 :root{
-  --bg:#f3f4f6;
-  --panel:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --line:#e5e7eb;
-  --primary:#111827;
-  --blue:#2563eb;
+  --bg:#f1f5f9;
+  --card:#ffffff;
+  --ink:#0f172a;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --primary:#2563eb;
+  --primary2:#1d4ed8;
   --green:#15803d;
-  --yellow:#b45309;
+  --yellow:#a16207;
   --red:#b91c1c;
-  --orange:#ea580c;
-  --shadow:0 8px 25px rgba(0,0,0,.07);
-  --radius:14px;
+  --gray:#475569;
+  --dark:#0f172a;
+  --shadow:0 8px 25px rgba(15,23,42,.08);
 }
-
 *{box-sizing:border-box}
-
+html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:Inter,Arial,Helvetica,sans-serif;
   background:var(--bg);
-  color:var(--text);
+  color:var(--ink);
 }
-
-button,input,select,textarea{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
-
-.app{
-  display:flex;
-  min-height:100vh;
-}
-
-/* SIDEBAR */
-
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
 .sidebar{
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  width:280px;
-  background:#111827;
+  width:270px;
+  background:var(--dark);
   color:white;
-  padding:20px;
-  overflow-y:auto;
+  position:fixed;
+  inset:0 auto 0 0;
+  overflow:auto;
   z-index:20;
 }
-
 .brand{
-  padding:8px 5px 20px;
-  border-bottom:1px solid rgba(255,255,255,.12);
-  margin-bottom:15px;
+  padding:22px 20px;
+  border-bottom:1px solid rgba(255,255,255,.1)
 }
-
-.brand h1{
-  font-size:19px;
-  margin:0 0 5px;
-}
-
-.brand p{
-  margin:0;
-  font-size:11px;
-  color:#9ca3af;
-  line-height:1.5;
-}
-
-.nav-section{
-  margin:20px 0 8px;
-  color:#6b7280;
-  font-size:10px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.nav-btn{
-  display:flex;
+.brand h1{font-size:18px;margin:0 0 5px}
+.brand p{margin:0;color:#94a3b8;font-size:12px}
+.nav{padding:12px}
+.nav button{
+  display:block;
   width:100%;
-  align-items:center;
-  gap:10px;
+  text-align:left;
   border:0;
   background:transparent;
-  color:#d1d5db;
-  padding:10px 11px;
+  color:#cbd5e1;
+  padding:11px 12px;
+  border-radius:8px;
   margin:2px 0;
-  border-radius:9px;
-  text-align:left;
 }
-
-.nav-btn:hover,
-.nav-btn.active{
-  background:#1f2937;
+.nav button:hover,.nav button.active{
+  background:#1e293b;
   color:white;
 }
-
-.nav-icon{
-  width:22px;
-  text-align:center;
-}
-
-/* MAIN */
-
 .main{
-  margin-left:280px;
-  width:calc(100% - 280px);
-  min-width:0;
+  margin-left:270px;
+  width:calc(100% - 270px);
+  padding:22px;
 }
-
 .topbar{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:rgba(243,244,246,.94);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
-  padding:13px 24px;
   display:flex;
+  justify-content:space-between;
   align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
-
-.top-title{
-  font-size:17px;
-  font-weight:800;
-}
-
-.top-sub{
-  font-size:11px;
-  color:var(--muted);
-}
-
-.top-actions{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.container{
-  max-width:1500px;
-  margin:auto;
-  padding:25px;
-}
-
-/* BUTTONS */
-
-.btn{
-  border:1px solid var(--line);
-  background:white;
-  color:var(--text);
-  border-radius:9px;
-  padding:9px 13px;
-  font-weight:700;
-  font-size:13px;
-}
-
-.btn:hover{
-  background:#f9fafb;
-}
-
-.btn.primary{
-  background:var(--primary);
-  border-color:var(--primary);
-  color:white;
-}
-
-.btn.blue{
-  background:var(--blue);
-  border-color:var(--blue);
-  color:white;
-}
-
-.btn.green{
-  background:var(--green);
-  border-color:var(--green);
-  color:white;
-}
-
-.btn.red{
-  background:var(--red);
-  border-color:var(--red);
-  color:white;
-}
-
-.btn.small{
-  padding:6px 9px;
-  font-size:11px;
-}
-
-/* CARDS */
-
-.grid{
-  display:grid;
-  gap:15px;
-}
-
-.grid-2{
-  grid-template-columns:repeat(2,minmax(0,1fr));
-}
-
-.grid-3{
-  grid-template-columns:repeat(3,minmax(0,1fr));
-}
-
-.grid-4{
-  grid-template-columns:repeat(4,minmax(0,1fr));
-}
-
-.card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:18px;
-}
-
-.card h3{
-  margin:0 0 8px;
-  font-size:16px;
-}
-
-.card h4{
-  margin:0 0 7px;
-  font-size:13px;
-}
-
-.muted{
-  color:var(--muted);
-}
-
-.stat{
-  position:relative;
-}
-
-.stat-label{
-  font-size:11px;
-  color:var(--muted);
-  text-transform:uppercase;
-  font-weight:800;
-  letter-spacing:.5px;
-}
-
-.stat-value{
-  font-size:30px;
-  font-weight:900;
-  margin-top:7px;
-}
-
-/* HEADINGS */
-
-.page-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
   gap:15px;
   margin-bottom:20px;
 }
-
-.page-head h2{
-  margin:0 0 5px;
-  font-size:25px;
-}
-
-.page-head p{
-  margin:0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-/* TABLE */
-
-.table-wrap{
-  overflow:auto;
+.topbar h2{margin:0;font-size:25px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
   border:1px solid var(--line);
-  border-radius:10px;
+  background:white;
+  color:var(--ink);
+  padding:9px 13px;
+  border-radius:8px;
+  font-weight:600;
 }
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  min-width:700px;
+.btn.primary{background:var(--primary);border-color:var(--primary);color:white}
+.btn.danger{background:#fee2e2;border-color:#fecaca;color:#991b1b}
+.btn.success{background:#dcfce7;border-color:#bbf7d0;color:#166534}
+.btn:hover{filter:brightness(.97)}
+.page{display:none}
+.page.active{display:block}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:14px;
 }
-
-th,td{
-  border-bottom:1px solid var(--line);
-  padding:11px;
-  text-align:left;
-  font-size:12px;
-  vertical-align:top;
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  padding:17px;
 }
-
-th{
-  background:#f9fafb;
-  font-size:10px;
-  text-transform:uppercase;
-  color:#6b7280;
-  letter-spacing:.5px;
+.span3{grid-column:span 3}
+.span4{grid-column:span 4}
+.span6{grid-column:span 6}
+.span8{grid-column:span 8}
+.span12{grid-column:span 12}
+.kpi .label{font-size:12px;color:var(--muted)}
+.kpi .value{font-size:28px;font-weight:800;margin-top:7px}
+.kpi small{color:var(--muted)}
+.progress{
+  height:8px;
+  background:#e2e8f0;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:9px;
 }
-
-tr:last-child td{
-  border-bottom:0;
-}
-
-tr:hover td{
-  background:#fafafa;
-}
-
-/* BADGES */
-
+.progress i{display:block;height:100%;background:var(--primary)}
+h3{margin:0 0 12px}
+h4{margin:17px 0 8px}
+.muted{color:var(--muted)}
 .badge{
   display:inline-flex;
   align-items:center;
-  gap:5px;
-  padding:4px 8px;
   border-radius:999px;
-  font-size:10px;
+  padding:4px 8px;
+  font-size:11px;
   font-weight:800;
-  white-space:nowrap;
 }
-
-.badge.green{
-  background:#dcfce7;
-  color:#166534;
+.clear{background:#dcfce7;color:#166534}
+.pending{background:#fef3c7;color:#92400e}
+.blocked{background:#fee2e2;color:#991b1b}
+.process{background:#dbeafe;color:#1e40af}
+.na{background:#e2e8f0;color:#475569}
+.warning{background:#ffedd5;color:#9a3412}
+table{width:100%;border-collapse:collapse}
+th,td{
+  border-bottom:1px solid var(--line);
+  padding:9px 7px;
+  text-align:left;
+  vertical-align:top;
+  font-size:13px;
 }
-
-.badge.yellow{
-  background:#fef3c7;
-  color:#92400e;
+th{background:#f8fafc;font-size:12px}
+input,select,textarea{
+  width:100%;
+  border:1px solid #cbd5e1;
+  border-radius:7px;
+  padding:9px;
+  background:white;
+  color:var(--ink);
 }
-
-.badge.red{
-  background:#fee2e2;
-  color:#991b1b;
+textarea{min-height:100px;resize:vertical}
+.formgrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
 }
-
-.badge.blue{
-  background:#dbeafe;
-  color:#1e40af;
-}
-
-.badge.gray{
-  background:#f3f4f6;
-  color:#4b5563;
-}
-
-/* FORM */
-
-.form-group{
-  margin-bottom:13px;
-}
-
-label{
+.field label{
   display:block;
   font-size:11px;
   font-weight:800;
-  margin-bottom:5px;
-}
-
-input,select,textarea{
-  width:100%;
-  border:1px solid #d1d5db;
-  border-radius:8px;
-  padding:9px 10px;
-  background:white;
-  color:var(--text);
-  outline:none;
-}
-
-textarea{
-  min-height:100px;
-  resize:vertical;
-}
-
-input:focus,
-select:focus,
-textarea:focus{
-  border-color:var(--blue);
-  box-shadow:0 0 0 3px rgba(37,99,235,.1);
-}
-
-/* PHASE */
-
-.phase-list{
-  display:grid;
-  gap:10px;
-}
-
-.phase-card{
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:15px;
-  background:white;
-}
-
-.phase-row{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.phase-number{
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  border-radius:10px;
-  background:#111827;
-  color:white;
-  font-weight:900;
-}
-
-.phase-main{
-  flex:1;
-}
-
-.phase-title{
-  font-weight:900;
-  font-size:14px;
-}
-
-.phase-desc{
   color:var(--muted);
-  font-size:11px;
-  margin-top:3px;
+  margin-bottom:5px;
+  text-transform:uppercase;
 }
-
-.progress{
-  height:7px;
-  background:#e5e7eb;
-  border-radius:99px;
-  overflow:hidden;
+.searchbar{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px;
 }
-
-.progress > div{
-  height:100%;
-  background:#111827;
-}
-
-/* LEGAL */
-
-.legal-box{
-  border:1px solid #d1d5db;
-  border-radius:10px;
-  padding:14px;
-  background:#fafafa;
-  margin-bottom:10px;
-}
-
-.legal-title{
-  font-weight:900;
+.searchbar input{flex:1}
+.notice{
+  border-left:4px solid var(--primary);
+  background:#eff6ff;
+  padding:12px 14px;
+  border-radius:8px;
+  margin-bottom:14px;
   font-size:13px;
 }
-
-.legal-meta{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:3px;
-}
-
-.warning{
-  border-left:4px solid var(--yellow);
+.notice.warn{
+  border-color:#d97706;
   background:#fffbeb;
-  padding:12px;
-  border-radius:8px;
 }
-
-.danger{
-  border-left:4px solid var(--red);
+.notice.danger{
+  border-color:#dc2626;
   background:#fef2f2;
-  padding:12px;
-  border-radius:8px;
 }
-
-.success{
-  border-left:4px solid var(--green);
-  background:#f0fdf4;
-  padding:12px;
-  border-radius:8px;
+.phase{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:13px;
+  margin-bottom:9px;
+  background:#fff;
 }
-
-/* MODAL */
-
+.phase-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+}
+.phase h4{margin:0}
+.phase p{font-size:13px;color:var(--muted);line-height:1.55}
+.timeline{
+  border-left:2px solid #cbd5e1;
+  padding-left:16px;
+}
+.timeline-item{
+  margin-bottom:14px;
+  position:relative;
+}
+.timeline-item:before{
+  content:"";
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--primary);
+  position:absolute;
+  left:-21px;top:5px;
+}
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.55);
+  background:rgba(15,23,42,.6);
   z-index:100;
   padding:20px;
   overflow:auto;
 }
-
-.modal.show{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.modal-box{
-  width:min(900px,100%);
-  max-height:90vh;
-  overflow:auto;
+.modal.show{display:block}
+.modalbox{
+  max-width:1100px;
+  margin:20px auto;
   background:white;
-  border-radius:15px;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
-  padding:22px;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 30px 80px rgba(0,0,0,.25);
 }
-
-.modal-head{
+.modalhead{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
-  margin-bottom:18px;
+  gap:15px;
+  border-bottom:1px solid var(--line);
+  padding-bottom:12px;
+  margin-bottom:15px;
 }
-
-.modal-head h3{
-  margin:0;
-}
-
-/* CHECKLIST */
-
-.check{
+.close{font-size:22px;border:0;background:transparent}
+.checklist label{
   display:flex;
-  align-items:flex-start;
   gap:8px;
-  padding:8px 0;
-  border-bottom:1px solid #f1f1f1;
+  align-items:flex-start;
+  padding:7px 0;
+  border-bottom:1px solid #f1f5f9;
+  font-size:13px;
 }
-
-.check input{
-  width:auto;
-  margin-top:3px;
-}
-
-.check span{
-  font-size:12px;
-}
-
-/* TIMELINE */
-
-.timeline{
-  border-left:2px solid #e5e7eb;
-  margin-left:7px;
-  padding-left:20px;
-}
-
-.timeline-item{
-  position:relative;
-  margin-bottom:18px;
-}
-
-.timeline-item:before{
-  content:"";
-  position:absolute;
-  left:-27px;
-  top:3px;
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  background:#111827;
-}
-
-.timeline-date{
-  font-size:10px;
+.checklist input{width:auto;margin-top:3px}
+.small{font-size:11px}
+.footer{
+  margin-top:25px;
+  padding:18px;
+  text-align:center;
   color:var(--muted);
+  font-size:11px;
 }
-
-.timeline-text{
-  font-size:12px;
-  margin-top:3px;
-}
-
-/* MOBILE */
-
-.mobile-menu{
-  display:none;
-}
-
 @media(max-width:900px){
+  .sidebar{width:220px}
+  .main{margin-left:220px;width:calc(100% - 220px)}
+  .span3,.span4,.span6,.span8{grid-column:span 12}
+}
+@media(max-width:650px){
   .sidebar{
-    transform:translateX(-100%);
-    transition:.25s;
-  }
-
-  .sidebar.open{
-    transform:translateX(0);
-  }
-
-  .main{
-    margin-left:0;
+    position:static;
     width:100%;
+    height:auto;
   }
-
-  .mobile-menu{
-    display:block;
-  }
-
-  .grid-2,
-  .grid-3,
-  .grid-4{
-    grid-template-columns:1fr;
-  }
-
-  .container{
-    padding:15px;
-  }
-
-  .topbar{
-    padding:10px 15px;
-  }
+  .app{display:block}
+  .main{margin:0;width:100%;padding:12px}
+  .formgrid{grid-template-columns:1fr}
+  .topbar{align-items:flex-start;flex-direction:column}
 }
 
 /* PRINT */
-
 @media print{
-  .sidebar,
-  .topbar,
-  .top-actions,
-  button{
-    display:none!important;
-  }
-
-  .main{
-    margin:0;
-    width:100%;
-  }
-
-  .card{
-    box-shadow:none;
-  }
+  .sidebar,.actions,.no-print{display:none!important}
+  .main{margin:0;width:100%;padding:0}
+  .page{display:block!important}
+  .card{box-shadow:none}
 }
 </style>
 </head>
@@ -653,3136 +297,1076 @@ textarea:focus{
 
 <div class="app">
 
-<!-- =========================================================
-     SIDEBAR
-========================================================= -->
-
-<aside class="sidebar" id="sidebar">
-
+<aside class="sidebar">
   <div class="brand">
-    <h1>MASTER SPH</h1>
-    <p>Legal & Project Control System</p>
-    <p style="margin-top:5px">Single-file HTML Edition</p>
+    <h1>LAND CONTROL</h1>
+    <p>GIA → BUMI · 56 PERSIL</p>
   </div>
 
-  <button class="nav-btn active" onclick="showPage('dashboard')">
-    <span class="nav-icon">⌂</span> Dashboard
-  </button>
-
-  <div class="nav-section">Project</div>
-
-  <button class="nav-btn" onclick="showPage('phases')">
-    <span class="nav-icon">▣</span> 16 Fase
-  </button>
-
-  <button class="nav-btn" onclick="showPage('persil')">
-    <span class="nav-icon">▤</span> 56 Persil
-  </button>
-
-  <button class="nav-btn" onclick="showPage('parties')">
-    <span class="nav-icon">♙</span> Para Pihak
-  </button>
-
-  <button class="nav-btn" onclick="showPage('documents')">
-    <span class="nav-icon">▧</span> Dokumen
-  </button>
-
-  <div class="nav-section">Legal Control</div>
-
-  <button class="nav-btn" onclick="showPage('legal')">
-    <span class="nav-icon">§</span> Legal Register
-  </button>
-
-  <button class="nav-btn" onclick="showPage('authority')">
-    <span class="nav-icon">⚖</span> Kewenangan
-  </button>
-
-  <button class="nav-btn" onclick="showPage('risk')">
-    <span class="nav-icon">!</span> Red Flag / Risiko
-  </button>
-
-  <div class="nav-section">Control</div>
-
-  <button class="nav-btn" onclick="showPage('tasks')">
-    <span class="nav-icon">✓</span> Task & Deadline
-  </button>
-
-  <button class="nav-btn" onclick="showPage('audit')">
-    <span class="nav-icon">◷</span> Audit Trail
-  </button>
-
-  <button class="nav-btn" onclick="showPage('sop')">
-    <span class="nav-icon">☷</span> SOP
-  </button>
-
-  <button class="nav-btn" onclick="showPage('presentation')">
-    <span class="nav-icon">▶</span> Presentation
-  </button>
-
-  <div class="nav-section">System</div>
-
-  <button class="nav-btn" onclick="exportData()">
-    <span class="nav-icon">⇩</span> Export JSON
-  </button>
-
-  <button class="nav-btn" onclick="document.getElementById('importFile').click()">
-    <span class="nav-icon">⇧</span> Import JSON
-  </button>
-
-  <input
-    id="importFile"
-    type="file"
-    accept=".json"
-    style="display:none"
-    onchange="importData(event)"
-  >
-
-  <button class="nav-btn" onclick="window.print()">
-    <span class="nav-icon">▣</span> Print
-  </button>
-
+  <nav class="nav">
+    <button class="active" onclick="showPage('dashboard',this)">01 · Control Tower</button>
+    <button onclick="showPage('project',this)">02 · Project Charter</button>
+    <button onclick="showPage('persil',this)">03 · 56 Persil</button>
+    <button onclick="showPage('workflow',this)">04 · 16 Fase</button>
+    <button onclick="showPage('decision',this)">05 · Decision Tree</button>
+    <button onclick="showPage('documents',this)">06 · Document Control</button>
+    <button onclick="showPage('legal',this)">07 · Legal Register</button>
+    <button onclick="showPage('roles',this)">08 · RACI & Pengawasan</button>
+    <button onclick="showPage('risk',this)">09 · Risk Register</button>
+    <button onclick="showPage('correspondence',this)">10 · Correspondence</button>
+    <button onclick="showPage('finance',this)">11 · Valuation & Pajak</button>
+    <button onclick="showPage('transaction',this)">12 · Transaction</button>
+    <button onclick="showPage('setoff',this)">13 · Set-Off</button>
+    <button onclick="showPage('audit',this)">14 · Audit Trail</button>
+    <button onclick="showPage('closing',this)">15 · Closing</button>
+    <button onclick="showPage('about',this)">16 · Legal Notice</button>
+  </nav>
 </aside>
-
-
-<!-- =========================================================
-     MAIN
-========================================================= -->
 
 <main class="main">
 
-<header class="topbar">
+<div class="topbar">
+  <div>
+    <h2>Project Control Tower</h2>
+    <div class="muted">Sistem kendali administrasi, legal, pertanahan & closing</div>
+  </div>
+  <div class="actions no-print">
+    <button class="btn primary" onclick="backup()">Export JSON</button>
+    <button class="btn" onclick="window.print()">Print</button>
+    <button class="btn danger" onclick="resetAll()">Reset Demo</button>
+  </div>
+</div>
 
-  <div style="display:flex;align-items:center;gap:10px">
-    <button class="btn mobile-menu" onclick="toggleSidebar()">☰</button>
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+<div class="notice">
+  <b>PROJECT:</b> Penyelesaian administrasi/legal 56 persil dalam konteks GIA → BUMI.
+  Sistem ini tidak menentukan hak atas tanah. Setiap kesimpulan wajib diverifikasi terhadap dokumen asli,
+  Kantor Pertanahan dan pejabat/profesional yang berwenang.
+</div>
 
-    <div>
-      <div class="top-title" id="topTitle">
-        Dashboard
-      </div>
-      <div class="top-sub">
-        MASTER SPH • Legal Control • Project Tracker
-      </div>
-    </div>
+<div class="grid">
+  <div class="card kpi span3">
+    <div class="label">TOTAL PERSIL</div>
+    <div class="value" id="kTotal">56</div>
+    <small>Master register</small>
+  </div>
+  <div class="card kpi span3">
+    <div class="label">CLEAR</div>
+    <div class="value" id="kClear">0</div>
+    <small>Siap lanjut</small>
+  </div>
+  <div class="card kpi span3">
+    <div class="label">PENDING</div>
+    <div class="value" id="kPending">56</div>
+    <small>Masih membutuhkan tindakan</small>
+  </div>
+  <div class="card kpi span3">
+    <div class="label">BLOCKED</div>
+    <div class="value" id="kBlocked">0</div>
+    <small>Harus dihentikan/escalate</small>
   </div>
 
-  <div class="top-actions">
-    <button class="btn" onclick="saveData()">Simpan</button>
-    <button class="btn primary" onclick="openModal('quickModal')">
-      + Quick Entry
-    </button>
+  <div class="card span8">
+    <h3>Overall Project Progress</h3>
+    <div class="muted small">Dihitung dari checklist utama 16 fase.</div>
+    <div class="progress"><i id="overallProgress" style="width:0%"></i></div>
+    <strong id="overallText">0%</strong>
   </div>
 
-</header>
+  <div class="card span4">
+    <h3>Risk Snapshot</h3>
+    <div id="riskSnapshot"></div>
+  </div>
 
-<div class="container" id="content"></div>
+  <div class="card span12">
+    <h3>Critical Gates</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Gate</th>
+          <th>Harus dibuktikan</th>
+          <th>Decision maker / verifier</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="gateTable"></tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<!-- PROJECT -->
+<section id="project" class="page">
+<div class="grid">
+<div class="card span12">
+<h3>Project Charter</h3>
+<div class="formgrid">
+<div class="field"><label>Project Name</label><input id="projectName" value="GIA → BUMI — 56 Persil"></div>
+<div class="field"><label>Project Owner</label><input id="projectOwner" value=""></div>
+<div class="field"><label>PIC / Coordinator</label><input id="projectPIC" value=""></div>
+<div class="field"><label>Legal Counsel</label><input id="legalCounsel" value=""></div>
+<div class="field"><label>Target Closing</label><input id="targetClosing" type="date"></div>
+<div class="field"><label>Wilayah Kerja</label><input value="Belitung — verifikasi wilayah wajib dilakukan terhadap data persil"></div>
+</div>
+<h4>Tujuan</h4>
+<textarea id="projectGoal">Membangun proses terkontrol untuk verifikasi, legal due diligence, penyelesaian administrasi pertanahan, transaksi, pendaftaran, rekonsiliasi nilai dan closing 56 persil.</textarea>
+<h4>Batasan</h4>
+<div class="checklist">
+<label><input type="checkbox"> Tidak ada tindakan hukum tanpa dasar dokumen.</label>
+<label><input type="checkbox"> Tidak menganggap keterangan desa/kelurahan sebagai bukti hak final.</label>
+<label><input type="checkbox"> Tidak menganggap PPAT/Notaris sebagai penerbit sertifikat.</label>
+<label><input type="checkbox"> Tidak melakukan transaksi pada persil yang memiliki unresolved legal red flag.</label>
+<label><input type="checkbox"> Semua perubahan dicatat dalam audit trail.</label>
+</div>
+<button class="btn primary" onclick="saveProject()">Simpan Charter</button>
+</div>
+</div>
+</section>
+
+<!-- PERSIL -->
+<section id="persil" class="page">
+<div class="card">
+<h3>Master Register — 56 Persil</h3>
+<div class="searchbar">
+<input id="persilSearch" placeholder="Cari P-001, lokasi, pemegang, status..." oninput="renderPersil()">
+<select id="persilStatus" onchange="renderPersil()">
+<option value="">Semua Status</option>
+<option value="CLEAR">CLEAR</option>
+<option value="PENDING">PENDING</option>
+<option value="BLOCKED">BLOCKED</option>
+<option value="PROCESS">IN PROCESS</option>
+</select>
+</div>
+<div style="overflow:auto">
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Lokasi</th>
+<th>Luas</th>
+<th>Status Hak</th>
+<th>Target</th>
+<th>Risk</th>
+<th>Status</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody id="persilTable"></tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow" class="page">
+<div class="card">
+<h3>16 Fase Operasional</h3>
+<div id="phaseList"></div>
+</div>
+</section>
+
+<!-- DECISION -->
+<section id="decision" class="page">
+<div class="grid">
+<div class="card span6">
+<h3>Decision Tree</h3>
+
+<div class="phase">
+<b>1. Apakah identitas objek jelas?</b>
+<p>Jika tidak → HOLD → verifikasi lokasi/batas/data fisik.</p>
+</div>
+
+<div class="phase">
+<b>2. Apakah dasar penguasaan/hak dapat dibuktikan?</b>
+<p>Jika tidak → LEGAL REVIEW. Jangan menyimpulkan kepemilikan hanya dari penguasaan fisik.</p>
+</div>
+
+<div class="phase">
+<b>3. Apakah objek sudah terdaftar?</b>
+<p>Jika ya → cek data fisik/yuridis dan status pendaftaran. Jika tidak → tentukan jalur pendaftaran sesuai fakta dan aturan yang berlaku.</p>
+</div>
+
+<div class="phase">
+<b>4. Apakah ada sengketa/blokir/sita/tumpang tindih?</b>
+<p>Jika ya → BLOCKED / ESCALATE.</p>
+</div>
+
+<div class="phase">
+<b>5. Apakah diperlukan perbuatan hukum yang dibuat dengan Akta PPAT?</b>
+<p>Jika ya → PPAT berwenang. PPAT membuat akta untuk perbuatan hukum tertentu; pendaftaran tetap mengikuti proses pertanahan.</p>
+</div>
+
+<div class="phase">
+<b>6. Apakah dokumen membutuhkan kewenangan Notaris?</b>
+<p>Jika ya → Notaris sesuai jenis dokumen/perbuatan hukumnya. Jangan mencampur fungsi Notaris dan PPAT.</p>
+</div>
+
+<div class="phase">
+<b>7. Apakah diperlukan administrasi desa/kelurahan atau kecamatan?</b>
+<p>Hanya bila diperlukan oleh fakta/kebutuhan administrasi dan ketentuan yang berlaku. Bukan otomatis setiap persil harus melalui Lurah/Camat.</p>
+</div>
+
+<div class="phase">
+<b>8. Apakah seluruh gate terpenuhi?</b>
+<p>Jika belum → PENDING/BLOCKED. Jika terpenuhi → PROCEED.</p>
+</div>
+</div>
+
+<div class="card span6">
+<h3>STOP Conditions</h3>
+<div class="notice danger">
+<b>STOP TRANSACTION</b>
+<ul>
+<li>Identitas pihak tidak konsisten.</li>
+<li>Dasar penguasaan/hak tidak dapat dibuktikan.</li>
+<li>Data fisik dan dokumen berbeda material.</li>
+<li>Ada sengketa aktif yang belum diselesaikan.</li>
+<li>Ada indikasi tumpang tindih yang belum diverifikasi.</li>
+<li>Authority perusahaan belum jelas.</li>
+<li>Dokumen asli belum diverifikasi ketika diperlukan.</li>
+<li>Legal counsel/PPAT menyatakan instrumen belum tepat.</li>
+<li>Persetujuan internal yang diperlukan belum tersedia.</li>
+</ul>
+</div>
+
+<h3>Escalation</h3>
+<ol>
+<li>PIC → kumpulkan fakta.</li>
+<li>Legal → klasifikasi isu.</li>
+<li>PPAT/Notaris → review instrumen sesuai kewenangan.</li>
+<li>Kantor Pertanahan → verifikasi aspek administrasi pertanahan.</li>
+<li>Management → keputusan bisnis.</li>
+<li>Advokat/instansi berwenang → jika sengketa atau isu hukum khusus.</li>
+</ol>
+</div>
+</div>
+</section>
+
+<!-- DOCUMENTS -->
+<section id="documents" class="page">
+<div class="card">
+<h3>Document Control</h3>
+<div class="notice warn">
+Setiap checklist harus dapat ditelusuri ke bukti. Jangan mengubah status menjadi CLEAR hanya karena dokumen “katanya ada”.
+</div>
+<table>
+<thead>
+<tr><th>Jenis</th><th>Minimum Control</th><th>Verifier</th><th>Status</th></tr>
+</thead>
+<tbody>
+<tr><td>Identitas pihak</td><td>Nama, NIK/identitas badan, kewenangan</td><td>Legal/KYC</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Akta perusahaan</td><td>Akta + perubahan relevan + data administrasi badan</td><td>Legal</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Alas hak</td><td>Dokumen asli/sumber sah + chain</td><td>Legal/PPAT/BPN sesuai konteks</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Data fisik</td><td>Lokasi, luas, batas, hasil ukur bila diperlukan</td><td>Kantor Pertanahan/surveyor sesuai proses</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Data yuridis</td><td>Pemegang hak, beban, catatan</td><td>Kantor Pertanahan/Legal</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Pajak</td><td>Jenis, pihak, dasar, pembayaran, bukti</td><td>Tax/Finance</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Akta</td><td>Jenis akta, nomor, tanggal, pejabat</td><td>PPAT/Notaris</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Produk pendaftaran</td><td>Produk resmi dan pencatatan</td><td>Kantor Pertanahan</td><td><span class="badge pending">PENDING</span></td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:20px">Document Evidence Register</h3>
+<table>
+<thead><tr><th>ID</th><th>Dokumen</th><th>Persil</th><th>Versi</th><th>Asli</th><th>Verified By</th><th>Tanggal</th></tr></thead>
+<tbody id="docTable"></tbody>
+</table>
+<button class="btn primary" onclick="addDocument()">+ Tambah Evidence</button>
+</div>
+</section>
+
+<!-- LEGAL -->
+<section id="legal" class="page">
+<div class="card">
+<h3>Legal Register — Currentness Check</h3>
+<div class="notice">
+Daftar ini adalah starting point. Untuk setiap tindakan, lakukan pengecekan kembali terhadap JDIH/database peraturan resmi sebelum eksekusi.
+</div>
+<table>
+<thead>
+<tr><th>Regulasi</th><th>Materi</th><th>Status / Catatan</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><b>UU No. 5 Tahun 1960</b></td>
+<td>Pokok-pokok Agraria / UUPA</td>
+<td>Landasan utama hukum agraria; cek ketentuan yang relevan terhadap objek konkret.</td>
+</tr>
+<tr>
+<td><b>PP No. 24 Tahun 1997</b></td>
+<td>Pendaftaran Tanah</td>
+<td>Berlaku; diubah oleh PP No. 18 Tahun 2021.</td>
+</tr>
+<tr>
+<td><b>PP No. 18 Tahun 2021</b></td>
+<td>HPL, Hak Atas Tanah, Rumah Susun & Pendaftaran Tanah</td>
+<td>Wajib menjadi referensi utama bersama aturan pelaksana yang relevan.</td>
+</tr>
+<tr>
+<td><b>PP No. 37 Tahun 1998 jo. PP No. 24 Tahun 2016</b></td>
+<td>Jabatan PPAT</td>
+<td>PPAT dan PPAT Sementara; gunakan sesuai kewenangan.</td>
+</tr>
+<tr>
+<td><b>Permen ATR/BPN No. 5 Tahun 2025 jo. No. 9 Tahun 2025</b></td>
+<td>Pelimpahan kewenangan penetapan hak dan kegiatan pendaftaran tanah</td>
+<td>Gunakan rezim terbaru; Permen 5/2025 menggantikan rezim Permen 16/2022.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:20px">Legal Issue Log</h3>
+<table>
+<thead><tr><th>ID</th><th>Persil</th><th>Issue</th><th>Risk</th><th>Legal Opinion</th><th>Decision</th></tr></thead>
+<tbody id="legalIssueTable"></tbody>
+</table>
+<button class="btn primary" onclick="addLegalIssue()">+ Tambah Legal Issue</button>
+</div>
+</section>
+
+<!-- ROLES -->
+<section id="roles" class="page">
+<div class="card">
+<h3>RACI & Pengawasan</h3>
+<div class="notice">
+PIC proyek mengoordinasikan. PIC tidak menggantikan kewenangan pejabat pertanahan, PPAT, Notaris, advokat, appraisal, pajak, atau organ perusahaan.
+</div>
+<table>
+<thead>
+<tr><th>Aktivitas</th><th>R — Responsible</th><th>A — Accountable</th><th>C — Consulted</th><th>I — Informed</th></tr>
+</thead>
+<tbody>
+<tr><td>Data room</td><td>PIC</td><td>Project Owner</td><td>Legal</td><td>Management</td></tr>
+<tr><td>Legal DD</td><td>Legal Counsel</td><td>Project Owner</td><td>PPAT/Notaris/BPN sesuai isu</td><td>PIC</td></tr>
+<tr><td>Data fisik</td><td>Surveyor/BPN sesuai proses</td><td>Pejabat berwenang</td><td>PIC/Legal</td><td>Management</td></tr>
+<tr><td>Akta PPAT</td><td>PPAT</td><td>Para pihak/pejabat sesuai kewenangan</td><td>Legal</td><td>PIC</td></tr>
+<tr><td>Dokumen Notaris</td><td>Notaris</td><td>Para pihak sesuai tindakan</td><td>Legal</td><td>PIC</td></tr>
+<tr><td>Pendaftaran</td><td>Pihak pemohon + proses Kantor Pertanahan</td><td>Pejabat berwenang</td><td>PPAT/Legal/PIC</td><td>Management</td></tr>
+<tr><td>Valuation</td><td>KJPP/Appraiser</td><td>Project Owner</td><td>Finance/Legal</td><td>PIC</td></tr>
+<tr><td>Set-off</td><td>Finance + Legal</td><td>GIA/BUMI sesuai authority</td><td>Tax/Accounting</td><td>PIC</td></tr>
+<tr><td>Closing</td><td>PIC</td><td>Project Owner</td><td>Legal/Finance/PPAT/Notaris</td><td>Management</td></tr>
+</tbody>
+</table>
+
+<h3 style="margin-top:20px">Segregation of Duties</h3>
+<div class="checklist">
+<label><input type="checkbox"> Input data ≠ reviewer akhir.</label>
+<label><input type="checkbox"> Reviewer ≠ pihak yang menyetujui transaksi, bila memungkinkan.</label>
+<label><input type="checkbox"> Pembayaran ≠ approval transaksi.</label>
+<label><input type="checkbox"> Pengelola dokumen asli ≠ satu-satunya validator.</label>
+</div>
+</div>
+</section>
+
+<!-- RISK -->
+<section id="risk" class="page">
+<div class="card">
+<h3>Risk Register</h3>
+<table>
+<thead><tr><th>ID</th><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th><th>Owner</th><th>Status</th></tr></thead>
+<tbody id="riskTable"></tbody>
+</table>
+<button class="btn primary" onclick="addRisk()">+ Tambah Risiko</button>
+</div>
+</section>
+
+<!-- CORRESPONDENCE -->
+<section id="correspondence" class="page">
+<div class="card">
+<h3>Correspondence & Government Contact Log</h3>
+<table>
+<thead><tr><th>Tanggal</th><th>Instansi</th><th>Nomor</th><th>Perihal</th><th>Respons</th><th>Deadline</th><th>Status</th></tr></thead>
+<tbody id="corrTable"></tbody>
+</table>
+<button class="btn primary" onclick="addCorrespondence()">+ Tambah</button>
+</div>
+</section>
+
+<!-- FINANCE -->
+<section id="finance" class="page">
+<div class="grid">
+<div class="card span6">
+<h3>Valuation Register</h3>
+<table>
+<thead><tr><th>Persil</th><th>Nilai Appraisal</th><th>Appraiser</th><th>Tanggal</th><th>Status</th></tr></thead>
+<tbody id="valuationTable"></tbody>
+</table>
+</div>
+
+<div class="card span6">
+<h3>Tax & Cost Register</h3>
+<table>
+<thead><tr><th>Persil</th><th>Jenis</th><th>Pihak</th><th>Nominal</th><th>Bukti</th></tr></thead>
+<tbody id="taxTable"></tbody>
+</table>
+</div>
+
+<div class="card span12">
+<h3>Financial Control</h3>
+<div class="formgrid">
+<div class="field"><label>Total Nilai Utang</label><input id="debtTotal" type="number" placeholder="0"></div>
+<div class="field"><label>Total Nilai Persil</label><input id="landTotal" type="number" placeholder="0"></div>
+<div class="field"><label>Total Pajak & Biaya</label><input id="costTotal" type="number" placeholder="0"></div>
+<div class="field"><label>Saldo Setelah Set-Off</label><input id="balanceAfter" type="number" placeholder="0"></div>
+</div>
+<button class="btn primary" onclick="calculateFinance()">Hitung</button>
+</div>
+</div>
+</section>
+
+<!-- TRANSACTION -->
+<section id="transaction" class="page">
+<div class="card">
+<h3>Transaction Gate</h3>
+<div class="notice warn">
+Jangan menyusun transaksi hanya berdasarkan tujuan bisnis. Instrumen hukum harus dipilih berdasarkan status hak, kewenangan pihak, fakta objek, dan ketentuan yang berlaku.
+</div>
+<table>
+<thead><tr><th>Gate</th><th>Requirement</th><th>Evidence</th><th>Approved By</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Authority</td><td>Kewenangan GIA/BUMI</td><td>Corporate docs</td><td>Legal</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Object</td><td>Objek dapat diidentifikasi</td><td>Survey/data pertanahan</td><td>Legal/BPN sesuai proses</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Title/Right</td><td>Dasar hak/penguasaan jelas</td><td>Alas hak + hasil verifikasi</td><td>Legal</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Encumbrance</td><td>Tidak ada beban/sengketa yang menghalangi</td><td>Verification</td><td>Legal</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Instrument</td><td>Jenis tindakan hukum tepat</td><td>Legal opinion</td><td>Legal + PPAT/Notaris</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Tax</td><td>Kewajiban pajak/biaya dipetakan</td><td>Tax memo/bukti</td><td>Tax/Finance</td><td><span class="badge pending">PENDING</span></td></tr>
+<tr><td>Registration</td><td>Jalur pendaftaran siap</td><td>Checklist BPN</td><td>Pejabat berwenang</td><td><span class="badge pending">PENDING</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- SETOFF -->
+<section id="setoff" class="page">
+<div class="card">
+<h3>Set-Off / Rekonsiliasi Utang</h3>
+<div class="notice">
+Set-off harus mengikuti dokumen dan konstruksi hukum yang telah disetujui. Nilai tanah, nilai utang, waktu pengakuan, pajak, accounting treatment dan dokumen transaksi harus direkonsiliasi.
+</div>
+
+<table>
+<thead>
+<tr><th>Persil</th><th>Nilai Tanah</th><th>Nilai Utang Dialokasikan</th><th>Set-Off</th><th>Dokumen</th><th>Status</th></tr>
+</thead>
+<tbody id="setoffTable"></tbody>
+</table>
+
+<h3 style="margin-top:20px">Reconciliation Gate</h3>
+<div class="checklist">
+<label><input type="checkbox"> Nilai persil telah diverifikasi.</label>
+<label><input type="checkbox"> Nilai utang telah diverifikasi.</label>
+<label><input type="checkbox"> Dasar hukum set-off telah direview.</label>
+<label><input type="checkbox"> Pajak/biaya telah diperhitungkan.</label>
+<label><input type="checkbox"> Accounting/Finance telah melakukan rekonsiliasi.</label>
+<label><input type="checkbox"> Corporate approval telah tersedia.</label>
+</div>
+</div>
+</section>
+
+<!-- AUDIT -->
+<section id="audit" class="page">
+<div class="card">
+<h3>Audit Trail</h3>
+<div class="notice">
+Jangan menghapus histori keputusan. Bila terjadi koreksi, buat record baru yang menjelaskan perubahan.
+</div>
+<table>
+<thead><tr><th>Waktu</th><th>User/PIC</th><th>Aksi</th><th>Objek</th><th>Before</th><th>After</th><th>Catatan</th></tr></thead>
+<tbody id="auditTable"></tbody>
+</table>
+</div>
+</section>
+
+<!-- CLOSING -->
+<section id="closing" class="page">
+<div class="card">
+<h3>Master Closing Checklist</h3>
+<div class="checklist" id="closingChecklist"></div>
+
+<div class="notice danger" style="margin-top:20px">
+<b>NO-GO:</b> Satu critical legal blocker yang belum terselesaikan berarti proyek tidak boleh dinyatakan closed secara keseluruhan.
+</div>
+
+<h3>Closing Certificate Internal</h3>
+<div class="formgrid">
+<div class="field"><label>Prepared By</label><input></div>
+<div class="field"><label>Reviewed By</label><input></div>
+<div class="field"><label>Approved By</label><input></div>
+<div class="field"><label>Closing Date</label><input type="date"></div>
+</div>
+<textarea placeholder="Catatan closing, outstanding matter, pengecualian, dan rekomendasi pasca-closing"></textarea>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="page">
+<div class="grid">
+<div class="card span8">
+<h3>Legal & Professional Notice</h3>
+
+<p>
+Aplikasi ini merupakan <b>alat bantu project management, administrative control,
+document control, legal issue tracking, checklist, evidence register, dan audit trail</b>.
+</p>
+
+<p>
+Aplikasi tidak memberikan keputusan hukum final mengenai kepemilikan, hak atas tanah,
+keabsahan dokumen, kewenangan pejabat, ataupun dapat/tidaknya suatu bidang ditransaksikan.
+</p>
+
+<p>
+Setiap persil harus diperiksa berdasarkan keadaan konkret dan dokumen yang sebenarnya.
+Jika terdapat perbedaan antara database internal dengan dokumen resmi atau hasil pemeriksaan
+instansi berwenang, maka data internal harus dianggap <b>belum final</b>.
+</p>
+
+<h3>Prinsip Pengawasan</h3>
+<ul>
+<li><b>Desa/Kelurahan:</b> dapat menjadi sumber administrasi/fakta wilayah sesuai kebutuhan, bukan penerbit sertifikat.</li>
+<li><b>Camat:</b> tidak otomatis menjadi tahapan semua proses; dapat mempunyai fungsi tertentu termasuk PPAT Sementara apabila memenuhi ketentuan.</li>
+<li><b>PPAT:</b> membuat akta autentik untuk perbuatan hukum tertentu mengenai hak atas tanah/HMSRS sesuai kewenangan.</li>
+<li><b>Notaris:</b> menjalankan kewenangan kenotariatan sesuai UU Jabatan Notaris dan jenis tindakan yang diminta.</li>
+<li><b>Kantor Pertanahan/BPN:</b> menjalankan fungsi administrasi pendaftaran tanah dan kewenangan pertanahan sesuai ketentuan.</li>
+<li><b>Kanwil/Menteri:</b> masuk apabila kewenangan atau jenis tindakan berada pada tingkat tersebut.</li>
+<li><b>Legal Counsel/Advokat:</b> memberikan analisis hukum dan menangani isu/sengketa sesuai kewenangan profesinya.</li>
+<li><b>KJPP/Appraiser:</b> melakukan penilaian apabila dibutuhkan untuk tujuan transaksi.</li>
+<li><b>Tax/Finance:</b> memeriksa pajak, biaya dan perlakuan akuntansi.</li>
+</ul>
+</div>
+
+<div class="card span4">
+<h3>Reference</h3>
+<ul>
+<li>UU No. 5 Tahun 1960</li>
+<li>PP No. 24 Tahun 1997</li>
+<li>PP No. 18 Tahun 2021</li>
+<li>PP No. 37 Tahun 1998</li>
+<li>PP No. 24 Tahun 2016</li>
+<li>Permen ATR/BPN No. 5 Tahun 2025</li>
+<li>Permen ATR/BPN No. 9 Tahun 2025</li>
+</ul>
+
+<div class="notice warn">
+<b>LEGAL CURRENTNESS:</b><br>
+Sebelum tindakan nyata dilakukan, lakukan pengecekan peraturan terbaru pada JDIH resmi.
+</div>
+</div>
+</div>
+</section>
+
+<div class="footer">
+LAND PROJECT CONTROL · GIA → BUMI · 56 PERSIL · Single-file HTML · LocalStorage enabled
+</div>
 
 </main>
 </div>
 
-
-<!-- =========================================================
-     MODAL QUICK ENTRY
-========================================================= -->
-
-<div class="modal" id="quickModal">
-
-<div class="modal-box">
-
-  <div class="modal-head">
-    <h3>Quick Entry</h3>
-    <button class="btn" onclick="closeModal('quickModal')">✕</button>
-  </div>
-
-  <div class="grid grid-2">
-
-    <div class="form-group">
-      <label>Jenis</label>
-      <select id="quickType">
-        <option value="task">Task</option>
-        <option value="risk">Red Flag</option>
-        <option value="note">Catatan</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Persil</label>
-      <select id="quickPersil">
-        <option value="">Tidak terkait persil</option>
-      </select>
-    </div>
-
-  </div>
-
-  <div class="form-group">
-    <label>Judul</label>
-    <input id="quickTitle" placeholder="Masukkan judul">
-  </div>
-
-  <div class="form-group">
-    <label>Catatan</label>
-    <textarea id="quickNote" placeholder="Keterangan"></textarea>
-  </div>
-
-  <div style="display:flex;gap:8px;justify-content:flex-end">
-    <button class="btn" onclick="closeModal('quickModal')">Batal</button>
-    <button class="btn primary" onclick="addQuickEntry()">Simpan</button>
-  </div>
-
+<!-- MODAL -->
+<div id="modal" class="modal">
+<div class="modalbox">
+<div class="modalhead">
+<h2 id="modalTitle">Persil</h2>
+<button class="close" onclick="closeModal()">×</button>
+</div>
+<div id="modalContent"></div>
 </div>
 </div>
-
 
 <script>
-
 /* =========================================================
-   APPLICATION DATA
-========================================================= */
+   LAND PROJECT CONTROL
+   SINGLE FILE APPLICATION
+   ========================================================= */
 
-const PHASES = [
+const KEY="LAND_CONTROL_GIA_BUMI_V1";
 
-{
- id:1,
- title:"Intake / Penerimaan Penugasan",
- desc:"Menerima penugasan, memahami tujuan, ruang lingkup, pihak, objek, dan batas pekerjaan.",
- output:"Intake Record + Scope of Work",
- risk:"Penugasan tidak jelas atau pihak yang memberi tugas tidak berwenang."
-},
-
-{
- id:2,
- title:"Identifikasi Para Pihak",
- desc:"Mencatat seluruh pihak dan kedudukannya dalam pekerjaan.",
- output:"Party Register",
- risk:"Identitas tidak konsisten, kewenangan bertindak tidak jelas."
-},
-
-{
- id:3,
- title:"Identifikasi Objek Tanah",
- desc:"Mengidentifikasi objek, lokasi, alas hak, data fisik dan data yuridis.",
- output:"Object / Parcel Profile",
- risk:"Objek tidak jelas atau data fisik dan yuridis tidak konsisten."
-},
-
-{
- id:4,
- title:"Inventarisasi Dokumen",
- desc:"Mencatat dokumen yang tersedia, belum tersedia, kedaluwarsa, atau perlu diverifikasi.",
- output:"Document Register",
- risk:"Dokumen penting hilang atau tidak dapat diverifikasi."
-},
-
-{
- id:5,
- title:"Verifikasi Dokumen",
- desc:"Mencocokkan data administratif dan mengidentifikasi ketidaksesuaian.",
- output:"Verification Report",
- risk:"Dokumen palsu, tidak lengkap, atau data bertentangan."
-},
-
-{
- id:6,
- title:"Pemeriksaan Hak & Kewenangan",
- desc:"Menentukan status hak dan siapa yang secara hukum berwenang melakukan tindakan.",
- output:"Authority Assessment",
- risk:"Pihak tidak berwenang atau tindakan berada di luar kewenangan operator."
-},
-
-{
- id:7,
- title:"Due Diligence / Risiko",
- desc:"Mengidentifikasi risiko hukum, administrasi, sengketa, pajak, dan transaksi.",
- output:"Risk Assessment",
- risk:"Ada sengketa, blokir, sita, beban, atau masalah hukum."
-},
-
-{
- id:8,
- title:"Klarifikasi & Konfrontasi Data",
- desc:"Mengklarifikasi data yang tidak konsisten kepada pihak atau instansi terkait.",
- output:"Clarification Record",
- risk:"Klarifikasi gagal atau terdapat konflik data."
-},
-
-{
- id:9,
- title:"Penentuan Jalur Hukum",
- desc:"Menentukan jalur proses berdasarkan jenis perbuatan dan kewenangan pejabat.",
- output:"Legal Route Decision",
- risk:"Jalur hukum salah atau tindakan dilakukan oleh pihak yang tidak berwenang."
-},
-
-{
- id:10,
- title:"Drafting / Penyusunan Dokumen",
- desc:"Penyusunan dokumen sesuai kewenangan dan kebutuhan kasus.",
- output:"Draft Document",
- risk:"Dokumen dianggap sebagai akta resmi padahal bukan dibuat oleh pejabat berwenang."
-},
-
-{
- id:11,
- title:"Review Administratif",
- desc:"Pemeriksaan kelengkapan, konsistensi, penamaan, nomor, tanggal, dan lampiran.",
- output:"Administrative Review",
- risk:"Kesalahan administratif."
-},
-
-{
- id:12,
- title:"Review Profesional",
- desc:"Review oleh profesi/pejabat yang berwenang sesuai tindakan hukum.",
- output:"Professional Approval / Advice",
- risk:"Operator mengambil alih kewenangan profesi."
-},
-
-{
- id:13,
- title:"Pre-Signing Control",
- desc:"Pemeriksaan terakhir sebelum penandatanganan.",
- output:"Signing Clearance",
- risk:"Dokumen belum final atau pihak belum siap menandatangani."
-},
-
-{
- id:14,
- title:"Penandatanganan",
- desc:"Penandatanganan dilakukan oleh pihak dan pejabat yang berwenang.",
- output:"Executed Document",
- risk:"Penandatangan tidak berwenang atau prosedur formal tidak terpenuhi."
-},
-
-{
- id:15,
- title:"Post-Signing / Pendaftaran",
- desc:"Tindak lanjut setelah dokumen ditandatangani termasuk proses administrasi/pendaftaran yang relevan.",
- output:"Registration / Follow-up Record",
- risk:"Dokumen tidak ditindaklanjuti atau batas waktu terlewat."
-},
-
-{
- id:16,
- title:"Arsip & Closing",
- desc:"Memastikan seluruh dokumen, bukti, keputusan, dan audit trail tersimpan.",
- output:"Closing Report + Archive",
- risk:"Berkas tidak lengkap dan sulit diaudit."
-}
-
+const phases=[
+["01","Penugasan & Project Charter","Mandat, kewenangan PIC, tujuan, scope, authority matrix."],
+["02","Data Room 56 Persil","Membuat master register dan evidence register per persil."],
+["03","Identifikasi Objek","Lokasi, luas, batas, penggunaan, koordinat, data fisik."],
+["04","Chain of Title","Menelusuri riwayat penguasaan/hak dan dokumen pendukung."],
+["05","Legal Due Diligence","Subjek, objek, beban, sengketa, pihak ketiga, authority."],
+["06","Verifikasi Pertanahan","Menentukan data yang perlu diverifikasi pada Kantor Pertanahan."],
+["07","Verifikasi Desa/Kelurahan/Kecamatan","Dilakukan hanya jika dibutuhkan oleh jalur hukum/administratif konkret."],
+["08","Penentuan Jalur Hak/Pendaftaran","Menentukan prosedur berdasarkan jenis objek, status dan dokumen."],
+["09","Corporate Approval","Memastikan kewenangan organ GIA/BUMI dan approval yang diperlukan."],
+["10","Legal Instrument","Menentukan instrumen transaksi dan peran PPAT/Notaris sesuai kewenangan."],
+["11","Valuation & Tax","Appraisal bila diperlukan, pajak, biaya dan accounting treatment."],
+["12","Execution","Penandatanganan/eksekusi instrumen oleh pihak berwenang."],
+["13","Registration","Proses pendaftaran sesuai jalur dan kewenangan pertanahan."],
+["14","Product Verification","Memastikan produk pendaftaran dan data akhirnya benar."],
+["15","Set-Off & Reconciliation","Rekonsiliasi utang, nilai persil, pajak dan accounting."],
+["16","Closing & Post-Closing","Closing certificate, arsip, audit trail dan monitoring pasca-closing."]
 ];
 
-
-/*
-  LEGAL REGISTER
-
-  Catatan:
-  Status dibuat konservatif.
-  Jangan gunakan daftar ini sebagai satu-satunya sumber hukum.
-  Setiap perkara harus diverifikasi kembali terhadap JDIH resmi
-  dan regulasi yang berlaku pada saat tindakan dilakukan.
-*/
-
-const LEGAL = [
-
-{
- code:"UUPA",
- name:"UU No. 5 Tahun 1960",
- title:"Peraturan Dasar Pokok-Pokok Agraria",
- status:"BERLAKU",
- authority:"UU / Pertanahan",
- note:"Kerangka dasar hukum agraria nasional."
-},
-
-{
- code:"PP24",
- name:"PP No. 24 Tahun 1997",
- title:"Pendaftaran Tanah",
- status:"BERLAKU DENGAN PERUBAHAN",
- authority:"Pendaftaran Tanah",
- note:"Kerangka pendaftaran tanah; perlu dibaca bersama perubahan dan aturan pelaksana yang berlaku."
-},
-
-{
- code:"PP18",
- name:"PP No. 18 Tahun 2021",
- title:"Hak Pengelolaan, Hak Atas Tanah, Satuan Rumah Susun, dan Pendaftaran Tanah",
- status:"BERLAKU",
- authority:"Pertanahan",
- note:"Regulasi penting mengenai hak dan pendaftaran tanah."
-},
-
-{
- code:"PP37",
- name:"PP No. 37 Tahun 1998",
- title:"Peraturan Jabatan Pejabat Pembuat Akta Tanah",
- status:"DIUBAH",
- authority:"PPAT",
- note:"Ketentuan jabatan PPAT; dibaca bersama PP perubahan."
-},
-
-{
- code:"PP24-2016",
- name:"PP No. 24 Tahun 2016",
- title:"Perubahan atas PP No. 37 Tahun 1998",
- status:"BERLAKU",
- authority:"PPAT",
- note:"Perubahan ketentuan jabatan PPAT."
-},
-
-{
- code:"PMNA3",
- name:"PMNA/KBPN No. 3 Tahun 1997",
- title:"Ketentuan Pelaksanaan PP No. 24 Tahun 1997",
- status:"DIUBAH",
- authority:"Teknis Pendaftaran Tanah",
- note:"Perlu dibaca bersama perubahan-perubahan yang masih berlaku."
-},
-
-{
- code:"PERMEN7-2019",
- name:"Permen ATR/BPN No. 7 Tahun 2019",
- title:"Perubahan Kedua atas PMNA/KBPN No. 3 Tahun 1997",
- status:"BERLAKU",
- authority:"Teknis Pendaftaran Tanah",
- note:"Perubahan ketentuan teknis pendaftaran tanah."
-},
-
-{
- code:"PERMEN16-2021",
- name:"Permen ATR/BPN No. 16 Tahun 2021",
- title:"Perubahan Ketiga atas PMNA/KBPN No. 3 Tahun 1997",
- status:"BERLAKU DENGAN CATATAN",
- authority:"Teknis Pendaftaran Tanah",
- note:"Sebagian ketentuannya kemudian dicabut/diubah oleh regulasi berikutnya."
-},
-
-{
- code:"PERMEN16-2022",
- name:"Permen ATR/BPN No. 16 Tahun 2022",
- title:"Perubahan Ketentuan Pendaftaran Tanah",
- status:"BERLAKU",
- authority:"Teknis Pendaftaran Tanah",
- note:"Harus diperhatikan dalam membaca ketentuan teknis yang telah berubah."
-},
-
-{
- code:"PERMEN21-2020",
- name:"Permen ATR/BPN No. 21 Tahun 2020",
- title:"Penanganan dan Penyelesaian Kasus Pertanahan",
- status:"BERLAKU",
- authority:"Kasus Pertanahan",
- note:"Relevan ketika ditemukan indikasi kasus/sengketa/konflik pertanahan."
-}
-
+const closingItems=[
+"56 persil telah memiliki status akhir.",
+"Identitas pihak telah diverifikasi.",
+"Corporate authority GIA telah diverifikasi.",
+"Corporate authority BUMI telah diverifikasi.",
+"Chain of title telah ditelusuri per persil.",
+"Data fisik telah diverifikasi sesuai kebutuhan.",
+"Data yuridis telah diverifikasi sesuai kebutuhan.",
+"Status sengketa/blokir/sita/tumpang tindih telah diperiksa.",
+"Tata ruang/perizinan yang relevan telah diperiksa.",
+"Legal due diligence telah selesai.",
+"Instrumen hukum telah direview oleh profesional berwenang.",
+"PPAT telah dilibatkan bila perbuatan hukum memerlukannya.",
+"Notaris telah dilibatkan bila tindakan memerlukan kewenangan notaris.",
+"Pajak dan biaya telah diperiksa.",
+"Valuation telah selesai bila diperlukan.",
+"Pendaftaran telah selesai untuk persil yang menjadi target.",
+"Produk pendaftaran telah diverifikasi.",
+"Set-off telah direkonsiliasi.",
+"Accounting/Finance telah melakukan reconciliation.",
+"Semua dokumen asli/evidence telah diarsipkan.",
+"Semua outstanding issue telah ditutup atau secara resmi diterima sebagai exception.",
+"Audit trail lengkap.",
+"Closing approval telah ditandatangani."
 ];
 
-
-/* =========================================================
-   ROLE MATRIX
-========================================================= */
-
-const ROLES = [
-
-{
- role:"Operator / Admin",
- allowed:[
-   "Input data",
-   "Scan/index dokumen",
-   "Checklist administratif",
-   "Tracking",
-   "Membuat laporan administratif"
- ],
- forbidden:[
-   "Mengambil alih kewenangan PPAT",
-   "Membuat akta yang merupakan kewenangan pejabat",
-   "Menyatakan legal clearance final tanpa kewenangan",
-   "Mengubah data resmi instansi"
- ]
-},
-
-{
- role:"Project Supervisor",
- allowed:[
-   "Mengawasi pekerjaan",
-   "Memeriksa kelengkapan administratif",
-   "Mengendalikan deadline",
-   "Menentukan eskalasi internal"
- ],
- forbidden:[
-   "Menggantikan pejabat yang memiliki kewenangan hukum khusus",
-   "Memberikan keputusan instansi"
- ]
-},
-
-{
- role:"Notaris",
- allowed:[
-   "Tindakan kenotariatan sesuai peraturan",
-   "Pembuatan akta yang menjadi kewenangan Notaris"
- ],
- forbidden:[
-   "Bertindak di luar kewenangan jabatan"
- ]
-},
-
-{
- role:"PPAT",
- allowed:[
-   "Tindakan dan akta PPAT sesuai peraturan",
-   "Pelaksanaan kewajiban PPAT dalam proses yang menjadi kewenangannya"
- ],
- forbidden:[
-   "Bertindak di luar wilayah/kewenangan jabatan"
- ]
-},
-
-{
- role:"Advokat / Legal Reviewer",
- allowed:[
-   "Analisis hukum",
-   "Legal opinion sesuai penugasan",
-   "Review kontrak/dokumen sesuai kompetensi"
- ],
- forbidden:[
-   "Menggantikan kewenangan pejabat pertanahan atau PPAT"
- ]
-},
-
-{
- role:"Kantor Pertanahan / ATR-BPN",
- allowed:[
-   "Pelayanan dan administrasi pertanahan sesuai kewenangan"
- ],
- forbidden:[
-   "Tidak relevan untuk diisi sebagai kewenangan operator proyek"
- ]
+function defaultPersil(){
+ let arr=[];
+ for(let i=1;i<=56;i++){
+   arr.push({
+     id:"P-"+String(i).padStart(3,"0"),
+     lokasi:"",
+     luas:"",
+     statusHak:"BELUM DITENTUKAN",
+     target:"BUMI",
+     risk:"UNKNOWN",
+     status:"PENDING",
+     notes:"",
+     checklist:{},
+     created:new Date().toISOString()
+   });
+ }
+ return arr;
 }
 
-];
+let state=loadState();
 
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-let state = JSON.parse(localStorage.getItem("MASTER_SPH_DATA") || "null");
-
-if(!state){
-
-  state = {
-
-    project:{
-      name:"MASTER SPH",
-      description:"Sistem kontrol administrasi, legal, dan project tracking",
-      owner:"",
-      supervisor:"",
-      startDate:"",
-      targetDate:""
-    },
-
-    persils:[],
-
-    parties:[],
-
-    documents:[],
-
-    tasks:[],
-
-    risks:[],
-
-    notes:[],
-
-    audit:[],
-
-    phaseStatus:{}
-
-  };
-
-  for(let i=1;i<=56;i++){
-
-    state.persils.push({
-      id:i,
-      code:"P-"+String(i).padStart(3,"0"),
-      name:"",
-      village:"",
-      district:"",
-      city:"",
-      province:"",
-      landRight:"",
-      certificate:"",
-      owner:"",
-      status:"BELUM DIMULAI",
-      currentPhase:1,
-      risk:"BELUM DINILAI",
-      notes:""
-    });
-
-    state.phaseStatus[i]={};
-
-  }
-
-  saveData();
-
+function loadState(){
+ try{
+   const x=JSON.parse(localStorage.getItem(KEY));
+   if(x) return x;
+ }catch(e){}
+ return {
+   persil:defaultPersil(),
+   documents:[],
+   legalIssues:[],
+   risks:[
+     {id:"R-001",risk:"Chain of title tidak lengkap",likelihood:"Medium",impact:"High",mitigation:"Legal DD + verifikasi dokumen asli",owner:"Legal",status:"OPEN"},
+     {id:"R-002",risk:"Perbedaan data fisik/dokumen",likelihood:"Medium",impact:"High",mitigation:"Survey/verifikasi data fisik",owner:"PIC",status:"OPEN"},
+     {id:"R-003",risk:"Sengketa pihak ketiga",likelihood:"Unknown",impact:"Critical",mitigation:"Search/verification + legal escalation",owner:"Legal",status:"OPEN"}
+   ],
+   correspondence:[],
+   valuation:[],
+   taxes:[],
+   audit:[],
+   phaseDone:{},
+   closing:{}
+ };
 }
 
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function saveData(){
-
-  localStorage.setItem(
-    "MASTER_SPH_DATA",
-    JSON.stringify(state)
-  );
-
-  addAudit("SYSTEM","Data disimpan");
-
-  toast("Data berhasil disimpan");
-
+function saveState(){
+ localStorage.setItem(KEY,JSON.stringify(state));
 }
 
-
-function addAudit(type,message){
-
-  if(!state.audit) state.audit=[];
-
-  state.audit.unshift({
-    time:new Date().toLocaleString("id-ID"),
-    type,
-    message
-  });
-
-  if(state.audit.length>500){
-    state.audit=state.audit.slice(0,500);
-  }
-
-  localStorage.setItem(
-    "MASTER_SPH_DATA",
-    JSON.stringify(state)
-  );
-
+function audit(action,object,before,after,note=""){
+ state.audit.unshift({
+   time:new Date().toLocaleString("id-ID"),
+   user:"PIC",
+   action,object,before,after,note
+ });
+ saveState();
+ renderAll();
 }
 
-
-function toast(message){
-
-  const el=document.createElement("div");
-
-  el.textContent=message;
-
-  el.style.position="fixed";
-  el.style.bottom="20px";
-  el.style.right="20px";
-  el.style.zIndex="999";
-  el.style.background="#111827";
-  el.style.color="white";
-  el.style.padding="11px 15px";
-  el.style.borderRadius="9px";
-  el.style.fontSize="12px";
-  el.style.fontWeight="700";
-
-  document.body.appendChild(el);
-
-  setTimeout(()=>el.remove(),2200);
-
+function showPage(id,btn){
+ document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+ if(btn) btn.classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
 }
 
-
-function esc(value){
-
-  return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;");
-
+function badge(s){
+ let c="pending";
+ if(s==="CLEAR") c="clear";
+ else if(s==="BLOCKED") c="blocked";
+ else if(s==="PROCESS" || s==="IN PROCESS") c="process";
+ else if(s==="N/A") c="na";
+ return `<span class="badge ${c}">${s}</span>`;
 }
 
-
-function statusBadge(status){
-
-  const s=String(status||"").toUpperCase();
-
-  let cls="gray";
-
-  if(
-    s.includes("SELESAI") ||
-    s.includes("PASS") ||
-    s.includes("BERLAKU")
-  ) cls="green";
-
-  else if(
-    s.includes("PROSES") ||
-    s.includes("PENDING") ||
-    s.includes("REVIEW")
-  ) cls="yellow";
-
-  else if(
-    s.includes("BLOCK") ||
-    s.includes("RED") ||
-    s.includes("RISIKO")
-  ) cls="red";
-
-  else if(
-    s.includes("AKTIF")
-  ) cls="blue";
-
-  return `<span class="badge ${cls}">${esc(status)}</span>`;
-
+function renderPersil(){
+ const q=(document.getElementById("persilSearch")?.value||"").toLowerCase();
+ const filter=document.getElementById("persilStatus")?.value||"";
+ const body=document.getElementById("persilTable");
+ if(!body)return;
+ body.innerHTML=state.persil.filter(p=>{
+   const text=JSON.stringify(p).toLowerCase();
+   return (!q||text.includes(q)) && (!filter||p.status===filter);
+ }).map(p=>`
+ <tr>
+  <td><b>${p.id}</b></td>
+  <td>${p.lokasi||"—"}</td>
+  <td>${p.luas||"—"}</td>
+  <td>${p.statusHak}</td>
+  <td>${p.target}</td>
+  <td>${p.risk}</td>
+  <td>${badge(p.status)}</td>
+  <td><button class="btn" onclick="openPersil('${p.id}')">OPEN CASE</button></td>
+ </tr>
+ `).join("");
 }
 
-
-function openModal(id){
-  document.getElementById(id).classList.add("show");
-}
-
-function closeModal(id){
-  document.getElementById(id).classList.remove("show");
-}
-
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("open");
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-const PAGE_TITLES={
-  dashboard:"Dashboard",
-  phases:"16 Fase",
-  persil:"Database 56 Persil",
-  parties:"Database Para Pihak",
-  documents:"Document Register",
-  legal:"Legal Register",
-  authority:"Matriks Kewenangan",
-  risk:"Red Flag & Risk Register",
-  tasks:"Task & Deadline",
-  audit:"Audit Trail",
-  sop:"SOP & Legal Gate",
-  presentation:"Presentation Mode"
-};
-
-function showPage(page){
-
-  document.querySelectorAll(".nav-btn")
-    .forEach(x=>x.classList.remove("active"));
-
-  const title=PAGE_TITLES[page] || "Dashboard";
-
-  document.getElementById("topTitle").textContent=title;
-
-  const content=document.getElementById("content");
-
-  if(page==="dashboard") renderDashboard(content);
-  if(page==="phases") renderPhases(content);
-  if(page==="persil") renderPersils(content);
-  if(page==="parties") renderParties(content);
-  if(page==="documents") renderDocuments(content);
-  if(page==="legal") renderLegal(content);
-  if(page==="authority") renderAuthority(content);
-  if(page==="risk") renderRisks(content);
-  if(page==="tasks") renderTasks(content);
-  if(page==="audit") renderAudit(content);
-  if(page==="sop") renderSOP(content);
-  if(page==="presentation") renderPresentation(content);
-
-  document.getElementById("sidebar").classList.remove("open");
-
-}
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-function renderDashboard(el){
-
-  const total=state.persils.length;
-
-  const done=state.persils.filter(
-    p=>p.status==="SELESAI"
-  ).length;
-
-  const blocked=state.persils.filter(
-    p=>p.status==="BLOCKED"
-  ).length;
-
-  const risks=state.risks.length;
-
-  const tasks=state.tasks.filter(
-    x=>x.status!=="SELESAI"
-  ).length;
-
-  const progress=Math.round(
-    state.persils.reduce((sum,p)=>{
-      return sum+(p.currentPhase-1)/16;
-    },0)/total*100
-  ) || 0;
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>MASTER SPH</h2>
-      <p>
-        Sistem kontrol administrasi, legal, pengawasan,
-        56 persil dan 16 fase pekerjaan.
-      </p>
-    </div>
-
-    <div>
-      ${statusBadge(
-        blocked>0 ? "ADA BLOCKED" :
-        risks>0 ? "ADA RISIKO" :
-        "TERKENDALI"
-      )}
-    </div>
-
+function openPersil(id){
+ const p=state.persil.find(x=>x.id===id);
+ if(!p)return;
+ document.getElementById("modalTitle").textContent=`CASE FILE · ${p.id}`;
+ document.getElementById("modalContent").innerHTML=`
+ <div class="formgrid">
+  <div class="field"><label>Lokasi</label><input id="mLokasi" value="${esc(p.lokasi)}"></div>
+  <div class="field"><label>Luas</label><input id="mLuas" value="${esc(p.luas)}"></div>
+  <div class="field"><label>Status Hak</label>
+   <select id="mHak">
+    ${["BELUM DITENTUKAN","SUDAH TERDAFTAR","BELUM TERDAFTAR","TANAH NEGARA","PERLU LEGAL REVIEW","LAINNYA"].map(x=>`<option ${p.statusHak===x?"selected":""}>${x}</option>`).join("")}
+   </select>
   </div>
-
-
-  <div class="grid grid-4">
-
-    <div class="card stat">
-      <div class="stat-label">Total Persil</div>
-      <div class="stat-value">${total}</div>
-    </div>
-
-    <div class="card stat">
-      <div class="stat-label">Selesai</div>
-      <div class="stat-value">${done}</div>
-    </div>
-
-    <div class="card stat">
-      <div class="stat-label">Blocked</div>
-      <div class="stat-value">${blocked}</div>
-    </div>
-
-    <div class="card stat">
-      <div class="stat-label">Task Aktif</div>
-      <div class="stat-value">${tasks}</div>
-    </div>
-
+  <div class="field"><label>Target</label>
+   <select id="mTarget"><option ${p.target==="BUMI"?"selected":""}>BUMI</option><option>GIA</option><option>OTHER</option></select>
   </div>
-
-  <br>
-
-  <div class="grid grid-2">
-
-    <div class="card">
-
-      <h3>Project Control</h3>
-
-      <div class="form-group">
-        <label>Nama Project</label>
-        <input
-          value="${esc(state.project.name)}"
-          onchange="state.project.name=this.value;saveData()"
-        >
-      </div>
-
-      <div class="form-group">
-        <label>Project Owner</label>
-        <input
-          value="${esc(state.project.owner)}"
-          onchange="state.project.owner=this.value;saveData()"
-        >
-      </div>
-
-      <div class="form-group">
-        <label>Supervisor</label>
-        <input
-          value="${esc(state.project.supervisor)}"
-          onchange="state.project.supervisor=this.value;saveData()"
-        >
-      </div>
-
-      <div class="grid grid-2">
-
-        <div class="form-group">
-          <label>Tanggal Mulai</label>
-          <input
-            type="date"
-            value="${esc(state.project.startDate)}"
-            onchange="state.project.startDate=this.value;saveData()"
-          >
-        </div>
-
-        <div class="form-group">
-          <label>Target Selesai</label>
-          <input
-            type="date"
-            value="${esc(state.project.targetDate)}"
-            onchange="state.project.targetDate=this.value;saveData()"
-          >
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>Progress Global</h3>
-
-      <div style="font-size:40px;font-weight:900;margin:10px 0">
-        ${progress}%
-      </div>
-
-      <div class="progress">
-        <div style="width:${progress}%"></div>
-      </div>
-
-      <p class="muted" style="font-size:12px;margin-top:12px">
-        Progress dihitung dari posisi fase masing-masing persil.
-      </p>
-
-      <div class="success">
-        <b>Prinsip kontrol:</b><br>
-        Tidak ada fase yang dianggap selesai hanya karena
-        checklist administratif dicentang. Bukti/output harus
-        tersedia dan tindakan yang menjadi kewenangan pejabat
-        profesional harus dilakukan oleh pihak yang berwenang.
-      </div>
-
-    </div>
-
+  <div class="field"><label>Risk</label>
+   <select id="mRisk">${["LOW","MEDIUM","HIGH","CRITICAL","UNKNOWN"].map(x=>`<option ${p.risk===x?"selected":""}>${x}</option>`).join("")}</select>
   </div>
-
-  <br>
-
-  <div class="card">
-
-    <h3>⚠ Legal Safety Notice</h3>
-
-    <div class="warning">
-
-      Sistem ini adalah <b>alat kontrol administrasi dan project</b>.
-      Sistem tidak menggantikan PPAT, Notaris, Advokat,
-      Kantor Pertanahan/ATR-BPN, instansi pajak, pengadilan,
-      atau pejabat/instansi lain yang memiliki kewenangan hukum.
-
-      <br><br>
-
-      Setiap tindakan harus diverifikasi berdasarkan
-      regulasi yang berlaku pada saat tindakan dilakukan.
-
-    </div>
-
+  <div class="field"><label>Status</label>
+   <select id="mStatus">${["PENDING","PROCESS","CLEAR","BLOCKED"].map(x=>`<option ${p.status===x?"selected":""}>${x}</option>`).join("")}</select>
   </div>
+ </div>
 
-  `;
+ <h4>16 Phase Checklist — ${p.id}</h4>
+ <div class="checklist">
+ ${phases.map(ph=>`
+   <label>
+    <input type="checkbox" data-phase="${ph[0]}" ${p.checklist[ph[0]]?"checked":""}>
+    <span><b>Fase ${ph[0]} — ${ph[1]}</b><br><span class="muted">${ph[2]}</span></span>
+   </label>
+ `).join("")}
+ </div>
 
+ <h4>Legal / Operational Notes</h4>
+ <textarea id="mNotes">${esc(p.notes)}</textarea>
+
+ <h4>Gate Questions</h4>
+ <div class="checklist">
+ <label><input type="checkbox" data-gate="identity"> Identitas pihak konsisten.</label>
+ <label><input type="checkbox" data-gate="object"> Objek dapat diidentifikasi dengan jelas.</label>
+ <label><input type="checkbox" data-gate="title"> Dasar penguasaan/hak memiliki evidence.</label>
+ <label><input type="checkbox" data-gate="dispute"> Tidak ada unresolved dispute/block/sita.</label>
+ <label><input type="checkbox" data-gate="authority"> Authority perusahaan telah diverifikasi.</label>
+ <label><input type="checkbox" data-gate="instrument"> Instrumen hukum telah direview.</label>
+ </div>
+
+ <div class="actions" style="margin-top:15px">
+  <button class="btn primary" onclick="savePersil('${p.id}')">Simpan Case</button>
+  <button class="btn danger" onclick="markBlocked('${p.id}')">BLOCK CASE</button>
+ </div>
+ `;
+ document.getElementById("modal").classList.add("show");
 }
 
+function savePersil(id){
+ const p=state.persil.find(x=>x.id===id);
+ const before=JSON.stringify(p);
 
-/* =========================================================
-   PHASES
-========================================================= */
+ p.lokasi=document.getElementById("mLokasi").value;
+ p.luas=document.getElementById("mLuas").value;
+ p.statusHak=document.getElementById("mHak").value;
+ p.target=document.getElementById("mTarget").value;
+ p.risk=document.getElementById("mRisk").value;
+ p.status=document.getElementById("mStatus").value;
+ p.notes=document.getElementById("mNotes").value;
 
-function renderPhases(el){
+ document.querySelectorAll("[data-phase]").forEach(c=>{
+   p.checklist[c.dataset.phase]=c.checked;
+ });
 
-  el.innerHTML=`
-
-  <div class="page-head">
-    <div>
-      <h2>16 Fase Operasional</h2>
-      <p>
-        Setiap fase mempunyai tujuan, output, risiko,
-        legal gate dan eskalasi.
-      </p>
-    </div>
-  </div>
-
-  <div class="phase-list">
-
-  ${PHASES.map(p=>{
-
-    const completed=Object.values(
-      state.phaseStatus
-    ).filter(x=>x[p.id]==="SELESAI").length;
-
-    const progress=Math.round(
-      completed/state.persils.length*100
-    );
-
-    return `
-
-    <div class="phase-card">
-
-      <div class="phase-row">
-
-        <div class="phase-number">
-          ${String(p.id).padStart(2,"0")}
-        </div>
-
-        <div class="phase-main">
-
-          <div class="phase-title">
-            ${esc(p.title)}
-          </div>
-
-          <div class="phase-desc">
-            ${esc(p.desc)}
-          </div>
-
-          <div style="margin-top:9px">
-
-            <div class="progress">
-              <div style="width:${progress}%"></div>
-            </div>
-
-            <div
-              style="
-              font-size:10px;
-              color:#6b7280;
-              margin-top:4px
-              "
-            >
-              ${completed}/56 persil • ${progress}%
-            </div>
-
-          </div>
-
-        </div>
-
-        <button
-          class="btn small"
-          onclick="openPhase(${p.id})"
-        >
-          Buka
-        </button>
-
-      </div>
-
-    </div>
-
-    `;
-
-  }).join("")}
-
-  </div>
-
-  `;
-
+ const after=JSON.stringify(p);
+ audit("UPDATE CASE",id,before,after,"Perubahan case file");
+ closeModal();
 }
 
-
-function openPhase(id){
-
-  const p=PHASES.find(x=>x.id===id);
-
-  if(!p)return;
-
-  const checks=[
-    "Input fase telah tersedia",
-    "Data identitas telah diperiksa",
-    "Dokumen terkait telah diinventarisasi",
-    "Tidak ada red flag yang belum ditangani",
-    "Kewenangan pihak telah diperiksa",
-    "Output fase telah dibuat",
-    "Reviewer telah ditentukan",
-    "Jika membutuhkan pejabat/profesional, telah dieskalasikan"
-  ];
-
-  document.getElementById("content").innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>
-        FASE ${String(p.id).padStart(2,"0")}
-        — ${esc(p.title)}
-      </h2>
-
-      <p>${esc(p.desc)}</p>
-    </div>
-
-    <button
-      class="btn"
-      onclick="showPage('phases')"
-    >
-      ← Kembali
-    </button>
-
-  </div>
-
-
-  <div class="grid grid-2">
-
-    <div class="card">
-
-      <h3>Tujuan</h3>
-      <p style="font-size:13px">
-        ${esc(p.desc)}
-      </p>
-
-      <h4>Output Wajib</h4>
-
-      <div class="success">
-        ${esc(p.output)}
-      </div>
-
-      <h4 style="margin-top:15px">
-        Red Flag Utama
-      </h4>
-
-      <div class="danger">
-        ${esc(p.risk)}
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>Legal Gate</h3>
-
-      <div class="warning">
-
-        <b>STOP CONDITION</b>
-
-        <ul style="font-size:12px;line-height:1.7">
-
-          <li>Identitas tidak dapat diverifikasi.</li>
-          <li>Dokumen material tidak tersedia.</li>
-          <li>Data objek bertentangan.</li>
-          <li>Kewenangan pihak tidak jelas.</li>
-          <li>Ada indikasi sengketa/kasus.</li>
-          <li>Tindakan membutuhkan pejabat/profesional.</li>
-          <li>Dasar hukum belum diverifikasi.</li>
-
-        </ul>
-
-      </div>
-
-      <div class="danger">
-
-        <b>DILARANG</b>
-
-        <p style="font-size:12px">
-          Operator tidak boleh menyatakan legalitas final,
-          membuat keputusan pejabat, atau melakukan tindakan
-          yang secara hukum merupakan kewenangan profesi/instansi
-          tertentu.
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <br>
-
-  <div class="card">
-
-    <h3>Checklist Fase</h3>
-
-    ${checks.map((c,i)=>`
-
-      <label class="check">
-
-        <input
-          type="checkbox"
-          onchange="
-            this.checked
-              ? addAudit('CHECKLIST','Fase ${p.id}: ${c}')
-              : null
-          "
-        >
-
-        <span>${esc(c)}</span>
-
-      </label>
-
-    `).join("")}
-
-  </div>
-
-  <br>
-
-  <div class="card">
-
-    <h3>Dasar Hukum / Legal Reference</h3>
-
-    <p class="muted" style="font-size:11px">
-      Referensi berikut adalah regulasi umum yang dapat
-      relevan. Regulasi spesifik harus dipetakan kembali
-      terhadap jenis tindakan pada perkara.
-    </p>
-
-    ${LEGAL.slice(0,6).map(l=>`
-
-      <div class="legal-box">
-
-        <div class="legal-title">
-          ${esc(l.name)} — ${esc(l.title)}
-        </div>
-
-        <div class="legal-meta">
-          Status: ${esc(l.status)}
-          • Domain: ${esc(l.authority)}
-        </div>
-
-        <div style="font-size:11px;margin-top:6px">
-          ${esc(l.note)}
-        </div>
-
-      </div>
-
-    `).join("")}
-
-  </div>
-
-  `;
-
+function markBlocked(id){
+ const p=state.persil.find(x=>x.id===id);
+ const before=p.status;
+ p.status="BLOCKED";
+ p.notes=(p.notes||"")+"\nBLOCKED: "+new Date().toLocaleString("id-ID");
+ audit("BLOCK CASE",id,before,"BLOCKED","Critical gate belum terpenuhi");
+ closeModal();
 }
 
-
-/* =========================================================
-   PERSILS
-========================================================= */
-
-function renderPersils(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Database 56 Persil</h2>
-      <p>
-        Satu record untuk setiap persil.
-      </p>
-    </div>
-
-    <button class="btn primary" onclick="addPersil()">
-      + Persil
-    </button>
-
-  </div>
-
-  <div class="card">
-
-    <div class="grid grid-3">
-
-      <input
-        id="persilSearch"
-        placeholder="Cari kode / pemilik / lokasi..."
-        oninput="filterPersils()"
-      >
-
-      <select id="persilStatus" onchange="filterPersils()">
-        <option value="">Semua Status</option>
-        <option>BELUM DIMULAI</option>
-        <option>PROSES</option>
-        <option>SELESAI</option>
-        <option>BLOCKED</option>
-      </select>
-
-      <select id="persilRisk" onchange="filterPersils()">
-        <option value="">Semua Risiko</option>
-        <option>BELUM DINILAI</option>
-        <option>RENDAH</option>
-        <option>SEDANG</option>
-        <option>TINGGI</option>
-        <option>KRITIS</option>
-      </select>
-
-    </div>
-
-  </div>
-
-  <br>
-
-  <div class="card">
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>Kode</th>
-            <th>Pemilik / Pihak</th>
-            <th>Lokasi</th>
-            <th>Hak</th>
-            <th>Sertifikat</th>
-            <th>Fase</th>
-            <th>Status</th>
-            <th>Risiko</th>
-            <th></th>
-          </tr>
-
-        </thead>
-
-        <tbody id="persilBody"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-  `;
-
-  filterPersils();
-
+function closeModal(){
+ document.getElementById("modal").classList.remove("show");
 }
 
-
-function filterPersils(){
-
-  const q=(document.getElementById("persilSearch")?.value||"")
-    .toLowerCase();
-
-  const status=document.getElementById("persilStatus")?.value||"";
-  const risk=document.getElementById("persilRisk")?.value||"";
-
-  const rows=state.persils.filter(p=>{
-
-    const text=(
-      p.code+" "+
-      p.name+" "+
-      p.owner+" "+
-      p.village+" "+
-      p.district+" "+
-      p.city
-    ).toLowerCase();
-
-    return (
-      (!q || text.includes(q)) &&
-      (!status || p.status===status) &&
-      (!risk || p.risk===risk)
-    );
-
-  });
-
-  const body=document.getElementById("persilBody");
-
-  if(!body)return;
-
-  body.innerHTML=rows.map(p=>`
-
-    <tr>
-
-      <td>
-        <b>${esc(p.code)}</b>
-      </td>
-
-      <td>
-        ${esc(p.owner||"-")}
-      </td>
-
-      <td>
-        ${esc(
-          [p.village,p.district,p.city,p.province]
-          .filter(Boolean)
-          .join(", ") || "-"
-        )}
-      </td>
-
-      <td>${esc(p.landRight||"-")}</td>
-
-      <td>${esc(p.certificate||"-")}</td>
-
-      <td>
-        Fase ${p.currentPhase}/16
-      </td>
-
-      <td>
-        ${statusBadge(p.status)}
-      </td>
-
-      <td>
-        ${statusBadge(p.risk)}
-      </td>
-
-      <td>
-        <button
-          class="btn small"
-          onclick="editPersil(${p.id})"
-        >
-          Buka
-        </button>
-      </td>
-
-    </tr>
-
-  `).join("");
-
-}
-
-
-function addPersil(){
-
-  const next=state.persils.length+1;
-
-  state.persils.push({
-    id:Date.now(),
-    code:"P-"+String(next).padStart(3,"0"),
-    name:"",
-    village:"",
-    district:"",
-    city:"",
-    province:"",
-    landRight:"",
-    certificate:"",
-    owner:"",
-    status:"BELUM DIMULAI",
-    currentPhase:1,
-    risk:"BELUM DINILAI",
-    notes:""
-  });
-
-  addAudit("PERSIL","Menambah persil");
-
-  saveData();
-
-  renderPersils(document.getElementById("content"));
-
-}
-
-
-function editPersil(id){
-
-  const p=state.persils.find(x=>x.id===id);
-
-  if(!p)return;
-
-  document.getElementById("content").innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>${esc(p.code)}</h2>
-      <p>Persil control record</p>
-    </div>
-
-    <button
-      class="btn"
-      onclick="showPage('persil')"
-    >
-      ← Kembali
-    </button>
-
+function renderPhases(){
+ document.getElementById("phaseList").innerHTML=phases.map(ph=>`
+ <div class="phase">
+  <div class="phase-head">
+   <h4>FASE ${ph[0]} · ${ph[1]}</h4>
+   <label class="small"><input type="checkbox" ${state.phaseDone[ph[0]]?"checked":""} onchange="togglePhase('${ph[0]}',this.checked)"> DONE</label>
   </div>
-
-  <div class="card">
-
-    <div class="grid grid-2">
-
-      <div class="form-group">
-        <label>Kode</label>
-        <input value="${esc(p.code)}"
-          onchange="pUpdate(${p.id},'code',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Nama Internal</label>
-        <input value="${esc(p.name)}"
-          onchange="pUpdate(${p.id},'name',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Pemilik / Pihak</label>
-        <input value="${esc(p.owner)}"
-          onchange="pUpdate(${p.id},'owner',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Jenis Hak</label>
-        <input value="${esc(p.landRight)}"
-          placeholder="Contoh: HM / HGB / dst."
-          onchange="pUpdate(${p.id},'landRight',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Nomor Sertifikat</label>
-        <input value="${esc(p.certificate)}"
-          onchange="pUpdate(${p.id},'certificate',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Desa/Kelurahan</label>
-        <input value="${esc(p.village)}"
-          onchange="pUpdate(${p.id},'village',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Kecamatan</label>
-        <input value="${esc(p.district)}"
-          onchange="pUpdate(${p.id},'district',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Kota/Kabupaten</label>
-        <input value="${esc(p.city)}"
-          onchange="pUpdate(${p.id},'city',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Provinsi</label>
-        <input value="${esc(p.province)}"
-          onchange="pUpdate(${p.id},'province',this.value)">
-      </div>
-
-      <div class="form-group">
-        <label>Fase Saat Ini</label>
-
-        <select
-          onchange="pUpdate(${p.id},'currentPhase',Number(this.value))"
-        >
-
-        ${PHASES.map(x=>`
-          <option
-            value="${x.id}"
-            ${p.currentPhase===x.id?"selected":""}
-          >
-            ${x.id}. ${esc(x.title)}
-          </option>
-        `).join("")}
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-        <label>Status</label>
-
-        <select
-          onchange="pUpdate(${p.id},'status',this.value)"
-        >
-
-          ${[
-            "BELUM DIMULAI",
-            "PROSES",
-            "SELESAI",
-            "BLOCKED"
-          ].map(x=>`
-            <option
-              ${p.status===x?"selected":""}
-            >${x}</option>
-          `).join("")}
-
-        </select>
-
-      </div>
-
-      <div class="form-group">
-        <label>Risk Level</label>
-
-        <select
-          onchange="pUpdate(${p.id},'risk',this.value)"
-        >
-
-          ${[
-            "BELUM DINILAI",
-            "RENDAH",
-            "SEDANG",
-            "TINGGI",
-            "KRITIS"
-          ].map(x=>`
-            <option
-              ${p.risk===x?"selected":""}
-            >${x}</option>
-          `).join("")}
-
-        </select>
-
-      </div>
-
-    </div>
-
-    <div class="form-group">
-      <label>Catatan</label>
-      <textarea
-        onchange="pUpdate(${p.id},'notes',this.value)"
-      >${esc(p.notes)}</textarea>
-    </div>
-
-    <div class="danger">
-
-      <b>Legal Gate</b>
-
-      <p style="font-size:12px">
-
-        Status "SELESAI" pada aplikasi hanya menunjukkan
-        pekerjaan project telah ditandai selesai.
-        Status tersebut bukan sertifikasi bahwa hak,
-        transaksi, akta, atau proses pertanahan telah
-        sah secara hukum.
-
-      </p>
-
-    </div>
-
-  </div>
-
-  `;
-
+  <p>${ph[2]}</p>
+  <div class="muted small"><b>Gate:</b> Evidence tersedia → reviewer → approval → next phase.</div>
+ </div>
+ `).join("");
 }
 
-
-function pUpdate(id,key,value){
-
-  const p=state.persils.find(x=>x.id===id);
-
-  if(!p)return;
-
-  p[key]=value;
-
-  addAudit(
-    "PERSIL",
-    `${p.code}: ${key} diubah`
-  );
-
-  saveData();
-
+function togglePhase(id,val){
+ state.phaseDone[id]=val;
+ audit("PHASE STATUS","FASE "+id,String(!val),String(val),"Master project phase");
 }
 
+function renderDashboard(){
+ const total=state.persil.length;
+ const clear=state.persil.filter(p=>p.status==="CLEAR").length;
+ const blocked=state.persil.filter(p=>p.status==="BLOCKED").length;
+ const pending=state.persil.filter(p=>p.status==="PENDING").length;
+ const process=state.persil.filter(p=>p.status==="PROCESS").length;
 
-/* =========================================================
-   PARTIES
-========================================================= */
+ document.getElementById("kTotal").textContent=total;
+ document.getElementById("kClear").textContent=clear;
+ document.getElementById("kBlocked").textContent=blocked;
+ document.getElementById("kPending").textContent=pending;
 
-function renderParties(el){
+ const phasePct=Object.values(state.phaseDone).filter(Boolean).length/phases.length*100;
+ const persilPct=clear/total*100;
+ const progress=Math.round((phasePct+persilPct)/2);
+ document.getElementById("overallProgress").style.width=progress+"%";
+ document.getElementById("overallText").textContent=progress+"%";
 
-  el.innerHTML=`
+ const critical=state.risks.filter(r=>r.impact==="Critical"&&r.status!=="CLOSED").length;
+ document.getElementById("riskSnapshot").innerHTML=`
+ <div>${badge("BLOCKED")} <b>${blocked}</b> persil</div>
+ <div style="margin-top:8px">${badge("PROCESS")} <b>${process}</b> persil</div>
+ <div style="margin-top:8px">${badge("PENDING")} <b>${pending}</b> persil</div>
+ <div style="margin-top:8px">${critical?"⚠":"✓"} Critical risk: <b>${critical}</b></div>
+ `;
 
-  <div class="page-head">
-
-    <div>
-      <h2>Database Para Pihak</h2>
-      <p>Identifikasi pihak dan kedudukannya.</p>
-    </div>
-
-    <button
-      class="btn primary"
-      onclick="addParty()"
-    >
-      + Pihak
-    </button>
-
-  </div>
-
-  <div class="card">
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>Nama</th>
-            <th>Kedudukan</th>
-            <th>Identitas</th>
-            <th>Hubungan</th>
-            <th>Status Verifikasi</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        ${state.parties.map((p,i)=>`
-
-          <tr>
-
-            <td>
-              <input
-                value="${esc(p.name)}"
-                onchange="partyUpdate(${i},'name',this.value)"
-              >
-            </td>
-
-            <td>
-              <input
-                value="${esc(p.role)}"
-                onchange="partyUpdate(${i},'role',this.value)"
-              >
-            </td>
-
-            <td>
-              <input
-                value="${esc(p.identity)}"
-                onchange="partyUpdate(${i},'identity',this.value)"
-              >
-            </td>
-
-            <td>
-              <input
-                value="${esc(p.relationship)}"
-                onchange="partyUpdate(${i},'relationship',this.value)"
-              >
-            </td>
-
-            <td>
-              <select
-                onchange="partyUpdate(${i},'verified',this.value)"
-              >
-                <option ${p.verified==="BELUM"?"selected":""}>
-                  BELUM
-                </option>
-                <option ${p.verified==="PROSES"?"selected":""}>
-                  PROSES
-                </option>
-                <option ${p.verified==="TERVERIFIKASI"?"selected":""}>
-                  TERVERIFIKASI
-                </option>
-                <option ${p.verified==="BLOCKED"?"selected":""}>
-                  BLOCKED
-                </option>
-              </select>
-            </td>
-
-            <td>
-              <button
-                class="btn small red"
-                onclick="deleteParty(${i})"
-              >
-                Hapus
-              </button>
-            </td>
-
-          </tr>
-
-        `).join("")}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-  `;
-
+ const gates=[
+ ["Identity","Identitas pihak konsisten","Legal/KYC"],
+ ["Object","Objek dapat diidentifikasi","Survey/BPN sesuai proses"],
+ ["Title","Dasar hak/penguasaan dapat dibuktikan","Legal"],
+ ["Encumbrance","Beban/sengketa/tumpang tindih diperiksa","Legal/BPN"],
+ ["Authority","Corporate authority","Legal/Management"],
+ ["Instrument","Instrumen transaksi tepat","Legal + PPAT/Notaris"],
+ ["Tax","Pajak dan biaya","Tax/Finance"],
+ ["Registration","Pendaftaran sesuai jalur","Kantor Pertanahan"],
+ ["Reconciliation","Set-off/accounting","Finance + Legal"]
+ ];
+ document.getElementById("gateTable").innerHTML=gates.map(g=>`
+ <tr><td><b>${g[0]}</b></td><td>${g[1]}</td><td>${g[2]}</td><td>${badge("PENDING")}</td></tr>
+ `).join("");
 }
 
-
-function addParty(){
-
-  state.parties.push({
-    name:"",
-    role:"",
-    identity:"",
-    relationship:"",
-    verified:"BELUM"
-  });
-
-  addAudit("PARTY","Menambah pihak");
-
-  saveData();
-
-  renderParties(document.getElementById("content"));
-
+function renderDocs(){
+ document.getElementById("docTable").innerHTML=state.documents.map((d,i)=>`
+ <tr>
+ <td>DOC-${String(i+1).padStart(3,"0")}</td>
+ <td>${d.name}</td><td>${d.persil}</td><td>${d.version}</td>
+ <td>${d.original?"YES":"NO"}</td><td>${d.verifiedBy}</td><td>${d.date}</td>
+ </tr>
+ `).join("") || `<tr><td colspan="7" class="muted">Belum ada evidence register.</td></tr>`;
 }
-
-
-function partyUpdate(i,key,value){
-
-  state.parties[i][key]=value;
-
-  addAudit(
-    "PARTY",
-    `Party ${i+1}: ${key} diubah`
-  );
-
-  saveData();
-
-}
-
-
-function deleteParty(i){
-
-  if(!confirm("Hapus pihak ini?"))return;
-
-  state.parties.splice(i,1);
-
-  addAudit("PARTY","Menghapus pihak");
-
-  saveData();
-
-  renderParties(document.getElementById("content"));
-
-}
-
-
-/* =========================================================
-   DOCUMENTS
-========================================================= */
-
-function renderDocuments(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Document Register</h2>
-      <p>
-        Dokumen harus mempunyai status dan hasil verifikasi.
-      </p>
-    </div>
-
-    <button
-      class="btn primary"
-      onclick="addDocument()"
-    >
-      + Dokumen
-    </button>
-
-  </div>
-
-  <div class="card">
-
-    <div class="warning">
-
-      <b>Kontrol dokumen</b>
-
-      <p style="font-size:12px">
-
-        Nama file atau dokumen yang tercatat di sini
-        tidak berarti dokumen tersebut autentik.
-        Keaslian dan validitas harus diperiksa sesuai
-        kewenangan dan prosedur yang berlaku.
-
-      </p>
-
-    </div>
-
-  </div>
-
-  <br>
-
-  <div class="card">
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>Persil</th>
-            <th>Nama Dokumen</th>
-            <th>Nomor</th>
-            <th>Tanggal</th>
-            <th>Status</th>
-            <th>Reviewer</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        ${state.documents.map((d,i)=>`
-
-          <tr>
-
-            <td>
-              <select onchange="docUpdate(${i},'persil',this.value)">
-                <option value="">-</option>
-
-                ${state.persils.map(p=>`
-                  <option
-                    value="${esc(p.code)}"
-                    ${d.persil===p.code?"selected":""}
-                  >
-                    ${esc(p.code)}
-                  </option>
-                `).join("")}
-
-              </select>
-            </td>
-
-            <td>
-              <input
-                value="${esc(d.name)}"
-                onchange="docUpdate(${i},'name',this.value)"
-              >
-            </td>
-
-            <td>
-              <input
-                value="${esc(d.number)}"
-                onchange="docUpdate(${i},'number',this.value)"
-              >
-            </td>
-
-            <td>
-              <input
-                type="date"
-                value="${esc(d.date)}"
-                onchange="docUpdate(${i},'date',this.value)"
-              >
-            </td>
-
-            <td>
-              <select onchange="docUpdate(${i},'status',this.value)">
-                ${[
-                  "BELUM DIPERIKSA",
-                  "PROSES",
-                  "TERVERIFIKASI",
-                  "TIDAK SESUAI",
-                  "BLOCKED"
-                ].map(x=>`
-                  <option
-                    ${d.status===x?"selected":""}
-                  >${x}</option>
-                `).join("")}
-              </select>
-            </td>
-
-            <td>
-              <input
-                value="${esc(d.reviewer)}"
-                onchange="docUpdate(${i},'reviewer',this.value)"
-              >
-            </td>
-
-            <td>
-              <button
-                class="btn small red"
-                onclick="deleteDocument(${i})"
-              >
-                Hapus
-              </button>
-            </td>
-
-          </tr>
-
-        `).join("")}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-  `;
-
-}
-
 
 function addDocument(){
-
-  state.documents.push({
-    persil:"",
-    name:"",
-    number:"",
-    date:"",
-    status:"BELUM DIPERIKSA",
-    reviewer:""
-  });
-
-  addAudit("DOCUMENT","Menambah dokumen");
-
-  saveData();
-
-  renderDocuments(document.getElementById("content"));
-
+ const name=prompt("Nama dokumen:");
+ if(!name)return;
+ const persil=prompt("Persil (P-001 dst):","P-001")||"";
+ state.documents.push({
+   name,persil,version:"v1",original:false,verifiedBy:"",date:""
+ });
+ audit("ADD DOCUMENT",persil,"","NEW",name);
 }
 
-
-function docUpdate(i,key,value){
-
-  state.documents[i][key]=value;
-
-  addAudit(
-    "DOCUMENT",
-    `Dokumen ${i+1}: ${key} diubah`
-  );
-
-  saveData();
-
+function renderLegal(){
+ document.getElementById("legalIssueTable").innerHTML=state.legalIssues.map((x,i)=>`
+ <tr><td>LI-${i+1}</td><td>${x.persil}</td><td>${x.issue}</td><td>${x.risk}</td><td>${x.opinion}</td><td>${x.decision}</td></tr>
+ `).join("") || `<tr><td colspan="6" class="muted">Belum ada legal issue.</td></tr>`;
 }
 
-
-function deleteDocument(i){
-
-  if(!confirm("Hapus dokumen?"))return;
-
-  state.documents.splice(i,1);
-
-  addAudit("DOCUMENT","Menghapus dokumen");
-
-  saveData();
-
-  renderDocuments(document.getElementById("content"));
-
+function addLegalIssue(){
+ const persil=prompt("Persil:","P-001");
+ if(!persil)return;
+ const issue=prompt("Legal issue:")||"";
+ const risk=prompt("Risk:","HIGH")||"HIGH";
+ const opinion=prompt("Legal opinion/status:")||"PENDING";
+ const decision=prompt("Decision:")||"HOLD";
+ state.legalIssues.push({persil,issue,risk,opinion,decision});
+ audit("ADD LEGAL ISSUE",persil,"","NEW",issue);
 }
 
-
-/* =========================================================
-   LEGAL REGISTER
-========================================================= */
-
-function renderLegal(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Legal Register</h2>
-      <p>
-        Daftar referensi regulasi utama.
-      </p>
-    </div>
-
-    <button class="btn" onclick="window.open(
-      'https://peraturan.bpk.go.id/',
-      '_blank'
-    )">
-      Buka Database Peraturan
-    </button>
-
-  </div>
-
-  <div class="danger">
-
-    <b>IMPORTANT LEGAL CONTROL</b>
-
-    <p style="font-size:12px">
-
-      Status regulasi dapat berubah. Sebelum digunakan
-      untuk mengambil keputusan atau melakukan tindakan
-      hukum, verifikasi naskah dan status terbaru pada
-      JDIH resmi/portal peraturan yang berwenang.
-
-    </p>
-
-  </div>
-
-  <br>
-
-  ${LEGAL.map(l=>`
-
-    <div class="card" style="margin-bottom:10px">
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        gap:10px;
-        align-items:flex-start
-      ">
-
-        <div>
-
-          <h3>
-            ${esc(l.name)}
-          </h3>
-
-          <div class="muted" style="font-size:12px">
-            ${esc(l.title)}
-          </div>
-
-        </div>
-
-        ${statusBadge(l.status)}
-
-      </div>
-
-      <hr style="
-        border:0;
-        border-top:1px solid #eee;
-        margin:13px 0
-      ">
-
-      <div class="grid grid-2">
-
-        <div>
-          <b style="font-size:10px">DOMAIN</b>
-          <div style="font-size:12px">
-            ${esc(l.authority)}
-          </div>
-        </div>
-
-        <div>
-          <b style="font-size:10px">CATATAN</b>
-          <div style="font-size:12px">
-            ${esc(l.note)}
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("")}
-
-  `;
-
+function renderRisks(){
+ document.getElementById("riskTable").innerHTML=state.risks.map((r,i)=>`
+ <tr><td>${r.id||"R-"+(i+1)}</td><td>${r.risk}</td><td>${r.likelihood}</td><td>${r.impact}</td><td>${r.mitigation}</td><td>${r.owner}</td><td>${r.status}</td></tr>
+ `).join("");
 }
-
-
-/* =========================================================
-   AUTHORITY
-========================================================= */
-
-function renderAuthority(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Matriks Kewenangan</h2>
-      <p>
-        Siapa yang boleh melakukan apa.
-      </p>
-    </div>
-
-  </div>
-
-  <div class="danger">
-
-    <b>Prinsip dasar:</b>
-
-    <p style="font-size:12px">
-
-      Sistem ini tidak memberikan kewenangan kepada operator.
-      Kewenangan berasal dari hukum, jabatan, surat tugas,
-      penugasan, atau dasar lain yang sah sesuai konteks.
-
-    </p>
-
-  </div>
-
-  <br>
-
-  ${ROLES.map(r=>`
-
-    <div class="card" style="margin-bottom:12px">
-
-      <h3>${esc(r.role)}</h3>
-
-      <div class="grid grid-2">
-
-        <div class="success">
-
-          <b>Yang dapat dilakukan</b>
-
-          <ul style="font-size:12px;line-height:1.7">
-            ${r.allowed.map(x=>`<li>${esc(x)}</li>`).join("")}
-          </ul>
-
-        </div>
-
-        <div class="danger">
-
-          <b>Batasan / tidak boleh</b>
-
-          <ul style="font-size:12px;line-height:1.7">
-            ${r.forbidden.map(x=>`<li>${esc(x)}</li>`).join("")}
-          </ul>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("")}
-
-  `;
-
-}
-
-
-/* =========================================================
-   RISKS
-========================================================= */
-
-function renderRisks(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Red Flag & Risk Register</h2>
-      <p>
-        Semua masalah yang dapat menghentikan proses.
-      </p>
-    </div>
-
-    <button
-      class="btn red"
-      onclick="addRisk()"
-    >
-      + Red Flag
-    </button>
-
-  </div>
-
-  <div class="card">
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>Persil</th>
-            <th>Risiko</th>
-            <th>Level</th>
-            <th>Status</th>
-            <th>Owner</th>
-            <th>Mitigasi</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        ${state.risks.map((r,i)=>`
-
-          <tr>
-
-            <td>
-              <select onchange="riskUpdate(${i},'persil',this.value)">
-
-                <option value="">-</option>
-
-                ${state.persils.map(p=>`
-                  <option
-                    ${r.persil===p.code?"selected":""}
-                  >${esc(p.code)}</option>
-                `).join("")}
-
-              </select>
-            </td>
-
-            <td>
-              <textarea
-                style="min-height:60px"
-                onchange="riskUpdate(${i},'risk',this.value)"
-              >${esc(r.risk)}</textarea>
-            </td>
-
-            <td>
-
-              <select onchange="riskUpdate(${i},'level',this.value)">
-
-                ${[
-                  "RENDAH",
-                  "SEDANG",
-                  "TINGGI",
-                  "KRITIS"
-                ].map(x=>`
-                  <option
-                    ${r.level===x?"selected":""}
-                  >${x}</option>
-                `).join("")}
-
-              </select>
-
-            </td>
-
-            <td>
-
-              <select onchange="riskUpdate(${i},'status',this.value)">
-
-                ${[
-                  "OPEN",
-                  "MITIGASI",
-                  "ESCALATED",
-                  "CLOSED",
-                  "BLOCKED"
-                ].map(x=>`
-                  <option
-                    ${r.status===x?"selected":""}
-                  >${x}</option>
-                `).join("")}
-
-              </select>
-
-            </td>
-
-            <td>
-              <input
-                value="${esc(r.owner)}"
-                onchange="riskUpdate(${i},'owner',this.value)"
-              >
-            </td>
-
-            <td>
-              <textarea
-                style="min-height:60px"
-                onchange="riskUpdate(${i},'mitigation',this.value)"
-              >${esc(r.mitigation)}</textarea>
-            </td>
-
-            <td>
-              <button
-                class="btn small red"
-                onclick="deleteRisk(${i})"
-              >
-                Hapus
-              </button>
-            </td>
-
-          </tr>
-
-        `).join("")}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-  `;
-
-}
-
 
 function addRisk(){
-
-  state.risks.push({
-    persil:"",
-    risk:"",
-    level:"SEDANG",
-    status:"OPEN",
-    owner:"",
-    mitigation:""
-  });
-
-  addAudit("RISK","Menambah red flag");
-
-  saveData();
-
-  renderRisks(document.getElementById("content"));
-
+ const risk=prompt("Risk:");
+ if(!risk)return;
+ state.risks.push({
+   id:"R-"+String(state.risks.length+1).padStart(3,"0"),
+   risk,
+   likelihood:prompt("Likelihood:","Medium")||"Medium",
+   impact:prompt("Impact:","High")||"High",
+   mitigation:prompt("Mitigation:","Legal review")||"Legal review",
+   owner:prompt("Owner:","PIC")||"PIC",
+   status:"OPEN"
+ });
+ audit("ADD RISK","PROJECT","","NEW",risk);
 }
 
-
-function riskUpdate(i,key,value){
-
-  state.risks[i][key]=value;
-
-  addAudit(
-    "RISK",
-    `Risk ${i+1}: ${key} diubah`
-  );
-
-  saveData();
-
+function renderCorr(){
+ document.getElementById("corrTable").innerHTML=state.correspondence.map(c=>`
+ <tr><td>${c.date}</td><td>${c.instansi}</td><td>${c.nomor}</td><td>${c.perihal}</td><td>${c.respons}</td><td>${c.deadline}</td><td>${c.status}</td></tr>
+ `).join("") || `<tr><td colspan="7" class="muted">Belum ada correspondence.</td></tr>`;
 }
 
-
-function deleteRisk(i){
-
-  if(!confirm("Hapus risk?"))return;
-
-  state.risks.splice(i,1);
-
-  addAudit("RISK","Menghapus red flag");
-
-  saveData();
-
-  renderRisks(document.getElementById("content"));
-
+function addCorrespondence(){
+ const instansi=prompt("Instansi:");
+ if(!instansi)return;
+ state.correspondence.push({
+   date:new Date().toISOString().slice(0,10),
+   instansi,
+   nomor:prompt("Nomor surat/reference:","")||"",
+   perihal:prompt("Perihal:","")||"",
+   respons:prompt("Respons/status:","PENDING")||"PENDING",
+   deadline:prompt("Deadline:","")||"",
+   status:"OPEN"
+ });
+ audit("ADD CORRESPONDENCE",instansi,"","NEW","");
 }
 
+function renderFinance(){
+ document.getElementById("valuationTable").innerHTML=state.valuation.map(v=>
+ `<tr><td>${v.persil}</td><td>${formatMoney(v.nilai)}</td><td>${v.appraiser}</td><td>${v.tanggal}</td><td>${v.status}</td></tr>`
+ ).join("") || `<tr><td colspan="5" class="muted">Belum ada valuation.</td></tr>`;
 
-/* =========================================================
-   TASKS
-========================================================= */
-
-function renderTasks(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Task & Deadline</h2>
-      <p>Kontrol pekerjaan dan tanggung jawab.</p>
-    </div>
-
-    <button
-      class="btn primary"
-      onclick="addTask()"
-    >
-      + Task
-    </button>
-
-  </div>
-
-  <div class="card">
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-          <tr>
-            <th>Task</th>
-            <th>Persil</th>
-            <th>Owner</th>
-            <th>Deadline</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody>
-
-        ${state.tasks.map((t,i)=>`
-
-          <tr>
-
-            <td>
-              <input
-                value="${esc(t.title)}"
-                onchange="taskUpdate(${i},'title',this.value)"
-              >
-            </td>
-
-            <td>
-
-              <select onchange="taskUpdate(${i},'persil',this.value)">
-
-                <option value="">-</option>
-
-                ${state.persils.map(p=>`
-                  <option
-                    ${t.persil===p.code?"selected":""}
-                  >${esc(p.code)}</option>
-                `).join("")}
-
-              </select>
-
-            </td>
-
-            <td>
-              <input
-                value="${esc(t.owner)}"
-                onchange="taskUpdate(${i},'owner',this.value)"
-              >
-            </td>
-
-            <td>
-              <input
-                type="date"
-                value="${esc(t.deadline)}"
-                onchange="taskUpdate(${i},'deadline',this.value)"
-              >
-            </td>
-
-            <td>
-
-              <select onchange="taskUpdate(${i},'status',this.value)">
-
-                ${[
-                  "OPEN",
-                  "PROSES",
-                  "REVIEW",
-                  "SELESAI",
-                  "BLOCKED"
-                ].map(x=>`
-                  <option
-                    ${t.status===x?"selected":""}
-                  >${x}</option>
-                `).join("")}
-
-              </select>
-
-            </td>
-
-            <td>
-
-              <button
-                class="btn small red"
-                onclick="deleteTask(${i})"
-              >
-                Hapus
-              </button>
-
-            </td>
-
-          </tr>
-
-        `).join("")}
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-  `;
-
+ document.getElementById("taxTable").innerHTML=state.taxes.map(t=>
+ `<tr><td>${t.persil}</td><td>${t.jenis}</td><td>${t.pihak}</td><td>${formatMoney(t.nominal)}</td><td>${t.bukti}</td></tr>`
+ ).join("") || `<tr><td colspan="5" class="muted">Belum ada data pajak/biaya.</td></tr>`;
 }
 
-
-function addTask(){
-
-  state.tasks.push({
-    title:"",
-    persil:"",
-    owner:"",
-    deadline:"",
-    status:"OPEN"
-  });
-
-  addAudit("TASK","Menambah task");
-
-  saveData();
-
-  renderTasks(document.getElementById("content"));
-
+function calculateFinance(){
+ const debt=Number(document.getElementById("debtTotal").value)||0;
+ const land=Number(document.getElementById("landTotal").value)||0;
+ const cost=Number(document.getElementById("costTotal").value)||0;
+ document.getElementById("balanceAfter").value=debt-land;
+ audit("FINANCE CALC","PROJECT","","CALCULATED","Debt - land = balance; costs tracked separately.");
 }
 
-
-function taskUpdate(i,key,value){
-
-  state.tasks[i][key]=value;
-
-  addAudit(
-    "TASK",
-    `Task ${i+1}: ${key} diubah`
-  );
-
-  saveData();
-
+function renderSetoff(){
+ document.getElementById("setoffTable").innerHTML=state.persil.map(p=>`
+ <tr>
+  <td>${p.id}</td>
+  <td><input type="number" data-so="${p.id}" placeholder="0"></td>
+  <td><input type="number" data-debt="${p.id}" placeholder="0"></td>
+  <td><input type="number" data-set="${p.id}" placeholder="0"></td>
+  <td>—</td>
+  <td>${badge("PENDING")}</td>
+ </tr>
+ `).join("");
 }
 
-
-function deleteTask(i){
-
-  if(!confirm("Hapus task?"))return;
-
-  state.tasks.splice(i,1);
-
-  addAudit("TASK","Menghapus task");
-
-  saveData();
-
-  renderTasks(document.getElementById("content"));
-
+function renderAudit(){
+ document.getElementById("auditTable").innerHTML=state.audit.map(a=>`
+ <tr><td>${a.time}</td><td>${a.user}</td><td>${a.action}</td><td>${a.object}</td><td>${short(a.before)}</td><td>${short(a.after)}</td><td>${a.note}</td></tr>
+ `).join("") || `<tr><td colspan="7" class="muted">Audit trail kosong.</td></tr>`;
 }
 
-
-/* =========================================================
-   AUDIT
-========================================================= */
-
-function renderAudit(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Audit Trail</h2>
-      <p>
-        Catatan perubahan lokal pada aplikasi.
-      </p>
-    </div>
-
-    <button
-      class="btn red"
-      onclick="clearAudit()"
-    >
-      Bersihkan
-    </button>
-
-  </div>
-
-  <div class="card">
-
-    <div class="timeline">
-
-    ${(state.audit||[]).map(a=>`
-
-      <div class="timeline-item">
-
-        <div class="timeline-date">
-          ${esc(a.time)} • ${esc(a.type)}
-        </div>
-
-        <div class="timeline-text">
-          ${esc(a.message)}
-        </div>
-
-      </div>
-
-    `).join("")}
-
-    </div>
-
-  </div>
-
-  `;
-
+function renderClosing(){
+ document.getElementById("closingChecklist").innerHTML=closingItems.map((x,i)=>`
+ <label>
+ <input type="checkbox" ${state.closing[i]?"checked":""} onchange="toggleClosing(${i},this.checked)">
+ <span>${x}</span>
+ </label>
+ `).join("");
 }
 
-
-function clearAudit(){
-
-  if(!confirm(
-    "Hapus seluruh audit trail lokal?"
-  ))return;
-
-  state.audit=[];
-
-  saveData();
-
-  renderAudit(document.getElementById("content"));
-
+function toggleClosing(i,val){
+ state.closing[i]=val;
+ audit("CLOSING CHECK",String(i+1),String(!val),String(val),closingItems[i]);
 }
 
-
-/* =========================================================
-   SOP
-========================================================= */
-
-function renderSOP(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>SOP & Legal Gate</h2>
-      <p>
-        Prinsip operasi yang wajib dipatuhi.
-      </p>
-    </div>
-
-  </div>
-
-
-  <div class="grid grid-2">
-
-    <div class="card">
-
-      <h3>01 — Four-Eyes Principle</h3>
-
-      <p style="font-size:12px">
-
-        Pekerjaan kritis tidak idealnya hanya diperiksa
-        oleh orang yang mengerjakannya. Harus ada reviewer
-        yang independen/berwenang sesuai kebutuhan.
-
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>02 — No Evidence, No Pass</h3>
-
-      <p style="font-size:12px">
-
-        Checklist tanpa bukti tidak dianggap sebagai
-        penyelesaian substantif.
-
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>03 — Authority First</h3>
-
-      <p style="font-size:12px">
-
-        Sebelum tindakan dilakukan, tentukan siapa yang
-        mempunyai kewenangan untuk melakukannya.
-
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>04 — Red Flag = Stop</h3>
-
-      <p style="font-size:12px">
-
-        Risiko kritis atau masalah hukum yang belum
-        diselesaikan menyebabkan proses dihentikan
-        dan dieskalasikan.
-
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>05 — Current Law Check</h3>
-
-      <p style="font-size:12px">
-
-        Jangan menggunakan nomor peraturan lama tanpa
-        memeriksa status, perubahan, dan pencabutannya.
-
-      </p>
-
-    </div>
-
-
-    <div class="card">
-
-      <h3>06 — Auditability</h3>
-
-      <p style="font-size:12px">
-
-        Setiap keputusan penting harus dapat ditelusuri:
-        siapa, kapan, berdasarkan apa, dan menghasilkan apa.
-
-      </p>
-
-    </div>
-
-  </div>
-
-
-  <br>
-
-
-  <div class="card">
-
-    <h3>Universal Legal Gate</h3>
-
-    <div class="table-wrap">
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>Gate</th>
-            <th>Pertanyaan</th>
-            <th>Jika Tidak</th>
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          <tr>
-            <td>G1</td>
-            <td>Apakah pihak telah teridentifikasi?</td>
-            <td>BLOCK</td>
-          </tr>
-
-          <tr>
-            <td>G2</td>
-            <td>Apakah objek telah teridentifikasi?</td>
-            <td>BLOCK</td>
-          </tr>
-
-          <tr>
-            <td>G3</td>
-            <td>Apakah dokumen material tersedia?</td>
-            <td>BLOCK</td>
-          </tr>
-
-          <tr>
-            <td>G4</td>
-            <td>Apakah data dapat diverifikasi?</td>
-            <td>BLOCK / CLARIFY</td>
-          </tr>
-
-          <tr>
-            <td>G5</td>
-            <td>Apakah kewenangan pelaksana jelas?</td>
-            <td>ESCALATE</td>
-          </tr>
-
-          <tr>
-            <td>G6</td>
-            <td>Apakah ada sengketa/kasus/red flag?</td>
-            <td>BLOCK / ESCALATE</td>
-          </tr>
-
-          <tr>
-            <td>G7</td>
-            <td>Apakah dasar hukum telah diverifikasi?</td>
-            <td>LEGAL REVIEW</td>
-          </tr>
-
-          <tr>
-            <td>G8</td>
-            <td>Apakah output fase telah dibuat?</td>
-            <td>REWORK</td>
-          </tr>
-
-          <tr>
-            <td>G9</td>
-            <td>Apakah reviewer telah melakukan review?</td>
-            <td>REVIEW</td>
-          </tr>
-
-          <tr>
-            <td>G10</td>
-            <td>Apakah pihak berwenang telah mengambil tindakan yang diperlukan?</td>
-            <td>ESCALATE</td>
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-  `;
-
+function saveProject(){
+ const data={
+   name:document.getElementById("projectName").value,
+   owner:document.getElementById("projectOwner").value,
+   pic:document.getElementById("projectPIC").value,
+   legal:document.getElementById("legalCounsel").value,
+   target:document.getElementById("targetClosing").value,
+   goal:document.getElementById("projectGoal").value
+ };
+ state.project=data;
+ audit("SAVE PROJECT CHARTER","PROJECT","","SAVED","");
+ alert("Project Charter disimpan.");
 }
 
-
-/* =========================================================
-   PRESENTATION
-========================================================= */
-
-function renderPresentation(el){
-
-  el.innerHTML=`
-
-  <div class="page-head">
-
-    <div>
-      <h2>Presentation Mode</h2>
-      <p>
-        Ringkasan project untuk briefing/presentasi.
-      </p>
-    </div>
-
-    <button
-      class="btn primary"
-      onclick="window.print()"
-    >
-      Print / PDF
-    </button>
-
-  </div>
-
-
-  <div class="card">
-
-    <h2 style="font-size:28px">
-      ${esc(state.project.name)}
-    </h2>
-
-    <p class="muted">
-      ${esc(state.project.description)}
-    </p>
-
-    <hr style="border:0;border-top:1px solid #eee">
-
-    <div class="grid grid-4">
-
-      <div>
-        <b>56</b>
-        <div class="muted">Persil</div>
-      </div>
-
-      <div>
-        <b>16</b>
-        <div class="muted">Fase</div>
-      </div>
-
-      <div>
-        <b>${state.risks.length}</b>
-        <div class="muted">Risk</div>
-      </div>
-
-      <div>
-        <b>${state.tasks.length}</b>
-        <div class="muted">Task</div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <br>
-
-  ${PHASES.map(p=>`
-
-    <div class="card" style="margin-bottom:10px">
-
-      <div style="display:flex;gap:12px">
-
-        <div class="phase-number">
-          ${String(p.id).padStart(2,"0")}
-        </div>
-
-        <div>
-
-          <h3>
-            ${esc(p.title)}
-          </h3>
-
-          <p style="font-size:12px">
-            ${esc(p.desc)}
-          </p>
-
-          <div class="muted" style="font-size:11px">
-            Output: ${esc(p.output)}
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `).join("")}
-
-  `;
-
+function backup(){
+ const blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});
+ const a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download="land-control-backup.json";
+ a.click();
+ URL.revokeObjectURL(a.href);
 }
 
-
-/* =========================================================
-   QUICK ENTRY
-========================================================= */
-
-function prepareQuickPersil(){
-
-  const select=document.getElementById("quickPersil");
-
-  if(!select)return;
-
-  select.innerHTML=`
-
-    <option value="">
-      Tidak terkait persil
-    </option>
-
-    ${state.persils.map(p=>`
-      <option value="${esc(p.code)}">
-        ${esc(p.code)}
-      </option>
-    `).join("")}
-
-  `;
-
+function resetAll(){
+ if(!confirm("Reset seluruh data lokal ke demo awal?"))return;
+ localStorage.removeItem(KEY);
+ state=loadState();
+ renderAll();
+ alert("Data direset.");
 }
 
-
-function addQuickEntry(){
-
-  const type=document.getElementById("quickType").value;
-  const persil=document.getElementById("quickPersil").value;
-  const title=document.getElementById("quickTitle").value;
-  const note=document.getElementById("quickNote").value;
-
-  if(!title.trim()){
-
-    alert("Judul wajib diisi.");
-
-    return;
-
-  }
-
-  if(type==="task"){
-
-    state.tasks.push({
-      title,
-      persil,
-      owner:"",
-      deadline:"",
-      status:"OPEN"
-    });
-
-  }
-
-  if(type==="risk"){
-
-    state.risks.push({
-      persil,
-      risk:title+" — "+note,
-      level:"SEDANG",
-      status:"OPEN",
-      owner:"",
-      mitigation:""
-    });
-
-  }
-
-  if(type==="note"){
-
-    state.notes.push({
-      persil,
-      title,
-      note,
-      time:new Date().toLocaleString("id-ID")
-    });
-
-  }
-
-  addAudit(
-    "QUICK",
-    `${type}: ${title}`
-  );
-
-  saveData();
-
-  document.getElementById("quickTitle").value="";
-  document.getElementById("quickNote").value="";
-
-  closeModal("quickModal");
-
+function formatMoney(x){
+ return "Rp "+Number(x||0).toLocaleString("id-ID");
+}
+function short(x){
+ x=String(x||"");
+ return x.length>90?x.slice(0,90)+"…":x;
+}
+function esc(x){
+ return String(x||"")
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;")
+ .replaceAll('"',"&quot;");
 }
 
-
-/* =========================================================
-   EXPORT / IMPORT
-========================================================= */
-
-function exportData(){
-
-  const data=JSON.stringify(
-    state,
-    null,
-    2
-  );
-
-  const blob=new Blob(
-    [data],
-    {type:"application/json"}
-  );
-
-  const url=URL.createObjectURL(blob);
-
-  const a=document.createElement("a");
-
-  a.href=url;
-
-  a.download=
-    "MASTER-SPH-BACKUP-"+
-    new Date().toISOString().slice(0,10)+
-    ".json";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
-
-  addAudit("SYSTEM","Export JSON");
-
+function renderAll(){
+ renderDashboard();
+ renderPersil();
+ renderPhases();
+ renderDocs();
+ renderLegal();
+ renderRisks();
+ renderCorr();
+ renderFinance();
+ renderSetoff();
+ renderAudit();
+ renderClosing();
 }
 
+renderAll();
 
-function importData(event){
-
-  const file=event.target.files[0];
-
-  if(!file)return;
-
-  const reader=new FileReader();
-
-  reader.onload=function(){
-
-    try{
-
-      const imported=JSON.parse(
-        reader.result
-      );
-
-      if(
-        !imported.persils ||
-        !imported.project
-      ){
-
-        throw new Error(
-          "Format data tidak valid"
-        );
-
-      }
-
-      if(!confirm(
-        "Import akan mengganti data saat ini. Lanjutkan?"
-      ))return;
-
-      state=imported;
-
-      saveData();
-
-      location.reload();
-
-    }catch(error){
-
-      alert(
-        "Import gagal: "+
-        error.message
-      );
-
-    }
-
-  };
-
-  reader.readAsText(file);
-
-}
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  ()=>{
-    showPage("dashboard");
-    prepareQuickPersil();
-  }
-);
-
-
-/*
-===========================================================
-LEGAL / TECHNICAL DISCLAIMER
-===========================================================
-
-1. Aplikasi ini adalah alat administrasi dan kontrol project.
-2. Bukan sistem resmi ATR/BPN.
-3. Bukan pengganti PPAT.
-4. Bukan pengganti Notaris.
-5. Bukan pengganti Advokat/Legal Reviewer.
-6. Bukan pengganti Kantor Pertanahan.
-7. Checklist tidak membuktikan keabsahan suatu dokumen.
-8. Status SELESAI bukan jaminan legalitas.
-9. Status VERIFIED adalah status internal aplikasi,
-   bukan pengesahan pejabat negara.
-10. Setiap tindakan harus mengikuti regulasi yang berlaku
-    pada saat tindakan dilakukan.
-11. Jika terdapat sengketa, konflik, indikasi pemalsuan,
-    sita, blokir, ketidaksesuaian data, atau masalah
-    kewenangan, proses harus dihentikan/escalated.
-12. Peraturan dapat berubah sehingga legal register harus
-    diperiksa dan diperbarui.
-
-===========================================================
-*/
-
+/* close modal if clicking backdrop */
+document.getElementById("modal").addEventListener("click",e=>{
+ if(e.target.id==="modal")closeModal();
+});
 </script>
 
 </body>
