@@ -2,571 +2,649 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MASTER SPH — Project Management</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>MASTER SPH — Legal & Project Control System</title>
 
 <style>
 :root{
-    --bg:#f4f6f8;
-    --card:#ffffff;
-    --text:#17202a;
-    --muted:#667085;
-    --line:#dfe4ea;
-    --primary:#173b6c;
-    --primary2:#245c91;
-    --success:#087443;
-    --warning:#b54708;
-    --danger:#b42318;
-    --info:#175cd3;
-    --sidebar:#101828;
+  --bg:#f3f4f6;
+  --panel:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --primary:#111827;
+  --blue:#2563eb;
+  --green:#15803d;
+  --yellow:#b45309;
+  --red:#b91c1c;
+  --orange:#ea580c;
+  --shadow:0 8px 25px rgba(0,0,0,.07);
+  --radius:14px;
 }
 
-*{
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
+*{box-sizing:border-box}
 
 body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);
+  color:var(--text);
 }
 
-/* =========================
-   LAYOUT
-========================= */
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
 
 .app{
-    min-height:100vh;
-    display:flex;
+  display:flex;
+  min-height:100vh;
 }
 
+/* SIDEBAR */
+
 .sidebar{
-    width:270px;
-    background:var(--sidebar);
-    color:white;
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    overflow-y:auto;
-    z-index:1000;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  width:280px;
+  background:#111827;
+  color:white;
+  padding:20px;
+  overflow-y:auto;
+  z-index:20;
 }
 
 .brand{
-    padding:22px 18px;
-    border-bottom:1px solid #344054;
+  padding:8px 5px 20px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  margin-bottom:15px;
 }
 
 .brand h1{
-    margin:0;
-    font-size:20px;
+  font-size:19px;
+  margin:0 0 5px;
 }
 
-.brand small{
-    color:#98a2b3;
+.brand p{
+  margin:0;
+  font-size:11px;
+  color:#9ca3af;
+  line-height:1.5;
 }
 
-.nav{
-    padding:12px;
+.nav-section{
+  margin:20px 0 8px;
+  color:#6b7280;
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1px;
 }
 
-.nav button{
-    width:100%;
-    border:0;
-    background:transparent;
-    color:#d0d5dd;
-    padding:11px 12px;
-    margin:2px 0;
-    border-radius:8px;
-    text-align:left;
-    cursor:pointer;
-    font-size:14px;
+.nav-btn{
+  display:flex;
+  width:100%;
+  align-items:center;
+  gap:10px;
+  border:0;
+  background:transparent;
+  color:#d1d5db;
+  padding:10px 11px;
+  margin:2px 0;
+  border-radius:9px;
+  text-align:left;
 }
 
-.nav button:hover,
-.nav button.active{
-    background:#1d2939;
-    color:white;
+.nav-btn:hover,
+.nav-btn.active{
+  background:#1f2937;
+  color:white;
 }
 
-.nav-title{
-    color:#667085;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    padding:14px 12px 6px;
+.nav-icon{
+  width:22px;
+  text-align:center;
 }
+
+/* MAIN */
 
 .main{
-    margin-left:270px;
-    width:calc(100% - 270px);
+  margin-left:280px;
+  width:calc(100% - 280px);
+  min-width:0;
 }
 
 .topbar{
-    position:sticky;
-    top:0;
-    z-index:900;
-    background:#ffffffee;
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-    padding:12px 20px;
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(243,244,246,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:13px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
 
-.topbar-inner{
-    max-width:1500px;
-    margin:auto;
-    display:flex;
-    gap:10px;
-    align-items:center;
+.top-title{
+  font-size:17px;
+  font-weight:800;
 }
 
-.search{
-    flex:1;
-    min-width:150px;
-    padding:11px 14px;
-    border:1px solid var(--line);
-    border-radius:9px;
-    outline:none;
+.top-sub{
+  font-size:11px;
+  color:var(--muted);
 }
 
-.search:focus{
-    border-color:var(--primary2);
+.top-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
-.content{
-    max-width:1500px;
-    margin:auto;
-    padding:22px;
+.container{
+  max-width:1500px;
+  margin:auto;
+  padding:25px;
 }
 
-.page{
-    display:none;
-}
-
-.page.active{
-    display:block;
-}
-
-/* =========================
-   COMPONENTS
-========================= */
-
-.card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:18px;
-    margin-bottom:16px;
-}
-
-.card h2,
-.card h3{
-    margin-top:0;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:14px;
-}
-
-.kpi{
-    font-size:30px;
-    font-weight:800;
-    color:var(--primary);
-}
-
-.muted{
-    color:var(--muted);
-}
-
-button,
-select,
-input,
-textarea{
-    font:inherit;
-}
+/* BUTTONS */
 
 .btn{
-    border:1px solid var(--line);
-    background:white;
-    padding:9px 13px;
-    border-radius:8px;
-    cursor:pointer;
+  border:1px solid var(--line);
+  background:white;
+  color:var(--text);
+  border-radius:9px;
+  padding:9px 13px;
+  font-weight:700;
+  font-size:13px;
 }
 
 .btn:hover{
-    background:#f2f4f7;
+  background:#f9fafb;
 }
 
-.btn-primary{
-    background:var(--primary);
-    color:white;
-    border-color:var(--primary);
+.btn.primary{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:white;
 }
 
-.btn-success{
-    background:var(--success);
-    color:white;
-    border-color:var(--success);
+.btn.blue{
+  background:var(--blue);
+  border-color:var(--blue);
+  color:white;
 }
 
-.btn-danger{
-    background:var(--danger);
-    color:white;
-    border-color:var(--danger);
+.btn.green{
+  background:var(--green);
+  border-color:var(--green);
+  color:white;
 }
 
-.btn-warning{
-    background:var(--warning);
-    color:white;
-    border-color:var(--warning);
+.btn.red{
+  background:var(--red);
+  border-color:var(--red);
+  color:white;
 }
 
-.toolbar{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-bottom:15px;
+.btn.small{
+  padding:6px 9px;
+  font-size:11px;
 }
 
-.badge{
-    display:inline-block;
-    padding:4px 9px;
-    border-radius:999px;
-    font-size:12px;
-    font-weight:700;
-    background:#eef2f6;
+/* CARDS */
+
+.grid{
+  display:grid;
+  gap:15px;
 }
 
-.badge.success{
-    background:#dcfae6;
-    color:#05603a;
+.grid-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));
 }
 
-.badge.warning{
-    background:#fef0c7;
-    color:#93370d;
+.grid-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));
 }
 
-.badge.danger{
-    background:#fee4e2;
-    color:#912018;
+.grid-4{
+  grid-template-columns:repeat(4,minmax(0,1fr));
 }
 
-.badge.info{
-    background:#dbeafe;
-    color:#1d4ed8;
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:18px;
 }
 
-.progress{
-    height:10px;
-    background:#eaecf0;
-    border-radius:999px;
-    overflow:hidden;
+.card h3{
+  margin:0 0 8px;
+  font-size:16px;
 }
 
-.progress-bar{
-    height:100%;
-    background:var(--primary);
-    transition:.3s;
+.card h4{
+  margin:0 0 7px;
+  font-size:13px;
 }
+
+.muted{
+  color:var(--muted);
+}
+
+.stat{
+  position:relative;
+}
+
+.stat-label{
+  font-size:11px;
+  color:var(--muted);
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.stat-value{
+  font-size:30px;
+  font-weight:900;
+  margin-top:7px;
+}
+
+/* HEADINGS */
+
+.page-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.page-head h2{
+  margin:0 0 5px;
+  font-size:25px;
+}
+
+.page-head p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* TABLE */
 
 .table-wrap{
-    overflow:auto;
+  overflow:auto;
+  border:1px solid var(--line);
+  border-radius:10px;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:700px;
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
 }
 
-th,
-td{
-    border-bottom:1px solid var(--line);
-    padding:10px;
-    text-align:left;
-    vertical-align:top;
+th,td{
+  border-bottom:1px solid var(--line);
+  padding:11px;
+  text-align:left;
+  font-size:12px;
+  vertical-align:top;
 }
 
 th{
-    background:#f8fafc;
-    font-size:13px;
+  background:#f9fafb;
+  font-size:10px;
+  text-transform:uppercase;
+  color:#6b7280;
+  letter-spacing:.5px;
 }
 
-input,
-select,
+tr:last-child td{
+  border-bottom:0;
+}
+
+tr:hover td{
+  background:#fafafa;
+}
+
+/* BADGES */
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.badge.green{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.badge.yellow{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.badge.red{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.badge.blue{
+  background:#dbeafe;
+  color:#1e40af;
+}
+
+.badge.gray{
+  background:#f3f4f6;
+  color:#4b5563;
+}
+
+/* FORM */
+
+.form-group{
+  margin-bottom:13px;
+}
+
+label{
+  display:block;
+  font-size:11px;
+  font-weight:800;
+  margin-bottom:5px;
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  padding:9px 10px;
+  background:white;
+  color:var(--text);
+  outline:none;
+}
+
 textarea{
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:9px 10px;
-    width:100%;
-    background:white;
+  min-height:100px;
+  resize:vertical;
 }
 
-textarea{
-    min-height:100px;
-    resize:vertical;
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(37,99,235,.1);
 }
 
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:12px;
+/* PHASE */
+
+.phase-list{
+  display:grid;
+  gap:10px;
 }
 
-.form-group label{
-    display:block;
-    font-weight:700;
-    font-size:13px;
-    margin-bottom:5px;
+.phase-card{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:15px;
+  background:white;
 }
 
-.check{
-    display:flex;
-    align-items:flex-start;
-    gap:8px;
-    padding:8px 0;
-}
-
-.check input{
-    width:auto;
-    margin-top:4px;
-}
-
-.alert{
-    padding:13px 15px;
-    border-radius:9px;
-    margin:10px 0;
-}
-
-.alert-info{
-    background:#eff8ff;
-    border-left:4px solid var(--info);
-}
-
-.alert-warning{
-    background:#fffaeb;
-    border-left:4px solid var(--warning);
-}
-
-.alert-danger{
-    background:#fef3f2;
-    border-left:4px solid var(--danger);
-}
-
-.alert-success{
-    background:#ecfdf3;
-    border-left:4px solid var(--success);
-}
-
-/* =========================
-   PHASE
-========================= */
-
-.phase{
-    border:1px solid var(--line);
-    border-radius:12px;
-    background:white;
-    margin-bottom:14px;
-    overflow:hidden;
-}
-
-.phase-header{
-    padding:15px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    cursor:pointer;
-    background:#f8fafc;
+.phase-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
 }
 
 .phase-number{
-    width:38px;
-    height:38px;
-    min-width:38px;
-    border-radius:50%;
-    background:var(--primary);
-    color:white;
-    display:grid;
-    place-items:center;
-    font-weight:800;
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-radius:10px;
+  background:#111827;
+  color:white;
+  font-weight:900;
 }
 
-.phase-body{
-    padding:18px;
-    display:none;
+.phase-main{
+  flex:1;
 }
 
-.phase.open .phase-body{
-    display:block;
+.phase-title{
+  font-weight:900;
+  font-size:14px;
 }
 
-/* =========================
-   MODAL
-========================= */
+.phase-desc{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.progress{
+  height:7px;
+  background:#e5e7eb;
+  border-radius:99px;
+  overflow:hidden;
+}
+
+.progress > div{
+  height:100%;
+  background:#111827;
+}
+
+/* LEGAL */
+
+.legal-box{
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  padding:14px;
+  background:#fafafa;
+  margin-bottom:10px;
+}
+
+.legal-title{
+  font-weight:900;
+  font-size:13px;
+}
+
+.legal-meta{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.warning{
+  border-left:4px solid var(--yellow);
+  background:#fffbeb;
+  padding:12px;
+  border-radius:8px;
+}
+
+.danger{
+  border-left:4px solid var(--red);
+  background:#fef2f2;
+  padding:12px;
+  border-radius:8px;
+}
+
+.success{
+  border-left:4px solid var(--green);
+  background:#f0fdf4;
+  padding:12px;
+  border-radius:8px;
+}
+
+/* MODAL */
 
 .modal{
-    position:fixed;
-    inset:0;
-    background:#0008;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    z-index:3000;
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:100;
+  padding:20px;
+  overflow:auto;
 }
 
 .modal.show{
-    display:flex;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .modal-box{
-    width:min(900px,100%);
-    max-height:90vh;
-    overflow:auto;
-    background:white;
-    border-radius:14px;
-    padding:20px;
+  width:min(900px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:white;
+  border-radius:15px;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+  padding:22px;
 }
 
-/* =========================
-   PRESENTATION
-========================= */
-
-.presentation{
-    position:fixed;
-    inset:0;
-    background:#0b1220;
-    color:white;
-    z-index:5000;
-    display:none;
-    align-items:center;
-    justify-content:center;
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
 }
 
-.presentation.show{
-    display:flex;
+.modal-head h3{
+  margin:0;
 }
 
-.slide{
-    width:min(1100px,90vw);
-    min-height:70vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+/* CHECKLIST */
+
+.check{
+  display:flex;
+  align-items:flex-start;
+  gap:8px;
+  padding:8px 0;
+  border-bottom:1px solid #f1f1f1;
 }
 
-.slide h1{
-    font-size:clamp(36px,6vw,80px);
-    margin:0 0 20px;
+.check input{
+  width:auto;
+  margin-top:3px;
 }
 
-.slide h2{
-    font-size:clamp(28px,4vw,54px);
+.check span{
+  font-size:12px;
 }
 
-.slide-number{
-    position:fixed;
-    right:25px;
-    bottom:20px;
-    color:#98a2b3;
+/* TIMELINE */
+
+.timeline{
+  border-left:2px solid #e5e7eb;
+  margin-left:7px;
+  padding-left:20px;
 }
 
-.presentation-controls{
-    position:fixed;
-    bottom:20px;
-    left:20px;
-    display:flex;
-    gap:8px;
+.timeline-item{
+  position:relative;
+  margin-bottom:18px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+.timeline-item:before{
+  content:"";
+  position:absolute;
+  left:-27px;
+  top:3px;
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:#111827;
+}
+
+.timeline-date{
+  font-size:10px;
+  color:var(--muted);
+}
+
+.timeline-text{
+  font-size:12px;
+  margin-top:3px;
+}
+
+/* MOBILE */
 
 .mobile-menu{
-    display:none;
+  display:none;
 }
 
 @media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+  }
 
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.25s;
-    }
+  .sidebar.open{
+    transform:translateX(0);
+  }
 
-    .sidebar.show{
-        transform:translateX(0);
-    }
+  .main{
+    margin-left:0;
+    width:100%;
+  }
 
-    .main{
-        margin-left:0;
-        width:100%;
-    }
+  .mobile-menu{
+    display:block;
+  }
 
-    .mobile-menu{
-        display:block;
-    }
+  .grid-2,
+  .grid-3,
+  .grid-4{
+    grid-template-columns:1fr;
+  }
 
-    .content{
-        padding:12px;
-    }
+  .container{
+    padding:15px;
+  }
 
-    .topbar{
-        padding:9px;
-    }
-
+  .topbar{
+    padding:10px 15px;
+  }
 }
 
-/* =========================
-   PRINT
-========================= */
+/* PRINT */
 
 @media print{
-
-    .sidebar,
-    .topbar,
-    .toolbar,
-    .no-print{
-        display:none!important;
-    }
-
-    .main{
-        margin:0;
-        width:100%;
-    }
-
-    .content{
-        padding:0;
-    }
-
-    .page{
-        display:block!important;
-    }
-
-    .card{
-        break-inside:avoid;
-    }
-
-}
-
-.hidden{
+  .sidebar,
+  .topbar,
+  .top-actions,
+  button{
     display:none!important;
+  }
+
+  .main{
+    margin:0;
+    width:100%;
+  }
+
+  .card{
+    box-shadow:none;
+  }
 }
 </style>
 </head>
@@ -575,736 +653,696 @@ textarea{
 
 <div class="app">
 
-<!-- =========================
+<!-- =========================================================
      SIDEBAR
-========================= -->
+========================================================= -->
 
 <aside class="sidebar" id="sidebar">
 
-    <div class="brand">
-        <h1>MASTER SPH</h1>
-        <small>Project Operation System</small>
-    </div>
+  <div class="brand">
+    <h1>MASTER SPH</h1>
+    <p>Legal & Project Control System</p>
+    <p style="margin-top:5px">Single-file HTML Edition</p>
+  </div>
 
-    <div class="nav">
+  <button class="nav-btn active" onclick="showPage('dashboard')">
+    <span class="nav-icon">⌂</span> Dashboard
+  </button>
 
-        <div class="nav-title">Utama</div>
+  <div class="nav-section">Project</div>
 
-        <button onclick="showPage('dashboard',this)">
-            🏠 Dashboard
-        </button>
+  <button class="nav-btn" onclick="showPage('phases')">
+    <span class="nav-icon">▣</span> 16 Fase
+  </button>
 
-        <button onclick="showPage('manual',this)">
-            📖 Manual Operasi
-        </button>
+  <button class="nav-btn" onclick="showPage('persil')">
+    <span class="nav-icon">▤</span> 56 Persil
+  </button>
 
-        <button onclick="showPage('persil',this)">
-            🗂 Database 56 Persil
-        </button>
+  <button class="nav-btn" onclick="showPage('parties')">
+    <span class="nav-icon">♙</span> Para Pihak
+  </button>
 
-        <button onclick="showPage('dokumen',this)">
-            📑 Dokumen
-        </button>
+  <button class="nav-btn" onclick="showPage('documents')">
+    <span class="nav-icon">▧</span> Dokumen
+  </button>
 
-        <button onclick="showPage('checklist',this)">
-            ☑ Checklist
-        </button>
+  <div class="nav-section">Legal Control</div>
 
-        <div class="nav-title">Project</div>
+  <button class="nav-btn" onclick="showPage('legal')">
+    <span class="nav-icon">§</span> Legal Register
+  </button>
 
-        <button onclick="showPage('tracker',this)">
-            📊 Project Tracker
-        </button>
+  <button class="nav-btn" onclick="showPage('authority')">
+    <span class="nav-icon">⚖</span> Kewenangan
+  </button>
 
-        <button onclick="showPage('redflag',this)">
-            ⚠️ Red Flag
-        </button>
+  <button class="nav-btn" onclick="showPage('risk')">
+    <span class="nav-icon">!</span> Red Flag / Risiko
+  </button>
 
-        <button onclick="showPage('pihak',this)">
-            👥 Para Pihak
-        </button>
+  <div class="nav-section">Control</div>
 
-        <button onclick="showPage('log',this)">
-            📝 Activity Log
-        </button>
+  <button class="nav-btn" onclick="showPage('tasks')">
+    <span class="nav-icon">✓</span> Task & Deadline
+  </button>
 
-        <div class="nav-title">Output</div>
+  <button class="nav-btn" onclick="showPage('audit')">
+    <span class="nav-icon">◷</span> Audit Trail
+  </button>
 
-        <button onclick="showPage('template',this)">
-            📋 Template
-        </button>
+  <button class="nav-btn" onclick="showPage('sop')">
+    <span class="nav-icon">☷</span> SOP
+  </button>
 
-        <button onclick="startPresentation()">
-            🎤 Presentation Mode
-        </button>
+  <button class="nav-btn" onclick="showPage('presentation')">
+    <span class="nav-icon">▶</span> Presentation
+  </button>
 
-        <button onclick="window.print()">
-            🖨 Print / PDF
-        </button>
+  <div class="nav-section">System</div>
 
-        <div class="nav-title">Data</div>
+  <button class="nav-btn" onclick="exportData()">
+    <span class="nav-icon">⇩</span> Export JSON
+  </button>
 
-        <button onclick="exportJSON()">
-            💾 Export JSON
-        </button>
+  <button class="nav-btn" onclick="document.getElementById('importFile').click()">
+    <span class="nav-icon">⇧</span> Import JSON
+  </button>
 
-        <button onclick="document.getElementById('importFile').click()">
-            📥 Import JSON
-        </button>
+  <input
+    id="importFile"
+    type="file"
+    accept=".json"
+    style="display:none"
+    onchange="importData(event)"
+  >
 
-        <button onclick="exportCSV()">
-            📊 Export CSV
-        </button>
-
-        <button onclick="resetData()">
-            ♻ Reset Data
-        </button>
-
-    </div>
+  <button class="nav-btn" onclick="window.print()">
+    <span class="nav-icon">▣</span> Print
+  </button>
 
 </aside>
 
-<!-- =========================
+
+<!-- =========================================================
      MAIN
-========================= -->
+========================================================= -->
 
-<div class="main">
+<main class="main">
 
-    <div class="topbar">
+<header class="topbar">
 
-        <div class="topbar-inner">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="btn mobile-menu" onclick="toggleSidebar()">☰</button>
 
-            <button
-                class="btn mobile-menu"
-                onclick="toggleSidebar()">
-                ☰
-            </button>
-
-            <input
-                class="search"
-                id="globalSearch"
-                placeholder="Cari persil, pemilik, fase, dokumen..."
-                oninput="globalSearch()">
-
-            <button
-                class="btn"
-                onclick="showPage('dashboard')">
-                Dashboard
-            </button>
-
-        </div>
-
+    <div>
+      <div class="top-title" id="topTitle">
+        Dashboard
+      </div>
+      <div class="top-sub">
+        MASTER SPH • Legal Control • Project Tracker
+      </div>
     </div>
+  </div>
 
-    <div class="content">
+  <div class="top-actions">
+    <button class="btn" onclick="saveData()">Simpan</button>
+    <button class="btn primary" onclick="openModal('quickModal')">
+      + Quick Entry
+    </button>
+  </div>
 
-<!-- =========================
-     DASHBOARD
-========================= -->
+</header>
 
-<section id="page-dashboard" class="page active">
+<div class="container" id="content"></div>
 
-    <div class="card">
-
-        <h2>Dashboard Proyek SPH</h2>
-
-        <p class="muted">
-            Pusat kendali seluruh proses, 16 fase, 56 persil,
-            dokumen, pekerjaan, dan permasalahan.
-        </p>
-
-    </div>
-
-    <div class="grid">
-
-        <div class="card">
-            <div class="muted">Total Persil</div>
-            <div class="kpi" id="kpiTotal">56</div>
-        </div>
-
-        <div class="card">
-            <div class="muted">Selesai</div>
-            <div class="kpi" id="kpiDone">0</div>
-        </div>
-
-        <div class="card">
-            <div class="muted">Dalam Proses</div>
-            <div class="kpi" id="kpiProcess">0</div>
-        </div>
-
-        <div class="card">
-            <div class="muted">Bermasalah</div>
-            <div class="kpi" id="kpiProblem">0</div>
-        </div>
-
-        <div class="card">
-            <div class="muted">Belum Dimulai</div>
-            <div class="kpi" id="kpiNotStarted">56</div>
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Overall Project Progress</h3>
-
-        <div class="progress">
-            <div
-                class="progress-bar"
-                id="overallProgress"
-                style="width:0%">
-            </div>
-        </div>
-
-        <p id="overallText">0%</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Status 16 Fase</h3>
-
-        <div id="dashboardPhases"></div>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Red Flag Terbaru</h3>
-
-        <div id="dashboardRedFlags"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     MANUAL
-========================= -->
-
-<section id="page-manual" class="page">
-
-    <div class="card">
-
-        <h2>Manual Operasi — 16 Fase</h2>
-
-        <div class="alert alert-warning">
-            Manual ini merupakan kerangka operasional.
-            Ketentuan hukum, persyaratan instansi, dan dokumen wajib
-            harus disesuaikan dengan jenis SPH dan perkara sebenarnya.
-        </div>
-
-    </div>
-
-    <div id="phaseContainer"></div>
-
-</section>
-
-
-<!-- =========================
-     PERSIL
-========================= -->
-
-<section id="page-persil" class="page">
-
-    <div class="card">
-
-        <h2>Database 56 Persil</h2>
-
-        <div class="toolbar">
-
-            <button
-                class="btn btn-primary"
-                onclick="addPersil()">
-                + Tambah / Edit Persil
-            </button>
-
-            <select
-                id="persilFilter"
-                onchange="renderPersils()">
-
-                <option value="">Semua Status</option>
-                <option value="BELUM DIMULAI">Belum Dimulai</option>
-                <option value="DALAM PROSES">Dalam Proses</option>
-                <option value="MENUNGGU DOKUMEN">Menunggu Dokumen</option>
-                <option value="BERMASALAH">Bermasalah</option>
-                <option value="SIAP PROSES">Siap Proses</option>
-                <option value="SELESAI">Selesai</option>
-
-            </select>
-
-        </div>
-
-        <div class="table-wrap">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>ID</th>
-                        <th>Pemilik</th>
-                        <th>Lokasi</th>
-                        <th>Luas</th>
-                        <th>Fase</th>
-                        <th>Status</th>
-                        <th>Progress</th>
-                        <th>Aksi</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="persilTable"></tbody>
-
-            </table>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     DOKUMEN
-========================= -->
-
-<section id="page-dokumen" class="page">
-
-    <div class="card">
-
-        <h2>Master Dokumen</h2>
-
-        <p class="muted">
-            Status dokumen dikelola per persil.
-        </p>
-
-        <div class="grid">
-
-            <div class="card">
-                <h3>Identitas</h3>
-                <p>KTP / identitas pihak</p>
-                <p>KK bila relevan</p>
-                <p>Dokumen status keluarga bila relevan</p>
-            </div>
-
-            <div class="card">
-                <h3>Objek</h3>
-                <p>Dokumen hak</p>
-                <p>Alas hak</p>
-                <p>Dokumen pendukung objek</p>
-            </div>
-
-            <div class="card">
-                <h3>Kewenangan</h3>
-                <p>Surat kuasa</p>
-                <p>Persetujuan</p>
-                <p>Dokumen badan hukum bila relevan</p>
-            </div>
-
-            <div class="card">
-                <h3>Pajak / Administrasi</h3>
-                <p>Bukti pembayaran</p>
-                <p>Dokumen administrasi terkait</p>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     CHECKLIST
-========================= -->
-
-<section id="page-checklist" class="page">
-
-    <div class="card">
-
-        <h2>Global Checklist</h2>
-
-        <div id="globalChecklist"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TRACKER
-========================= -->
-
-<section id="page-tracker" class="page">
-
-    <div class="card">
-
-        <h2>Project Tracker</h2>
-
-        <div class="toolbar">
-
-            <button
-                class="btn btn-primary"
-                onclick="addTask()">
-                + Tambah Task
-            </button>
-
-        </div>
-
-        <div id="taskList"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     RED FLAG
-========================= -->
-
-<section id="page-redflag" class="page">
-
-    <div class="card">
-
-        <h2>Red Flag Center</h2>
-
-        <div class="grid">
-
-            <div class="card">
-                <div class="muted">Critical</div>
-                <div class="kpi" id="criticalCount">0</div>
-            </div>
-
-            <div class="card">
-                <div class="muted">High</div>
-                <div class="kpi" id="highCount">0</div>
-            </div>
-
-            <div class="card">
-                <div class="muted">Medium</div>
-                <div class="kpi" id="mediumCount">0</div>
-            </div>
-
-        </div>
-
-        <button
-            class="btn btn-danger"
-            onclick="addRedFlag()">
-            + Tambah Red Flag
-        </button>
-
-        <div id="redFlagList"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     PIHAK
-========================= -->
-
-<section id="page-pihak" class="page">
-
-    <div class="card">
-
-        <h2>Database Para Pihak</h2>
-
-        <button
-            class="btn btn-primary"
-            onclick="addParty()">
-            + Tambah Pihak
-        </button>
-
-        <div id="partyList"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     LOG
-========================= -->
-
-<section id="page-log" class="page">
-
-    <div class="card">
-
-        <h2>Activity Log</h2>
-
-        <button
-            class="btn btn-primary"
-            onclick="addLog()">
-            + Tambah Aktivitas
-        </button>
-
-        <div id="activityLog"></div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TEMPLATE
-========================= -->
-
-<section id="page-template" class="page">
-
-    <div class="card">
-
-        <h2>Template Catatan Kerja</h2>
-
-        <h3>CASE SHEET</h3>
-
-<pre>
-NOMOR PERKARA :
-JENIS SPH      :
-PEMBERI TUGAS  :
-
-PARA PIHAK :
-1.
-2.
-3.
-
-OBJEK :
-LOKASI :
-LUAS :
-
-PROFESIONAL / PEJABAT :
-TARGET SELESAI :
-
-STATUS :
-</pre>
-
-    </div>
-
-    <div class="card">
-
-        <h3>STATUS BERKAS</h3>
-
-<pre>
-Tanggal :
-
-Sudah lengkap:
--
-
-Masih kurang:
--
-
-Ketidaksesuaian:
--
-
-Red Flag:
--
-
-Tindak lanjut:
--
-
-STATUS:
-BELUM DIMULAI
-PENGUMPULAN
-PEMERIKSAAN
-KLARIFIKASI
-SIAP PROSES
-SELESAI
-</pre>
-
-    </div>
-
-</section>
-
-</div>
-</div>
+</main>
 </div>
 
 
-<!-- =========================
-     MODAL
-========================= -->
+<!-- =========================================================
+     MODAL QUICK ENTRY
+========================================================= -->
 
-<div class="modal" id="modal">
+<div class="modal" id="quickModal">
 
-    <div class="modal-box">
+<div class="modal-box">
 
-        <div id="modalContent"></div>
+  <div class="modal-head">
+    <h3>Quick Entry</h3>
+    <button class="btn" onclick="closeModal('quickModal')">✕</button>
+  </div>
 
+  <div class="grid grid-2">
+
+    <div class="form-group">
+      <label>Jenis</label>
+      <select id="quickType">
+        <option value="task">Task</option>
+        <option value="risk">Red Flag</option>
+        <option value="note">Catatan</option>
+      </select>
     </div>
+
+    <div class="form-group">
+      <label>Persil</label>
+      <select id="quickPersil">
+        <option value="">Tidak terkait persil</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <label>Judul</label>
+    <input id="quickTitle" placeholder="Masukkan judul">
+  </div>
+
+  <div class="form-group">
+    <label>Catatan</label>
+    <textarea id="quickNote" placeholder="Keterangan"></textarea>
+  </div>
+
+  <div style="display:flex;gap:8px;justify-content:flex-end">
+    <button class="btn" onclick="closeModal('quickModal')">Batal</button>
+    <button class="btn primary" onclick="addQuickEntry()">Simpan</button>
+  </div>
 
 </div>
-
-
-<input
-    type="file"
-    id="importFile"
-    accept=".json"
-    style="display:none"
-    onchange="importJSON(event)">
-
-
-<!-- =========================
-     PRESENTATION
-========================= -->
-
-<div class="presentation" id="presentation">
-
-    <div class="slide" id="slide"></div>
-
-    <div class="slide-number" id="slideNumber"></div>
-
-    <div class="presentation-controls">
-
-        <button
-            class="btn"
-            onclick="previousSlide()">
-            ←
-        </button>
-
-        <button
-            class="btn"
-            onclick="nextSlide()">
-            →
-        </button>
-
-        <button
-            class="btn btn-danger"
-            onclick="closePresentation()">
-            EXIT
-        </button>
-
-    </div>
-
 </div>
 
 
 <script>
 
 /* =========================================================
-   DATABASE
+   APPLICATION DATA
 ========================================================= */
 
-const STORAGE_KEY = "MASTER_SPH_DATABASE_V1";
+const PHASES = [
 
-let DB = {
+{
+ id:1,
+ title:"Intake / Penerimaan Penugasan",
+ desc:"Menerima penugasan, memahami tujuan, ruang lingkup, pihak, objek, dan batas pekerjaan.",
+ output:"Intake Record + Scope of Work",
+ risk:"Penugasan tidak jelas atau pihak yang memberi tugas tidak berwenang."
+},
+
+{
+ id:2,
+ title:"Identifikasi Para Pihak",
+ desc:"Mencatat seluruh pihak dan kedudukannya dalam pekerjaan.",
+ output:"Party Register",
+ risk:"Identitas tidak konsisten, kewenangan bertindak tidak jelas."
+},
+
+{
+ id:3,
+ title:"Identifikasi Objek Tanah",
+ desc:"Mengidentifikasi objek, lokasi, alas hak, data fisik dan data yuridis.",
+ output:"Object / Parcel Profile",
+ risk:"Objek tidak jelas atau data fisik dan yuridis tidak konsisten."
+},
+
+{
+ id:4,
+ title:"Inventarisasi Dokumen",
+ desc:"Mencatat dokumen yang tersedia, belum tersedia, kedaluwarsa, atau perlu diverifikasi.",
+ output:"Document Register",
+ risk:"Dokumen penting hilang atau tidak dapat diverifikasi."
+},
+
+{
+ id:5,
+ title:"Verifikasi Dokumen",
+ desc:"Mencocokkan data administratif dan mengidentifikasi ketidaksesuaian.",
+ output:"Verification Report",
+ risk:"Dokumen palsu, tidak lengkap, atau data bertentangan."
+},
+
+{
+ id:6,
+ title:"Pemeriksaan Hak & Kewenangan",
+ desc:"Menentukan status hak dan siapa yang secara hukum berwenang melakukan tindakan.",
+ output:"Authority Assessment",
+ risk:"Pihak tidak berwenang atau tindakan berada di luar kewenangan operator."
+},
+
+{
+ id:7,
+ title:"Due Diligence / Risiko",
+ desc:"Mengidentifikasi risiko hukum, administrasi, sengketa, pajak, dan transaksi.",
+ output:"Risk Assessment",
+ risk:"Ada sengketa, blokir, sita, beban, atau masalah hukum."
+},
+
+{
+ id:8,
+ title:"Klarifikasi & Konfrontasi Data",
+ desc:"Mengklarifikasi data yang tidak konsisten kepada pihak atau instansi terkait.",
+ output:"Clarification Record",
+ risk:"Klarifikasi gagal atau terdapat konflik data."
+},
+
+{
+ id:9,
+ title:"Penentuan Jalur Hukum",
+ desc:"Menentukan jalur proses berdasarkan jenis perbuatan dan kewenangan pejabat.",
+ output:"Legal Route Decision",
+ risk:"Jalur hukum salah atau tindakan dilakukan oleh pihak yang tidak berwenang."
+},
+
+{
+ id:10,
+ title:"Drafting / Penyusunan Dokumen",
+ desc:"Penyusunan dokumen sesuai kewenangan dan kebutuhan kasus.",
+ output:"Draft Document",
+ risk:"Dokumen dianggap sebagai akta resmi padahal bukan dibuat oleh pejabat berwenang."
+},
+
+{
+ id:11,
+ title:"Review Administratif",
+ desc:"Pemeriksaan kelengkapan, konsistensi, penamaan, nomor, tanggal, dan lampiran.",
+ output:"Administrative Review",
+ risk:"Kesalahan administratif."
+},
+
+{
+ id:12,
+ title:"Review Profesional",
+ desc:"Review oleh profesi/pejabat yang berwenang sesuai tindakan hukum.",
+ output:"Professional Approval / Advice",
+ risk:"Operator mengambil alih kewenangan profesi."
+},
+
+{
+ id:13,
+ title:"Pre-Signing Control",
+ desc:"Pemeriksaan terakhir sebelum penandatanganan.",
+ output:"Signing Clearance",
+ risk:"Dokumen belum final atau pihak belum siap menandatangani."
+},
+
+{
+ id:14,
+ title:"Penandatanganan",
+ desc:"Penandatanganan dilakukan oleh pihak dan pejabat yang berwenang.",
+ output:"Executed Document",
+ risk:"Penandatangan tidak berwenang atau prosedur formal tidak terpenuhi."
+},
+
+{
+ id:15,
+ title:"Post-Signing / Pendaftaran",
+ desc:"Tindak lanjut setelah dokumen ditandatangani termasuk proses administrasi/pendaftaran yang relevan.",
+ output:"Registration / Follow-up Record",
+ risk:"Dokumen tidak ditindaklanjuti atau batas waktu terlewat."
+},
+
+{
+ id:16,
+ title:"Arsip & Closing",
+ desc:"Memastikan seluruh dokumen, bukti, keputusan, dan audit trail tersimpan.",
+ output:"Closing Report + Archive",
+ risk:"Berkas tidak lengkap dan sulit diaudit."
+}
+
+];
+
+
+/*
+  LEGAL REGISTER
+
+  Catatan:
+  Status dibuat konservatif.
+  Jangan gunakan daftar ini sebagai satu-satunya sumber hukum.
+  Setiap perkara harus diverifikasi kembali terhadap JDIH resmi
+  dan regulasi yang berlaku pada saat tindakan dilakukan.
+*/
+
+const LEGAL = [
+
+{
+ code:"UUPA",
+ name:"UU No. 5 Tahun 1960",
+ title:"Peraturan Dasar Pokok-Pokok Agraria",
+ status:"BERLAKU",
+ authority:"UU / Pertanahan",
+ note:"Kerangka dasar hukum agraria nasional."
+},
+
+{
+ code:"PP24",
+ name:"PP No. 24 Tahun 1997",
+ title:"Pendaftaran Tanah",
+ status:"BERLAKU DENGAN PERUBAHAN",
+ authority:"Pendaftaran Tanah",
+ note:"Kerangka pendaftaran tanah; perlu dibaca bersama perubahan dan aturan pelaksana yang berlaku."
+},
+
+{
+ code:"PP18",
+ name:"PP No. 18 Tahun 2021",
+ title:"Hak Pengelolaan, Hak Atas Tanah, Satuan Rumah Susun, dan Pendaftaran Tanah",
+ status:"BERLAKU",
+ authority:"Pertanahan",
+ note:"Regulasi penting mengenai hak dan pendaftaran tanah."
+},
+
+{
+ code:"PP37",
+ name:"PP No. 37 Tahun 1998",
+ title:"Peraturan Jabatan Pejabat Pembuat Akta Tanah",
+ status:"DIUBAH",
+ authority:"PPAT",
+ note:"Ketentuan jabatan PPAT; dibaca bersama PP perubahan."
+},
+
+{
+ code:"PP24-2016",
+ name:"PP No. 24 Tahun 2016",
+ title:"Perubahan atas PP No. 37 Tahun 1998",
+ status:"BERLAKU",
+ authority:"PPAT",
+ note:"Perubahan ketentuan jabatan PPAT."
+},
+
+{
+ code:"PMNA3",
+ name:"PMNA/KBPN No. 3 Tahun 1997",
+ title:"Ketentuan Pelaksanaan PP No. 24 Tahun 1997",
+ status:"DIUBAH",
+ authority:"Teknis Pendaftaran Tanah",
+ note:"Perlu dibaca bersama perubahan-perubahan yang masih berlaku."
+},
+
+{
+ code:"PERMEN7-2019",
+ name:"Permen ATR/BPN No. 7 Tahun 2019",
+ title:"Perubahan Kedua atas PMNA/KBPN No. 3 Tahun 1997",
+ status:"BERLAKU",
+ authority:"Teknis Pendaftaran Tanah",
+ note:"Perubahan ketentuan teknis pendaftaran tanah."
+},
+
+{
+ code:"PERMEN16-2021",
+ name:"Permen ATR/BPN No. 16 Tahun 2021",
+ title:"Perubahan Ketiga atas PMNA/KBPN No. 3 Tahun 1997",
+ status:"BERLAKU DENGAN CATATAN",
+ authority:"Teknis Pendaftaran Tanah",
+ note:"Sebagian ketentuannya kemudian dicabut/diubah oleh regulasi berikutnya."
+},
+
+{
+ code:"PERMEN16-2022",
+ name:"Permen ATR/BPN No. 16 Tahun 2022",
+ title:"Perubahan Ketentuan Pendaftaran Tanah",
+ status:"BERLAKU",
+ authority:"Teknis Pendaftaran Tanah",
+ note:"Harus diperhatikan dalam membaca ketentuan teknis yang telah berubah."
+},
+
+{
+ code:"PERMEN21-2020",
+ name:"Permen ATR/BPN No. 21 Tahun 2020",
+ title:"Penanganan dan Penyelesaian Kasus Pertanahan",
+ status:"BERLAKU",
+ authority:"Kasus Pertanahan",
+ note:"Relevan ketika ditemukan indikasi kasus/sengketa/konflik pertanahan."
+}
+
+];
+
+
+/* =========================================================
+   ROLE MATRIX
+========================================================= */
+
+const ROLES = [
+
+{
+ role:"Operator / Admin",
+ allowed:[
+   "Input data",
+   "Scan/index dokumen",
+   "Checklist administratif",
+   "Tracking",
+   "Membuat laporan administratif"
+ ],
+ forbidden:[
+   "Mengambil alih kewenangan PPAT",
+   "Membuat akta yang merupakan kewenangan pejabat",
+   "Menyatakan legal clearance final tanpa kewenangan",
+   "Mengubah data resmi instansi"
+ ]
+},
+
+{
+ role:"Project Supervisor",
+ allowed:[
+   "Mengawasi pekerjaan",
+   "Memeriksa kelengkapan administratif",
+   "Mengendalikan deadline",
+   "Menentukan eskalasi internal"
+ ],
+ forbidden:[
+   "Menggantikan pejabat yang memiliki kewenangan hukum khusus",
+   "Memberikan keputusan instansi"
+ ]
+},
+
+{
+ role:"Notaris",
+ allowed:[
+   "Tindakan kenotariatan sesuai peraturan",
+   "Pembuatan akta yang menjadi kewenangan Notaris"
+ ],
+ forbidden:[
+   "Bertindak di luar kewenangan jabatan"
+ ]
+},
+
+{
+ role:"PPAT",
+ allowed:[
+   "Tindakan dan akta PPAT sesuai peraturan",
+   "Pelaksanaan kewajiban PPAT dalam proses yang menjadi kewenangannya"
+ ],
+ forbidden:[
+   "Bertindak di luar wilayah/kewenangan jabatan"
+ ]
+},
+
+{
+ role:"Advokat / Legal Reviewer",
+ allowed:[
+   "Analisis hukum",
+   "Legal opinion sesuai penugasan",
+   "Review kontrak/dokumen sesuai kompetensi"
+ ],
+ forbidden:[
+   "Menggantikan kewenangan pejabat pertanahan atau PPAT"
+ ]
+},
+
+{
+ role:"Kantor Pertanahan / ATR-BPN",
+ allowed:[
+   "Pelayanan dan administrasi pertanahan sesuai kewenangan"
+ ],
+ forbidden:[
+   "Tidak relevan untuk diisi sebagai kewenangan operator proyek"
+ ]
+}
+
+];
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+let state = JSON.parse(localStorage.getItem("MASTER_SPH_DATA") || "null");
+
+if(!state){
+
+  state = {
+
     project:{
-        name:"MASTER SPH",
-        totalPersil:56
+      name:"MASTER SPH",
+      description:"Sistem kontrol administrasi, legal, dan project tracking",
+      owner:"",
+      supervisor:"",
+      startDate:"",
+      targetDate:""
     },
 
     persils:[],
 
-    tasks:[],
-
-    redFlags:[],
-
     parties:[],
 
-    logs:[],
+    documents:[],
 
-    checklist:{},
+    tasks:[],
 
-    phaseProgress:Array(16).fill(0)
-};
+    risks:[],
 
+    notes:[],
 
-/* =========================================================
-   INITIALIZE 56 PERSIL
-========================================================= */
+    audit:[],
 
-function createInitialPersils(){
+    phaseStatus:{}
 
-    const arr=[];
+  };
 
-    for(let i=1;i<=56;i++){
+  for(let i=1;i<=56;i++){
 
-        arr.push({
+    state.persils.push({
+      id:i,
+      code:"P-"+String(i).padStart(3,"0"),
+      name:"",
+      village:"",
+      district:"",
+      city:"",
+      province:"",
+      landRight:"",
+      certificate:"",
+      owner:"",
+      status:"BELUM DIMULAI",
+      currentPhase:1,
+      risk:"BELUM DINILAI",
+      notes:""
+    });
 
-            id:"P-"+String(i).padStart(3,"0"),
+    state.phaseStatus[i]={};
 
-            number:i,
+  }
 
-            owner:"",
-
-            location:"",
-
-            area:"",
-
-            phase:1,
-
-            status:"BELUM DIMULAI",
-
-            progress:0,
-
-            documents:{
-                identity:"MISSING",
-                object:"MISSING",
-                authority:"MISSING",
-                tax:"MISSING",
-                supporting:"MISSING"
-            },
-
-            notes:"",
-
-            deadline:""
-
-        });
-
-    }
-
-    return arr;
-}
-
-
-/* =========================================================
-   LOAD
-========================================================= */
-
-function loadDB(){
-
-    const saved=localStorage.getItem(STORAGE_KEY);
-
-    if(saved){
-
-        try{
-
-            const parsed=JSON.parse(saved);
-
-            DB={
-                ...DB,
-                ...parsed
-            };
-
-        }catch(e){
-
-            DB.persils=createInitialPersils();
-
-        }
-
-    }else{
-
-        DB.persils=createInitialPersils();
-
-    }
+  saveData();
 
 }
 
 
 /* =========================================================
-   SAVE
+   HELPERS
 ========================================================= */
 
-function saveDB(){
+function saveData(){
 
-    localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(DB)
-    );
+  localStorage.setItem(
+    "MASTER_SPH_DATA",
+    JSON.stringify(state)
+  );
 
-    updateDashboard();
+  addAudit("SYSTEM","Data disimpan");
 
+  toast("Data berhasil disimpan");
+
+}
+
+
+function addAudit(type,message){
+
+  if(!state.audit) state.audit=[];
+
+  state.audit.unshift({
+    time:new Date().toLocaleString("id-ID"),
+    type,
+    message
+  });
+
+  if(state.audit.length>500){
+    state.audit=state.audit.slice(0,500);
+  }
+
+  localStorage.setItem(
+    "MASTER_SPH_DATA",
+    JSON.stringify(state)
+  );
+
+}
+
+
+function toast(message){
+
+  const el=document.createElement("div");
+
+  el.textContent=message;
+
+  el.style.position="fixed";
+  el.style.bottom="20px";
+  el.style.right="20px";
+  el.style.zIndex="999";
+  el.style.background="#111827";
+  el.style.color="white";
+  el.style.padding="11px 15px";
+  el.style.borderRadius="9px";
+  el.style.fontSize="12px";
+  el.style.fontWeight="700";
+
+  document.body.appendChild(el);
+
+  setTimeout(()=>el.remove(),2200);
+
+}
+
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+
+}
+
+
+function statusBadge(status){
+
+  const s=String(status||"").toUpperCase();
+
+  let cls="gray";
+
+  if(
+    s.includes("SELESAI") ||
+    s.includes("PASS") ||
+    s.includes("BERLAKU")
+  ) cls="green";
+
+  else if(
+    s.includes("PROSES") ||
+    s.includes("PENDING") ||
+    s.includes("REVIEW")
+  ) cls="yellow";
+
+  else if(
+    s.includes("BLOCK") ||
+    s.includes("RED") ||
+    s.includes("RISIKO")
+  ) cls="red";
+
+  else if(
+    s.includes("AKTIF")
+  ) cls="blue";
+
+  return `<span class="badge ${cls}">${esc(status)}</span>`;
+
+}
+
+
+function openModal(id){
+  document.getElementById(id).classList.add("show");
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove("show");
+}
+
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
 }
 
 
@@ -1312,1495 +1350,46 @@ function saveDB(){
    NAVIGATION
 ========================================================= */
 
-function showPage(name,button){
-
-    document
-        .querySelectorAll(".page")
-        .forEach(p=>p.classList.remove("active"));
-
-    const page=document.getElementById("page-"+name);
-
-    if(page){
-        page.classList.add("active");
-    }
-
-    document
-        .querySelectorAll(".nav button")
-        .forEach(b=>b.classList.remove("active"));
-
-    if(button){
-        button.classList.add("active");
-    }
-
-    if(window.innerWidth<=900){
-        document
-            .getElementById("sidebar")
-            .classList.remove("show");
-    }
-
-    renderAll();
-
-}
-
-
-function toggleSidebar(){
-
-    document
-        .getElementById("sidebar")
-        .classList.toggle("show");
-
-}
-
-
-/* =========================================================
-   PHASE DATA
-========================================================= */
-
-const phases=[
-
-{
-title:"Intake / Penerimaan Penugasan",
-goal:"Memahami tujuan pekerjaan, pihak yang memberi tugas, objek, target waktu, dan batas kewenangan.",
-input:[
-"Penugasan",
-"Informasi awal",
-"Daftar pihak",
-"Informasi objek"
-],
-steps:[
-"Terima penugasan.",
-"Catat tujuan pekerjaan.",
-"Identifikasi para pihak.",
-"Identifikasi objek.",
-"Tentukan target waktu.",
-"Buat folder perkara.",
-"Buat checklist awal."
-],
-checks:[
-"Tujuan pekerjaan jelas.",
-"Pemberi tugas jelas.",
-"Para pihak diketahui.",
-"Objek diketahui.",
-"Target waktu tercatat."
-],
-red:[
-"Tujuan tidak jelas.",
-"Pemberi tugas tidak jelas.",
-"Diminta melakukan tindakan di luar kewenangan."
-],
-output:"Case Sheet dan checklist awal."
-},
-
-{
-title:"Identifikasi Para Pihak",
-goal:"Memastikan seluruh pihak yang terlibat telah teridentifikasi.",
-input:[
-"Identitas pihak",
-"Informasi hubungan antar pihak"
-],
-steps:[
-"Kumpulkan identitas.",
-"Catat kapasitas setiap pihak.",
-"Identifikasi hubungan hukum.",
-"Identifikasi pihak lain yang mungkin diperlukan."
-],
-checks:[
-"Nama lengkap konsisten.",
-"Nomor identitas konsisten.",
-"Alamat konsisten.",
-"Kapasitas bertindak jelas."
-],
-red:[
-"Nama berbeda.",
-"Identitas tidak dapat diverifikasi.",
-"Pihak tidak jelas kewenangannya."
-],
-output:"Daftar para pihak terverifikasi."
-},
-
-{
-title:"Pemeriksaan Objek",
-goal:"Memastikan objek dapat diidentifikasi dengan jelas.",
-input:[
-"Dokumen objek",
-"Informasi lokasi",
-"Data ukuran/luas"
-],
-steps:[
-"Catat identitas objek.",
-"Catat lokasi.",
-"Catat luas/ukuran.",
-"Catat nomor dokumen.",
-"Cocokkan data antar dokumen."
-],
-checks:[
-"Nomor dokumen benar.",
-"Lokasi konsisten.",
-"Luas/ukuran konsisten.",
-"Pemegang hak tercatat."
-],
-red:[
-"Objek tidak jelas.",
-"Data berbeda.",
-"Dokumen sumber tidak tersedia."
-],
-output:"Object Sheet."
-},
-
-{
-title:"Pengumpulan Dokumen",
-goal:"Mengumpulkan seluruh dokumen yang dibutuhkan.",
-input:[
-"Daftar dokumen"
-],
-steps:[
-"Buat daftar dokumen.",
-"Minta dokumen.",
-"Catat tanggal diterima.",
-"Scan/foto bila diperlukan.",
-"Kelompokkan berdasarkan kategori."
-],
-checks:[
-"Identitas tersedia.",
-"Dokumen objek tersedia.",
-"Dokumen kewenangan tersedia.",
-"Dokumen pendukung tersedia."
-],
-red:[
-"Dokumen hilang.",
-"Dokumen rusak.",
-"Dokumen tidak terbaca."
-],
-output:"Document Register."
-},
-
-{
-title:"Verifikasi Dokumen",
-goal:"Memeriksa konsistensi dan status dokumen.",
-input:[
-"Dokumen yang terkumpul"
-],
-steps:[
-"Periksa identitas.",
-"Periksa nomor.",
-"Periksa tanggal.",
-"Periksa keterkaitan antar dokumen.",
-"Catat ketidaksesuaian."
-],
-checks:[
-"Nama cocok.",
-"Nomor cocok.",
-"Tanggal masuk akal.",
-"Dokumen saling mendukung."
-],
-red:[
-"Data tidak konsisten.",
-"Dokumen meragukan.",
-"Informasi tidak dapat diverifikasi."
-],
-output:"Verification Report."
-},
-
-{
-title:"Pemeriksaan Dasar Hak / Kewenangan",
-goal:"Memastikan pihak yang bertindak memiliki dasar hak atau kewenangan.",
-input:[
-"Dokumen hak",
-"Surat kuasa",
-"Persetujuan",
-"Dokumen badan hukum bila relevan"
-],
-steps:[
-"Identifikasi dasar hak.",
-"Identifikasi pemegang hak.",
-"Periksa kewenangan.",
-"Periksa representasi.",
-"Catat kebutuhan persetujuan."
-],
-checks:[
-"Dasar hak jelas.",
-"Pemegang hak jelas.",
-"Kuasa jelas bila digunakan.",
-"Persetujuan telah diperiksa."
-],
-red:[
-"Kewenangan tidak jelas.",
-"Kuasa tidak memadai.",
-"Pemegang hak tidak sesuai."
-],
-output:"Authority Check."
-},
-
-{
-title:"Due Diligence / Pemeriksaan Risiko",
-goal:"Mengidentifikasi potensi sengketa, beban, atau hambatan.",
-input:[
-"Verification Report",
-"Authority Check",
-"Dokumen objek"
-],
-steps:[
-"Identifikasi potensi sengketa.",
-"Identifikasi beban/hambatan.",
-"Periksa kebutuhan klarifikasi.",
-"Catat risiko.",
-"Eskalasi kepada profesional bila diperlukan."
-],
-checks:[
-"Red flag dicatat.",
-"Risiko diklasifikasikan.",
-"Tindakan lanjutan ditentukan."
-],
-red:[
-"Sengketa.",
-"Blokir/sita/beban.",
-"Data tidak konsisten.",
-"Pihak menolak memberikan klarifikasi."
-],
-output:"Risk Register."
-},
-
-{
-title:"Klarifikasi",
-goal:"Menyelesaikan ketidaksesuaian sebelum drafting final.",
-input:[
-"Daftar masalah",
-"Pertanyaan klarifikasi"
-],
-steps:[
-"Buat daftar pertanyaan.",
-"Hubungi pihak terkait.",
-"Minta dokumen tambahan.",
-"Catat jawaban.",
-"Update status."
-],
-checks:[
-"Semua pertanyaan terjawab.",
-"Bukti pendukung tersedia.",
-"Profesional telah diberi informasi."
-],
-red:[
-"Jawaban bertentangan.",
-"Dokumen baru menimbulkan masalah baru."
-],
-output:"Clarification Record."
-},
-
-{
-title:"Penyusunan Draft",
-goal:"Menyusun dokumen berdasarkan fakta yang telah diverifikasi.",
-input:[
-"Data pihak",
-"Data objek",
-"Hasil pemeriksaan"
-],
-steps:[
-"Susun struktur.",
-"Masukkan data terverifikasi.",
-"Masukkan ketentuan yang diperlukan.",
-"Tambahkan lampiran.",
-"Buat versi draft."
-],
-checks:[
-"Identitas benar.",
-"Objek benar.",
-"Angka benar.",
-"Lampiran tersedia.",
-"Versi tercatat."
-],
-red:[
-"Masih ada data kosong.",
-"Fakta belum terverifikasi."
-],
-output:"Draft V01."
-},
-
-{
-title:"Review Internal",
-goal:"Melakukan pemeriksaan ulang sebelum review profesional.",
-input:[
-"Draft"
-],
-steps:[
-"Baca dari awal.",
-"Cocokkan dengan dokumen sumber.",
-"Periksa angka.",
-"Periksa nama.",
-"Periksa lampiran.",
-"Catat perubahan."
-],
-checks:[
-"Fakta benar.",
-"Bahasa konsisten.",
-"Nomor benar.",
-"Versi jelas."
-],
-red:[
-"Kesalahan fakta.",
-"Kontradiksi klausul."
-],
-output:"Draft Review."
-},
-
-{
-title:"Review Profesional",
-goal:"Mendapatkan pemeriksaan dari pihak yang memiliki kewenangan profesional.",
-input:[
-"Draft review",
-"Dokumen sumber"
-],
-steps:[
-"Serahkan berkas.",
-"Catat komentar.",
-"Revisi sesuai instruksi.",
-"Catat versi.",
-"Pastikan approval."
-],
-checks:[
-"Review dilakukan.",
-"Komentar ditindaklanjuti.",
-"Versi final ditetapkan."
-],
-red:[
-"Belum mendapat persetujuan.",
-"Masih terdapat masalah hukum."
-],
-output:"Approved Draft."
-},
-
-{
-title:"Persiapan Penandatanganan",
-goal:"Memastikan seluruh kondisi administrasi siap.",
-input:[
-"Approved Draft",
-"Identitas pihak",
-"Lampiran"
-],
-steps:[
-"Konfirmasi jadwal.",
-"Konfirmasi kehadiran.",
-"Siapkan dokumen.",
-"Siapkan lampiran.",
-"Periksa halaman."
-],
-checks:[
-"Semua pihak siap.",
-"Dokumen final tersedia.",
-"Lampiran lengkap."
-],
-red:[
-"Pihak tidak hadir.",
-"Dokumen belum final."
-],
-output:"Signing Package."
-},
-
-{
-title:"Penandatanganan",
-goal:"Melaksanakan penandatanganan sesuai prosedur.",
-input:[
-"Signing Package"
-],
-steps:[
-"Verifikasi pihak.",
-"Ikuti instruksi pejabat.",
-"Lakukan tanda tangan.",
-"Paraf bila diwajibkan.",
-"Pastikan seluruh halaman."
-],
-checks:[
-"Pihak benar.",
-"Dokumen benar.",
-"Tanda tangan lengkap."
-],
-red:[
-"Identitas tidak sesuai.",
-"Pihak menolak.",
-"Dokumen berubah tanpa review."
-],
-output:"Signed Document."
-},
-
-{
-title:"Tindak Lanjut",
-goal:"Menyelesaikan kewajiban setelah penandatanganan.",
-input:[
-"Signed Document"
-],
-steps:[
-"Catat nomor/tanggal.",
-"Catat bukti.",
-"Serahkan dokumen bila diperlukan.",
-"Lakukan tindak lanjut instansi."
-],
-checks:[
-"Nomor tercatat.",
-"Tanggal tercatat.",
-"Bukti tersimpan.",
-"Outstanding dicatat."
-],
-red:[
-"Tindak lanjut terlewat.",
-"Dokumen tidak tersampaikan."
-],
-output:"Post-Signing Record."
-},
-
-{
-title:"Pengarsipan",
-goal:"Menyimpan seluruh dokumen dan bukti secara sistematis.",
-input:[
-"Dokumen final",
-"Bukti proses"
-],
-steps:[
-"Scan dokumen.",
-"Rename file.",
-"Kelompokkan folder.",
-"Backup.",
-"Catat lokasi arsip."
-],
-checks:[
-"Arsip digital tersedia.",
-"Arsip fisik tersedia.",
-"Backup tersedia."
-],
-red:[
-"File hilang.",
-"Arsip tidak lengkap."
-],
-output:"Archive Package."
-},
-
-{
-title:"Closing / Penutupan Perkara",
-goal:"Memastikan seluruh pekerjaan selesai atau memiliki status outstanding yang jelas.",
-input:[
-"Archive Package",
-"Outstanding list"
-],
-steps:[
-"Review seluruh fase.",
-"Review seluruh persil.",
-"Review red flag.",
-"Pastikan task selesai.",
-"Buat laporan akhir.",
-"Tutup perkara."
-],
-checks:[
-"16 fase terdokumentasi.",
-"56 persil memiliki status.",
-"Outstanding jelas.",
-"Laporan akhir tersimpan."
-],
-red:[
-"Masih ada pekerjaan tanpa PIC.",
-"Masalah belum memiliki status."
-],
-output:"Final Project Report."
-}
-
-];
-
-
-/* =========================================================
-   RENDER PHASES
-========================================================= */
-
-function renderPhases(){
-
-    const container=
-        document.getElementById("phaseContainer");
-
-    container.innerHTML="";
-
-    phases.forEach((phase,index)=>{
-
-        const div=document.createElement("div");
-
-        div.className="phase";
-
-        div.innerHTML=`
-
-            <div class="phase-header"
-                 onclick="togglePhase(this.parentElement)">
-
-                <div class="phase-number">
-                    ${String(index+1).padStart(2,"0")}
-                </div>
-
-                <div style="flex:1">
-
-                    <strong>
-                        FASE ${index+1} —
-                        ${phase.title}
-                    </strong>
-
-                    <div class="muted">
-                        ${phase.goal}
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="phase-body">
-
-                <h3>🎯 Tujuan</h3>
-
-                <p>${phase.goal}</p>
-
-                <h3>📥 Input</h3>
-
-                <ul>
-                    ${phase.input.map(x=>`<li>${x}</li>`).join("")}
-                </ul>
-
-                <h3>🔧 Langkah Kerja</h3>
-
-                <ol>
-                    ${phase.steps.map(x=>`<li>${x}</li>`).join("")}
-                </ol>
-
-                <h3>🔍 Checklist</h3>
-
-                ${phase.checks.map((x,i)=>`
-
-                    <label class="check">
-
-                        <input
-                            type="checkbox"
-                            data-phase="${index}"
-                            onchange="savePhaseCheck(this)">
-
-                        <span>${x}</span>
-
-                    </label>
-
-                `).join("")}
-
-                <h3>⚠️ Red Flag</h3>
-
-                <ul>
-                    ${phase.red.map(x=>`<li>${x}</li>`).join("")}
-                </ul>
-
-                <div class="alert alert-success">
-
-                    <strong>OUTPUT:</strong>
-
-                    ${phase.output}
-
-                </div>
-
-            </div>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
-}
-
-
-/* =========================================================
-   PHASE CHECK
-========================================================= */
-
-function savePhaseCheck(input){
-
-    const key=input.dataset.phase+"_"+input.nextElementSibling.innerText;
-
-    DB.checklist[key]=input.checked;
-
-    saveDB();
-
-}
-
-
-/* =========================================================
-   TOGGLE PHASE
-========================================================= */
-
-function togglePhase(el){
-
-    el.classList.toggle("open");
-
-}
-
-
-/* =========================================================
-   PERSIL
-========================================================= */
-
-function renderPersils(){
-
-    const tbody=document.getElementById("persilTable");
-
-    const filter=
-        document.getElementById("persilFilter").value;
-
-    tbody.innerHTML="";
-
-    DB.persils
-        .filter(p=>!filter || p.status===filter)
-        .forEach(p=>{
-
-            const tr=document.createElement("tr");
-
-            tr.innerHTML=`
-
-                <td><strong>${p.id}</strong></td>
-
-                <td>
-                    ${p.owner || "-"}
-                </td>
-
-                <td>
-                    ${p.location || "-"}
-                </td>
-
-                <td>
-                    ${p.area || "-"}
-                </td>
-
-                <td>
-                    Fase ${p.phase}
-                </td>
-
-                <td>
-                    <span class="badge ${statusClass(p.status)}">
-                        ${p.status}
-                    </span>
-                </td>
-
-                <td style="min-width:150px">
-
-                    <div class="progress">
-
-                        <div
-                            class="progress-bar"
-                            style="width:${p.progress}%">
-                        </div>
-
-                    </div>
-
-                    <small>${p.progress}%</small>
-
-                </td>
-
-                <td>
-
-                    <button
-                        class="btn"
-                        onclick="editPersil('${p.id}')">
-                        Detail
-                    </button>
-
-                </td>
-
-            `;
-
-            tbody.appendChild(tr);
-
-        });
-
-}
-
-
-function statusClass(status){
-
-    if(status==="SELESAI")
-        return "success";
-
-    if(status==="BERMASALAH")
-        return "danger";
-
-    if(status==="DALAM PROSES" ||
-       status==="SIAP PROSES")
-        return "info";
-
-    if(status==="MENUNGGU DOKUMEN")
-        return "warning";
-
-    return "";
-
-}
-
-
-/* =========================================================
-   ADD PERSIL
-========================================================= */
-
-function addPersil(){
-
-    const html=`
-
-        <h2>Tambah / Edit Persil</h2>
-
-        <div class="form-grid">
-
-            <div class="form-group">
-
-                <label>ID Persil</label>
-
-                <input id="fId"
-                       placeholder="P-001">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Pemilik</label>
-
-                <input id="fOwner">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Lokasi</label>
-
-                <input id="fLocation">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Luas</label>
-
-                <input id="fArea">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Fase</label>
-
-                <select id="fPhase">
-
-                    ${phases.map((p,i)=>
-                        `<option value="${i+1}">
-                            Fase ${i+1} — ${p.title}
-                        </option>`
-                    ).join("")}
-
-                </select>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Status</label>
-
-                <select id="fStatus">
-
-                    <option>BELUM DIMULAI</option>
-                    <option>DALAM PROSES</option>
-                    <option>MENUNGGU DOKUMEN</option>
-                    <option>BERMASALAH</option>
-                    <option>SIAP PROSES</option>
-                    <option>SELESAI</option>
-
-                </select>
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Progress (%)</label>
-
-                <input id="fProgress"
-                       type="number"
-                       min="0"
-                       max="100"
-                       value="0">
-
-            </div>
-
-            <div class="form-group">
-
-                <label>Deadline</label>
-
-                <input id="fDeadline"
-                       type="date">
-
-            </div>
-
-        </div>
-
-        <br>
-
-        <div class="form-group">
-
-            <label>Catatan</label>
-
-            <textarea id="fNotes"></textarea>
-
-        </div>
-
-        <br>
-
-        <button
-            class="btn btn-primary"
-            onclick="savePersil()">
-            Simpan
-        </button>
-
-        <button
-            class="btn"
-            onclick="closeModal()">
-            Batal
-        </button>
-
-    `;
-
-    openModal(html);
-
-}
-
-
-function savePersil(){
-
-    const id=
-        document.getElementById("fId").value.trim();
-
-    if(!id){
-
-        alert("ID persil wajib diisi.");
-
-        return;
-
-    }
-
-    let p=
-        DB.persils.find(x=>x.id===id);
-
-    if(!p){
-
-        p={
-            id,
-            number:DB.persils.length+1,
-            documents:{
-                identity:"MISSING",
-                object:"MISSING",
-                authority:"MISSING",
-                tax:"MISSING",
-                supporting:"MISSING"
-            }
-        };
-
-        DB.persils.push(p);
-
-    }
-
-    p.owner=
-        document.getElementById("fOwner").value;
-
-    p.location=
-        document.getElementById("fLocation").value;
-
-    p.area=
-        document.getElementById("fArea").value;
-
-    p.phase=
-        Number(document.getElementById("fPhase").value);
-
-    p.status=
-        document.getElementById("fStatus").value;
-
-    p.progress=
-        Math.max(
-            0,
-            Math.min(
-                100,
-                Number(document.getElementById("fProgress").value)||0
-            )
-        );
-
-    p.deadline=
-        document.getElementById("fDeadline").value;
-
-    p.notes=
-        document.getElementById("fNotes").value;
-
-    saveDB();
-
-    closeModal();
-
-    renderPersils();
-
-}
-
-
-function editPersil(id){
-
-    const p=
-        DB.persils.find(x=>x.id===id);
-
-    if(!p) return;
-
-    openModal(`
-
-        <h2>${p.id}</h2>
-
-        <div class="form-grid">
-
-            <div>
-                <label>Pemilik</label>
-                <input id="eOwner" value="${escapeAttr(p.owner)}">
-            </div>
-
-            <div>
-                <label>Lokasi</label>
-                <input id="eLocation" value="${escapeAttr(p.location)}">
-            </div>
-
-            <div>
-                <label>Luas</label>
-                <input id="eArea" value="${escapeAttr(p.area)}">
-            </div>
-
-            <div>
-                <label>Fase</label>
-                <select id="ePhase">
-                    ${phases.map((x,i)=>
-                        `<option value="${i+1}" ${p.phase===i+1?"selected":""}>
-                            Fase ${i+1}
-                        </option>`
-                    ).join("")}
-                </select>
-            </div>
-
-            <div>
-                <label>Status</label>
-                <select id="eStatus">
-                    ${[
-                        "BELUM DIMULAI",
-                        "DALAM PROSES",
-                        "MENUNGGU DOKUMEN",
-                        "BERMASALAH",
-                        "SIAP PROSES",
-                        "SELESAI"
-                    ].map(x=>
-                        `<option ${p.status===x?"selected":""}>
-                            ${x}
-                        </option>`
-                    ).join("")}
-                </select>
-            </div>
-
-            <div>
-                <label>Progress</label>
-                <input id="eProgress"
-                       type="number"
-                       min="0"
-                       max="100"
-                       value="${p.progress}">
-            </div>
-
-            <div>
-                <label>Deadline</label>
-                <input id="eDeadline"
-                       type="date"
-                       value="${p.deadline||""}">
-            </div>
-
-        </div>
-
-        <br>
-
-        <label>Catatan</label>
-
-        <textarea id="eNotes">${escapeHTML(p.notes||"")}</textarea>
-
-        <br><br>
-
-        <button
-            class="btn btn-primary"
-            onclick="updatePersil('${id}')">
-            Simpan Perubahan
-        </button>
-
-        <button
-            class="btn btn-danger"
-            onclick="deletePersil('${id}')">
-            Hapus
-        </button>
-
-    `);
-
-}
-
-
-function updatePersil(id){
-
-    const p=
-        DB.persils.find(x=>x.id===id);
-
-    if(!p)return;
-
-    p.owner=
-        document.getElementById("eOwner").value;
-
-    p.location=
-        document.getElementById("eLocation").value;
-
-    p.area=
-        document.getElementById("eArea").value;
-
-    p.phase=
-        Number(document.getElementById("ePhase").value);
-
-    p.status=
-        document.getElementById("eStatus").value;
-
-    p.progress=
-        Number(document.getElementById("eProgress").value)||0;
-
-    p.deadline=
-        document.getElementById("eDeadline").value;
-
-    p.notes=
-        document.getElementById("eNotes").value;
-
-    saveDB();
-
-    closeModal();
-
-    renderAll();
-
-}
-
-
-function deletePersil(id){
-
-    if(!confirm("Hapus persil ini?")) return;
-
-    DB.persils=
-        DB.persils.filter(x=>x.id!==id);
-
-    saveDB();
-
-    closeModal();
-
-    renderAll();
-
-}
-
-
-/* =========================================================
-   TASK
-========================================================= */
-
-function addTask(){
-
-    const title=
-        prompt("Nama task:");
-
-    if(!title)return;
-
-    const task={
-        id:"TASK-"+Date.now(),
-        title,
-        persil:"",
-        phase:"",
-        pic:"",
-        deadline:"",
-        status:"TODO"
-    };
-
-    DB.tasks.push(task);
-
-    saveDB();
-
-    renderTasks();
-
-}
-
-
-function renderTasks(){
-
-    const el=
-        document.getElementById("taskList");
-
-    el.innerHTML="";
-
-    if(DB.tasks.length===0){
-
-        el.innerHTML=
-            `<p class="muted">Belum ada task.</p>`;
-
-        return;
-
-    }
-
-    DB.tasks.forEach(t=>{
-
-        const div=document.createElement("div");
-
-        div.className="card";
-
-        div.innerHTML=`
-
-            <strong>${escapeHTML(t.title)}</strong>
-
-            <p class="muted">
-                ${t.persil || "Tanpa persil"}
-                · ${t.pic || "PIC belum ditentukan"}
-                · ${t.deadline || "Tanpa deadline"}
-            </p>
-
-            <select onchange="updateTaskStatus('${t.id}',this.value)">
-
-                ${[
-                    "TODO",
-                    "IN PROGRESS",
-                    "BLOCKED",
-                    "DONE"
-                ].map(x=>
-                    `<option ${x===t.status?"selected":""}>
-                        ${x}
-                    </option>`
-                ).join("")}
-
-            </select>
-
-        `;
-
-        el.appendChild(div);
-
-    });
-
-}
-
-
-function updateTaskStatus(id,status){
-
-    const t=
-        DB.tasks.find(x=>x.id===id);
-
-    if(!t)return;
-
-    t.status=status;
-
-    saveDB();
-
-    renderTasks();
-
-}
-
-
-/* =========================================================
-   RED FLAGS
-========================================================= */
-
-function addRedFlag(){
-
-    const text=
-        prompt("Deskripsi red flag:");
-
-    if(!text)return;
-
-    const level=
-        prompt(
-            "Level: CRITICAL / HIGH / MEDIUM",
-            "MEDIUM"
-        );
-
-    DB.redFlags.push({
-
-        id:"RF-"+Date.now(),
-
-        text,
-
-        level:
-            (level||"MEDIUM").toUpperCase(),
-
-        status:"OPEN",
-
-        date:new Date().toLocaleString("id-ID")
-
-    });
-
-    saveDB();
-
-    renderRedFlags();
-
-}
-
-
-function renderRedFlags(){
-
-    const el=
-        document.getElementById("redFlagList");
-
-    el.innerHTML="";
-
-    DB.redFlags.forEach(r=>{
-
-        const div=document.createElement("div");
-
-        div.className="card";
-
-        div.innerHTML=`
-
-            <span class="badge ${r.level==="CRITICAL"||r.level==="HIGH"?"danger":"warning"}">
-                ${r.level}
-            </span>
-
-            <p>
-                ${escapeHTML(r.text)}
-            </p>
-
-            <small class="muted">
-                ${r.date}
-            </small>
-
-            <br><br>
-
-            <button
-                class="btn"
-                onclick="closeRedFlag('${r.id}')">
-                Tutup
-            </button>
-
-        `;
-
-        el.appendChild(div);
-
-    });
-
-    document.getElementById("criticalCount").innerText=
-        DB.redFlags.filter(x=>x.level==="CRITICAL" && x.status==="OPEN").length;
-
-    document.getElementById("highCount").innerText=
-        DB.redFlags.filter(x=>x.level==="HIGH" && x.status==="OPEN").length;
-
-    document.getElementById("mediumCount").innerText=
-        DB.redFlags.filter(x=>x.level==="MEDIUM" && x.status==="OPEN").length;
-
-}
-
-
-function closeRedFlag(id){
-
-    const r=
-        DB.redFlags.find(x=>x.id===id);
-
-    if(r){
-        r.status="CLOSED";
-    }
-
-    saveDB();
-
-    renderRedFlags();
-
-}
-
-
-/* =========================================================
-   PARTY
-========================================================= */
-
-function addParty(){
-
-    const name=
-        prompt("Nama pihak:");
-
-    if(!name)return;
-
-    const role=
-        prompt("Peran / kapasitas:");
-
-    DB.parties.push({
-
-        id:"PARTY-"+Date.now(),
-
-        name,
-
-        role:role||""
-
-    });
-
-    saveDB();
-
-    renderParties();
-
-}
-
-
-function renderParties(){
-
-    const el=
-        document.getElementById("partyList");
-
-    el.innerHTML="";
-
-    DB.parties.forEach(p=>{
-
-        el.innerHTML+=`
-
-            <div class="card">
-
-                <strong>
-                    ${escapeHTML(p.name)}
-                </strong>
-
-                <p class="muted">
-                    ${escapeHTML(p.role)}
-                </p>
-
-            </div>
-
-        `;
-
-    });
-
-}
-
-
-/* =========================================================
-   LOG
-========================================================= */
-
-function addLog(){
-
-    const text=
-        prompt("Aktivitas:");
-
-    if(!text)return;
-
-    DB.logs.unshift({
-
-        id:Date.now(),
-
-        date:new Date().toLocaleString("id-ID"),
-
-        text
-
-    });
-
-    saveDB();
-
-    renderLogs();
-
-}
-
-
-function renderLogs(){
-
-    const el=
-        document.getElementById("activityLog");
-
-    el.innerHTML="";
-
-    DB.logs.forEach(l=>{
-
-        el.innerHTML+=`
-
-            <div class="card">
-
-                <small class="muted">
-                    ${l.date}
-                </small>
-
-                <p>
-                    ${escapeHTML(l.text)}
-                </p>
-
-            </div>
-
-        `;
-
-    });
-
-}
-
-
-/* =========================================================
-   GLOBAL CHECKLIST
-========================================================= */
-
-const globalChecks=[
-
-"Tujuan perkara telah ditentukan",
-
-"Para pihak telah diidentifikasi",
-
-"Identitas telah diperiksa",
-
-"Objek telah diidentifikasi",
-
-"Dokumen dasar telah dikumpulkan",
-
-"Dokumen telah diperiksa",
-
-"Kewenangan telah diperiksa",
-
-"Red flag telah dicatat",
-
-"Klarifikasi telah dilakukan",
-
-"Draft telah dibuat",
-
-"Draft telah direview",
-
-"Review profesional telah dilakukan",
-
-"Persiapan tanda tangan selesai",
-
-"Penandatanganan selesai",
-
-"Tindak lanjut selesai",
-
-"Arsip selesai"
-
-];
-
-
-function renderGlobalChecklist(){
-
-    const el=
-        document.getElementById("globalChecklist");
-
-    el.innerHTML="";
-
-    globalChecks.forEach((x,i)=>{
-
-        const key="global_"+i;
-
-        const checked=
-            DB.checklist[key]===true;
-
-        el.innerHTML+=`
-
-            <label class="check">
-
-                <input
-                    type="checkbox"
-                    ${checked?"checked":""}
-                    onchange="globalCheck(${i},this.checked)">
-
-                <span>
-                    ${i+1}. ${x}
-                </span>
-
-            </label>
-
-        `;
-
-    });
-
-}
-
-
-function globalCheck(i,value){
-
-    DB.checklist["global_"+i]=value;
-
-    saveDB();
+const PAGE_TITLES={
+  dashboard:"Dashboard",
+  phases:"16 Fase",
+  persil:"Database 56 Persil",
+  parties:"Database Para Pihak",
+  documents:"Document Register",
+  legal:"Legal Register",
+  authority:"Matriks Kewenangan",
+  risk:"Red Flag & Risk Register",
+  tasks:"Task & Deadline",
+  audit:"Audit Trail",
+  sop:"SOP & Legal Gate",
+  presentation:"Presentation Mode"
+};
+
+function showPage(page){
+
+  document.querySelectorAll(".nav-btn")
+    .forEach(x=>x.classList.remove("active"));
+
+  const title=PAGE_TITLES[page] || "Dashboard";
+
+  document.getElementById("topTitle").textContent=title;
+
+  const content=document.getElementById("content");
+
+  if(page==="dashboard") renderDashboard(content);
+  if(page==="phases") renderPhases(content);
+  if(page==="persil") renderPersils(content);
+  if(page==="parties") renderParties(content);
+  if(page==="documents") renderDocuments(content);
+  if(page==="legal") renderLegal(content);
+  if(page==="authority") renderAuthority(content);
+  if(page==="risk") renderRisks(content);
+  if(page==="tasks") renderTasks(content);
+  if(page==="audit") renderAudit(content);
+  if(page==="sop") renderSOP(content);
+  if(page==="presentation") renderPresentation(content);
+
+  document.getElementById("sidebar").classList.remove("open");
 
 }
 
@@ -2809,427 +1398,2061 @@ function globalCheck(i,value){
    DASHBOARD
 ========================================================= */
 
-function updateDashboard(){
+function renderDashboard(el){
 
-    const total=DB.persils.length;
+  const total=state.persils.length;
 
-    const done=
-        DB.persils.filter(x=>x.status==="SELESAI").length;
+  const done=state.persils.filter(
+    p=>p.status==="SELESAI"
+  ).length;
 
-    const process=
-        DB.persils.filter(x=>
-            x.status==="DALAM PROSES" ||
-            x.status==="SIAP PROSES"
-        ).length;
+  const blocked=state.persils.filter(
+    p=>p.status==="BLOCKED"
+  ).length;
 
-    const problem=
-        DB.persils.filter(x=>x.status==="BERMASALAH").length;
+  const risks=state.risks.length;
 
-    const notStarted=
-        DB.persils.filter(x=>x.status==="BELUM DIMULAI").length;
+  const tasks=state.tasks.filter(
+    x=>x.status!=="SELESAI"
+  ).length;
 
-    const avg=
-        total
-        ?
-        Math.round(
-            DB.persils.reduce(
-                (a,b)=>a+(Number(b.progress)||0),
-                0
-            )/total
-        )
-        :
-        0;
+  const progress=Math.round(
+    state.persils.reduce((sum,p)=>{
+      return sum+(p.currentPhase-1)/16;
+    },0)/total*100
+  ) || 0;
 
-    document.getElementById("kpiTotal").innerText=total;
+  el.innerHTML=`
 
-    document.getElementById("kpiDone").innerText=done;
+  <div class="page-head">
 
-    document.getElementById("kpiProcess").innerText=process;
+    <div>
+      <h2>MASTER SPH</h2>
+      <p>
+        Sistem kontrol administrasi, legal, pengawasan,
+        56 persil dan 16 fase pekerjaan.
+      </p>
+    </div>
 
-    document.getElementById("kpiProblem").innerText=problem;
+    <div>
+      ${statusBadge(
+        blocked>0 ? "ADA BLOCKED" :
+        risks>0 ? "ADA RISIKO" :
+        "TERKENDALI"
+      )}
+    </div>
 
-    document.getElementById("kpiNotStarted").innerText=notStarted;
+  </div>
 
-    document.getElementById("overallProgress").style.width=
-        avg+"%";
 
-    document.getElementById("overallText").innerText=
-        avg+"%";
+  <div class="grid grid-4">
 
-    renderDashboardPhases();
+    <div class="card stat">
+      <div class="stat-label">Total Persil</div>
+      <div class="stat-value">${total}</div>
+    </div>
 
-    renderDashboardRedFlags();
+    <div class="card stat">
+      <div class="stat-label">Selesai</div>
+      <div class="stat-value">${done}</div>
+    </div>
+
+    <div class="card stat">
+      <div class="stat-label">Blocked</div>
+      <div class="stat-value">${blocked}</div>
+    </div>
+
+    <div class="card stat">
+      <div class="stat-label">Task Aktif</div>
+      <div class="stat-value">${tasks}</div>
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="grid grid-2">
+
+    <div class="card">
+
+      <h3>Project Control</h3>
+
+      <div class="form-group">
+        <label>Nama Project</label>
+        <input
+          value="${esc(state.project.name)}"
+          onchange="state.project.name=this.value;saveData()"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Project Owner</label>
+        <input
+          value="${esc(state.project.owner)}"
+          onchange="state.project.owner=this.value;saveData()"
+        >
+      </div>
+
+      <div class="form-group">
+        <label>Supervisor</label>
+        <input
+          value="${esc(state.project.supervisor)}"
+          onchange="state.project.supervisor=this.value;saveData()"
+        >
+      </div>
+
+      <div class="grid grid-2">
+
+        <div class="form-group">
+          <label>Tanggal Mulai</label>
+          <input
+            type="date"
+            value="${esc(state.project.startDate)}"
+            onchange="state.project.startDate=this.value;saveData()"
+          >
+        </div>
+
+        <div class="form-group">
+          <label>Target Selesai</label>
+          <input
+            type="date"
+            value="${esc(state.project.targetDate)}"
+            onchange="state.project.targetDate=this.value;saveData()"
+          >
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>Progress Global</h3>
+
+      <div style="font-size:40px;font-weight:900;margin:10px 0">
+        ${progress}%
+      </div>
+
+      <div class="progress">
+        <div style="width:${progress}%"></div>
+      </div>
+
+      <p class="muted" style="font-size:12px;margin-top:12px">
+        Progress dihitung dari posisi fase masing-masing persil.
+      </p>
+
+      <div class="success">
+        <b>Prinsip kontrol:</b><br>
+        Tidak ada fase yang dianggap selesai hanya karena
+        checklist administratif dicentang. Bukti/output harus
+        tersedia dan tindakan yang menjadi kewenangan pejabat
+        profesional harus dilakukan oleh pihak yang berwenang.
+      </div>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="card">
+
+    <h3>⚠ Legal Safety Notice</h3>
+
+    <div class="warning">
+
+      Sistem ini adalah <b>alat kontrol administrasi dan project</b>.
+      Sistem tidak menggantikan PPAT, Notaris, Advokat,
+      Kantor Pertanahan/ATR-BPN, instansi pajak, pengadilan,
+      atau pejabat/instansi lain yang memiliki kewenangan hukum.
+
+      <br><br>
+
+      Setiap tindakan harus diverifikasi berdasarkan
+      regulasi yang berlaku pada saat tindakan dilakukan.
+
+    </div>
+
+  </div>
+
+  `;
 
 }
 
 
-function renderDashboardPhases(){
+/* =========================================================
+   PHASES
+========================================================= */
 
-    const el=
-        document.getElementById("dashboardPhases");
+function renderPhases(el){
 
-    el.innerHTML="";
+  el.innerHTML=`
 
-    phases.forEach((phase,i)=>{
+  <div class="page-head">
+    <div>
+      <h2>16 Fase Operasional</h2>
+      <p>
+        Setiap fase mempunyai tujuan, output, risiko,
+        legal gate dan eskalasi.
+      </p>
+    </div>
+  </div>
 
-        const count=
-            DB.persils.filter(
-                p=>p.phase===i+1
-            ).length;
+  <div class="phase-list">
 
-        el.innerHTML+=`
+  ${PHASES.map(p=>{
 
-            <div style="margin:10px 0">
+    const completed=Object.values(
+      state.phaseStatus
+    ).filter(x=>x[p.id]==="SELESAI").length;
 
-                <div style="
-                    display:flex;
-                    justify-content:space-between">
+    const progress=Math.round(
+      completed/state.persils.length*100
+    );
 
-                    <strong>
-                        Fase ${i+1}
-                    </strong>
+    return `
 
-                    <span>
-                        ${count} persil
-                    </span>
+    <div class="phase-card">
 
-                </div>
+      <div class="phase-row">
 
-                <div class="progress">
+        <div class="phase-number">
+          ${String(p.id).padStart(2,"0")}
+        </div>
 
-                    <div
-                        class="progress-bar"
-                        style="
-                        width:${count/Math.max(DB.persils.length,1)*100}%;
-                        ">
-                    </div>
+        <div class="phase-main">
 
-                </div>
+          <div class="phase-title">
+            ${esc(p.title)}
+          </div>
 
+          <div class="phase-desc">
+            ${esc(p.desc)}
+          </div>
+
+          <div style="margin-top:9px">
+
+            <div class="progress">
+              <div style="width:${progress}%"></div>
             </div>
 
-        `;
-
-    });
-
-}
-
-
-function renderDashboardRedFlags(){
-
-    const el=
-        document.getElementById("dashboardRedFlags");
-
-    const open=
-        DB.redFlags
-        .filter(x=>x.status==="OPEN")
-        .slice(0,5);
-
-    if(open.length===0){
-
-        el.innerHTML=
-            `<div class="alert alert-success">
-                Tidak ada red flag terbuka.
-            </div>`;
-
-        return;
-
-    }
-
-    el.innerHTML=
-        open.map(x=>`
-
-            <div class="alert alert-danger">
-
-                <strong>${x.level}</strong>
-
-                —
-                ${escapeHTML(x.text)}
-
+            <div
+              style="
+              font-size:10px;
+              color:#6b7280;
+              margin-top:4px
+              "
+            >
+              ${completed}/56 persil • ${progress}%
             </div>
 
-        `).join("");
+          </div>
+
+        </div>
+
+        <button
+          class="btn small"
+          onclick="openPhase(${p.id})"
+        >
+          Buka
+        </button>
+
+      </div>
+
+    </div>
+
+    `;
+
+  }).join("")}
+
+  </div>
+
+  `;
+
+}
+
+
+function openPhase(id){
+
+  const p=PHASES.find(x=>x.id===id);
+
+  if(!p)return;
+
+  const checks=[
+    "Input fase telah tersedia",
+    "Data identitas telah diperiksa",
+    "Dokumen terkait telah diinventarisasi",
+    "Tidak ada red flag yang belum ditangani",
+    "Kewenangan pihak telah diperiksa",
+    "Output fase telah dibuat",
+    "Reviewer telah ditentukan",
+    "Jika membutuhkan pejabat/profesional, telah dieskalasikan"
+  ];
+
+  document.getElementById("content").innerHTML=`
+
+  <div class="page-head">
+
+    <div>
+      <h2>
+        FASE ${String(p.id).padStart(2,"0")}
+        — ${esc(p.title)}
+      </h2>
+
+      <p>${esc(p.desc)}</p>
+    </div>
+
+    <button
+      class="btn"
+      onclick="showPage('phases')"
+    >
+      ← Kembali
+    </button>
+
+  </div>
+
+
+  <div class="grid grid-2">
+
+    <div class="card">
+
+      <h3>Tujuan</h3>
+      <p style="font-size:13px">
+        ${esc(p.desc)}
+      </p>
+
+      <h4>Output Wajib</h4>
+
+      <div class="success">
+        ${esc(p.output)}
+      </div>
+
+      <h4 style="margin-top:15px">
+        Red Flag Utama
+      </h4>
+
+      <div class="danger">
+        ${esc(p.risk)}
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>Legal Gate</h3>
+
+      <div class="warning">
+
+        <b>STOP CONDITION</b>
+
+        <ul style="font-size:12px;line-height:1.7">
+
+          <li>Identitas tidak dapat diverifikasi.</li>
+          <li>Dokumen material tidak tersedia.</li>
+          <li>Data objek bertentangan.</li>
+          <li>Kewenangan pihak tidak jelas.</li>
+          <li>Ada indikasi sengketa/kasus.</li>
+          <li>Tindakan membutuhkan pejabat/profesional.</li>
+          <li>Dasar hukum belum diverifikasi.</li>
+
+        </ul>
+
+      </div>
+
+      <div class="danger">
+
+        <b>DILARANG</b>
+
+        <p style="font-size:12px">
+          Operator tidak boleh menyatakan legalitas final,
+          membuat keputusan pejabat, atau melakukan tindakan
+          yang secara hukum merupakan kewenangan profesi/instansi
+          tertentu.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="card">
+
+    <h3>Checklist Fase</h3>
+
+    ${checks.map((c,i)=>`
+
+      <label class="check">
+
+        <input
+          type="checkbox"
+          onchange="
+            this.checked
+              ? addAudit('CHECKLIST','Fase ${p.id}: ${c}')
+              : null
+          "
+        >
+
+        <span>${esc(c)}</span>
+
+      </label>
+
+    `).join("")}
+
+  </div>
+
+  <br>
+
+  <div class="card">
+
+    <h3>Dasar Hukum / Legal Reference</h3>
+
+    <p class="muted" style="font-size:11px">
+      Referensi berikut adalah regulasi umum yang dapat
+      relevan. Regulasi spesifik harus dipetakan kembali
+      terhadap jenis tindakan pada perkara.
+    </p>
+
+    ${LEGAL.slice(0,6).map(l=>`
+
+      <div class="legal-box">
+
+        <div class="legal-title">
+          ${esc(l.name)} — ${esc(l.title)}
+        </div>
+
+        <div class="legal-meta">
+          Status: ${esc(l.status)}
+          • Domain: ${esc(l.authority)}
+        </div>
+
+        <div style="font-size:11px;margin-top:6px">
+          ${esc(l.note)}
+        </div>
+
+      </div>
+
+    `).join("")}
+
+  </div>
+
+  `;
 
 }
 
 
 /* =========================================================
-   SEARCH
+   PERSILS
 ========================================================= */
 
-function globalSearch(){
+function renderPersils(el){
 
-    const q=
-        document
-        .getElementById("globalSearch")
-        .value
-        .toLowerCase()
-        .trim();
+  el.innerHTML=`
 
-    if(!q){
+  <div class="page-head">
 
-        renderPersils();
+    <div>
+      <h2>Database 56 Persil</h2>
+      <p>
+        Satu record untuk setiap persil.
+      </p>
+    </div>
 
-        return;
+    <button class="btn primary" onclick="addPersil()">
+      + Persil
+    </button>
 
-    }
+  </div>
 
-    const result=
-        DB.persils.filter(p=>
+  <div class="card">
 
-            JSON.stringify(p)
-            .toLowerCase()
-            .includes(q)
+    <div class="grid grid-3">
 
-        );
+      <input
+        id="persilSearch"
+        placeholder="Cari kode / pemilik / lokasi..."
+        oninput="filterPersils()"
+      >
 
-    document
-        .querySelectorAll(".page")
-        .forEach(x=>x.classList.remove("active"));
+      <select id="persilStatus" onchange="filterPersils()">
+        <option value="">Semua Status</option>
+        <option>BELUM DIMULAI</option>
+        <option>PROSES</option>
+        <option>SELESAI</option>
+        <option>BLOCKED</option>
+      </select>
 
-    document
-        .getElementById("page-persil")
-        .classList.add("active");
+      <select id="persilRisk" onchange="filterPersils()">
+        <option value="">Semua Risiko</option>
+        <option>BELUM DINILAI</option>
+        <option>RENDAH</option>
+        <option>SEDANG</option>
+        <option>TINGGI</option>
+        <option>KRITIS</option>
+      </select>
 
-    const tbody=
-        document.getElementById("persilTable");
+    </div>
 
-    tbody.innerHTML="";
+  </div>
 
-    result.forEach(p=>{
+  <br>
 
-        tbody.innerHTML+=`
+  <div class="card">
 
-            <tr>
+    <div class="table-wrap">
 
-                <td>${p.id}</td>
+      <table>
 
-                <td>${escapeHTML(p.owner||"-")}</td>
+        <thead>
 
-                <td>${escapeHTML(p.location||"-")}</td>
+          <tr>
+            <th>Kode</th>
+            <th>Pemilik / Pihak</th>
+            <th>Lokasi</th>
+            <th>Hak</th>
+            <th>Sertifikat</th>
+            <th>Fase</th>
+            <th>Status</th>
+            <th>Risiko</th>
+            <th></th>
+          </tr>
 
-                <td>${escapeHTML(p.area||"-")}</td>
+        </thead>
 
-                <td>Fase ${p.phase}</td>
+        <tbody id="persilBody"></tbody>
 
-                <td>${p.status}</td>
+      </table>
 
-                <td>${p.progress}%</td>
+    </div>
 
-                <td>
-                    <button
-                        class="btn"
-                        onclick="editPersil('${p.id}')">
-                        Detail
-                    </button>
-                </td>
+  </div>
 
-            </tr>
+  `;
 
-        `;
-
-    });
+  filterPersils();
 
 }
 
 
-/* =========================================================
-   MODAL
-========================================================= */
+function filterPersils(){
 
-function openModal(content){
+  const q=(document.getElementById("persilSearch")?.value||"")
+    .toLowerCase();
 
-    document
-        .getElementById("modalContent")
-        .innerHTML=content;
+  const status=document.getElementById("persilStatus")?.value||"";
+  const risk=document.getElementById("persilRisk")?.value||"";
 
-    document
-        .getElementById("modal")
-        .classList.add("show");
+  const rows=state.persils.filter(p=>{
 
-}
+    const text=(
+      p.code+" "+
+      p.name+" "+
+      p.owner+" "+
+      p.village+" "+
+      p.district+" "+
+      p.city
+    ).toLowerCase();
 
-
-function closeModal(){
-
-    document
-        .getElementById("modal")
-        .classList.remove("show");
-
-}
-
-
-/* =========================================================
-   EXPORT JSON
-========================================================= */
-
-function exportJSON(){
-
-    const blob=
-        new Blob(
-            [JSON.stringify(DB,null,2)],
-            {type:"application/json"}
-        );
-
-    downloadBlob(
-        blob,
-        "master-sph-backup.json"
+    return (
+      (!q || text.includes(q)) &&
+      (!status || p.status===status) &&
+      (!risk || p.risk===risk)
     );
 
+  });
+
+  const body=document.getElementById("persilBody");
+
+  if(!body)return;
+
+  body.innerHTML=rows.map(p=>`
+
+    <tr>
+
+      <td>
+        <b>${esc(p.code)}</b>
+      </td>
+
+      <td>
+        ${esc(p.owner||"-")}
+      </td>
+
+      <td>
+        ${esc(
+          [p.village,p.district,p.city,p.province]
+          .filter(Boolean)
+          .join(", ") || "-"
+        )}
+      </td>
+
+      <td>${esc(p.landRight||"-")}</td>
+
+      <td>${esc(p.certificate||"-")}</td>
+
+      <td>
+        Fase ${p.currentPhase}/16
+      </td>
+
+      <td>
+        ${statusBadge(p.status)}
+      </td>
+
+      <td>
+        ${statusBadge(p.risk)}
+      </td>
+
+      <td>
+        <button
+          class="btn small"
+          onclick="editPersil(${p.id})"
+        >
+          Buka
+        </button>
+      </td>
+
+    </tr>
+
+  `).join("");
+
+}
+
+
+function addPersil(){
+
+  const next=state.persils.length+1;
+
+  state.persils.push({
+    id:Date.now(),
+    code:"P-"+String(next).padStart(3,"0"),
+    name:"",
+    village:"",
+    district:"",
+    city:"",
+    province:"",
+    landRight:"",
+    certificate:"",
+    owner:"",
+    status:"BELUM DIMULAI",
+    currentPhase:1,
+    risk:"BELUM DINILAI",
+    notes:""
+  });
+
+  addAudit("PERSIL","Menambah persil");
+
+  saveData();
+
+  renderPersils(document.getElementById("content"));
+
+}
+
+
+function editPersil(id){
+
+  const p=state.persils.find(x=>x.id===id);
+
+  if(!p)return;
+
+  document.getElementById("content").innerHTML=`
+
+  <div class="page-head">
+
+    <div>
+      <h2>${esc(p.code)}</h2>
+      <p>Persil control record</p>
+    </div>
+
+    <button
+      class="btn"
+      onclick="showPage('persil')"
+    >
+      ← Kembali
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <div class="grid grid-2">
+
+      <div class="form-group">
+        <label>Kode</label>
+        <input value="${esc(p.code)}"
+          onchange="pUpdate(${p.id},'code',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Nama Internal</label>
+        <input value="${esc(p.name)}"
+          onchange="pUpdate(${p.id},'name',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Pemilik / Pihak</label>
+        <input value="${esc(p.owner)}"
+          onchange="pUpdate(${p.id},'owner',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Jenis Hak</label>
+        <input value="${esc(p.landRight)}"
+          placeholder="Contoh: HM / HGB / dst."
+          onchange="pUpdate(${p.id},'landRight',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Nomor Sertifikat</label>
+        <input value="${esc(p.certificate)}"
+          onchange="pUpdate(${p.id},'certificate',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Desa/Kelurahan</label>
+        <input value="${esc(p.village)}"
+          onchange="pUpdate(${p.id},'village',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Kecamatan</label>
+        <input value="${esc(p.district)}"
+          onchange="pUpdate(${p.id},'district',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Kota/Kabupaten</label>
+        <input value="${esc(p.city)}"
+          onchange="pUpdate(${p.id},'city',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Provinsi</label>
+        <input value="${esc(p.province)}"
+          onchange="pUpdate(${p.id},'province',this.value)">
+      </div>
+
+      <div class="form-group">
+        <label>Fase Saat Ini</label>
+
+        <select
+          onchange="pUpdate(${p.id},'currentPhase',Number(this.value))"
+        >
+
+        ${PHASES.map(x=>`
+          <option
+            value="${x.id}"
+            ${p.currentPhase===x.id?"selected":""}
+          >
+            ${x.id}. ${esc(x.title)}
+          </option>
+        `).join("")}
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+
+        <select
+          onchange="pUpdate(${p.id},'status',this.value)"
+        >
+
+          ${[
+            "BELUM DIMULAI",
+            "PROSES",
+            "SELESAI",
+            "BLOCKED"
+          ].map(x=>`
+            <option
+              ${p.status===x?"selected":""}
+            >${x}</option>
+          `).join("")}
+
+        </select>
+
+      </div>
+
+      <div class="form-group">
+        <label>Risk Level</label>
+
+        <select
+          onchange="pUpdate(${p.id},'risk',this.value)"
+        >
+
+          ${[
+            "BELUM DINILAI",
+            "RENDAH",
+            "SEDANG",
+            "TINGGI",
+            "KRITIS"
+          ].map(x=>`
+            <option
+              ${p.risk===x?"selected":""}
+            >${x}</option>
+          `).join("")}
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label>Catatan</label>
+      <textarea
+        onchange="pUpdate(${p.id},'notes',this.value)"
+      >${esc(p.notes)}</textarea>
+    </div>
+
+    <div class="danger">
+
+      <b>Legal Gate</b>
+
+      <p style="font-size:12px">
+
+        Status "SELESAI" pada aplikasi hanya menunjukkan
+        pekerjaan project telah ditandai selesai.
+        Status tersebut bukan sertifikasi bahwa hak,
+        transaksi, akta, atau proses pertanahan telah
+        sah secara hukum.
+
+      </p>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+function pUpdate(id,key,value){
+
+  const p=state.persils.find(x=>x.id===id);
+
+  if(!p)return;
+
+  p[key]=value;
+
+  addAudit(
+    "PERSIL",
+    `${p.code}: ${key} diubah`
+  );
+
+  saveData();
+
 }
 
 
 /* =========================================================
-   IMPORT JSON
+   PARTIES
 ========================================================= */
 
-function importJSON(event){
+function renderParties(el){
 
-    const file=
-        event.target.files[0];
+  el.innerHTML=`
 
-    if(!file)return;
+  <div class="page-head">
 
-    const reader=
-        new FileReader();
+    <div>
+      <h2>Database Para Pihak</h2>
+      <p>Identifikasi pihak dan kedudukannya.</p>
+    </div>
 
-    reader.onload=function(e){
+    <button
+      class="btn primary"
+      onclick="addParty()"
+    >
+      + Pihak
+    </button>
 
-        try{
+  </div>
 
-            const data=
-                JSON.parse(e.target.result);
+  <div class="card">
 
-            DB=data;
+    <div class="table-wrap">
 
-            saveDB();
+      <table>
 
-            renderAll();
+        <thead>
+          <tr>
+            <th>Nama</th>
+            <th>Kedudukan</th>
+            <th>Identitas</th>
+            <th>Hubungan</th>
+            <th>Status Verifikasi</th>
+            <th></th>
+          </tr>
+        </thead>
 
-            alert("Database berhasil di-import.");
+        <tbody>
 
-        }catch(err){
+        ${state.parties.map((p,i)=>`
 
-            alert("File JSON tidak valid.");
+          <tr>
 
-        }
+            <td>
+              <input
+                value="${esc(p.name)}"
+                onchange="partyUpdate(${i},'name',this.value)"
+              >
+            </td>
 
-    };
+            <td>
+              <input
+                value="${esc(p.role)}"
+                onchange="partyUpdate(${i},'role',this.value)"
+              >
+            </td>
 
-    reader.readAsText(file);
+            <td>
+              <input
+                value="${esc(p.identity)}"
+                onchange="partyUpdate(${i},'identity',this.value)"
+              >
+            </td>
+
+            <td>
+              <input
+                value="${esc(p.relationship)}"
+                onchange="partyUpdate(${i},'relationship',this.value)"
+              >
+            </td>
+
+            <td>
+              <select
+                onchange="partyUpdate(${i},'verified',this.value)"
+              >
+                <option ${p.verified==="BELUM"?"selected":""}>
+                  BELUM
+                </option>
+                <option ${p.verified==="PROSES"?"selected":""}>
+                  PROSES
+                </option>
+                <option ${p.verified==="TERVERIFIKASI"?"selected":""}>
+                  TERVERIFIKASI
+                </option>
+                <option ${p.verified==="BLOCKED"?"selected":""}>
+                  BLOCKED
+                </option>
+              </select>
+            </td>
+
+            <td>
+              <button
+                class="btn small red"
+                onclick="deleteParty(${i})"
+              >
+                Hapus
+              </button>
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+function addParty(){
+
+  state.parties.push({
+    name:"",
+    role:"",
+    identity:"",
+    relationship:"",
+    verified:"BELUM"
+  });
+
+  addAudit("PARTY","Menambah pihak");
+
+  saveData();
+
+  renderParties(document.getElementById("content"));
+
+}
+
+
+function partyUpdate(i,key,value){
+
+  state.parties[i][key]=value;
+
+  addAudit(
+    "PARTY",
+    `Party ${i+1}: ${key} diubah`
+  );
+
+  saveData();
+
+}
+
+
+function deleteParty(i){
+
+  if(!confirm("Hapus pihak ini?"))return;
+
+  state.parties.splice(i,1);
+
+  addAudit("PARTY","Menghapus pihak");
+
+  saveData();
+
+  renderParties(document.getElementById("content"));
 
 }
 
 
 /* =========================================================
-   EXPORT CSV
+   DOCUMENTS
 ========================================================= */
 
-function exportCSV(){
+function renderDocuments(el){
 
-    const headers=[
-        "ID",
-        "Pemilik",
-        "Lokasi",
-        "Luas",
-        "Fase",
-        "Status",
-        "Progress",
-        "Deadline",
-        "Catatan"
-    ];
+  el.innerHTML=`
 
-    const rows=
-        DB.persils.map(p=>[
+  <div class="page-head">
 
-            p.id,
-            p.owner,
-            p.location,
-            p.area,
-            p.phase,
-            p.status,
-            p.progress,
-            p.deadline,
-            p.notes
+    <div>
+      <h2>Document Register</h2>
+      <p>
+        Dokumen harus mempunyai status dan hasil verifikasi.
+      </p>
+    </div>
 
-        ]);
+    <button
+      class="btn primary"
+      onclick="addDocument()"
+    >
+      + Dokumen
+    </button>
 
-    const csv=
-        [headers,...rows]
-        .map(row=>
-            row
-            .map(cell=>
-                `"${String(cell??"").replace(/"/g,'""')}"`
-            )
-            .join(",")
-        )
-        .join("\n");
+  </div>
 
-    downloadBlob(
+  <div class="card">
 
-        new Blob(
-            [csv],
-            {type:"text/csv;charset=utf-8"}
-        ),
+    <div class="warning">
 
-        "database-56-persil.csv"
+      <b>Kontrol dokumen</b>
 
-    );
+      <p style="font-size:12px">
+
+        Nama file atau dokumen yang tercatat di sini
+        tidak berarti dokumen tersebut autentik.
+        Keaslian dan validitas harus diperiksa sesuai
+        kewenangan dan prosedur yang berlaku.
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <br>
+
+  <div class="card">
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Persil</th>
+            <th>Nama Dokumen</th>
+            <th>Nomor</th>
+            <th>Tanggal</th>
+            <th>Status</th>
+            <th>Reviewer</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+        ${state.documents.map((d,i)=>`
+
+          <tr>
+
+            <td>
+              <select onchange="docUpdate(${i},'persil',this.value)">
+                <option value="">-</option>
+
+                ${state.persils.map(p=>`
+                  <option
+                    value="${esc(p.code)}"
+                    ${d.persil===p.code?"selected":""}
+                  >
+                    ${esc(p.code)}
+                  </option>
+                `).join("")}
+
+              </select>
+            </td>
+
+            <td>
+              <input
+                value="${esc(d.name)}"
+                onchange="docUpdate(${i},'name',this.value)"
+              >
+            </td>
+
+            <td>
+              <input
+                value="${esc(d.number)}"
+                onchange="docUpdate(${i},'number',this.value)"
+              >
+            </td>
+
+            <td>
+              <input
+                type="date"
+                value="${esc(d.date)}"
+                onchange="docUpdate(${i},'date',this.value)"
+              >
+            </td>
+
+            <td>
+              <select onchange="docUpdate(${i},'status',this.value)">
+                ${[
+                  "BELUM DIPERIKSA",
+                  "PROSES",
+                  "TERVERIFIKASI",
+                  "TIDAK SESUAI",
+                  "BLOCKED"
+                ].map(x=>`
+                  <option
+                    ${d.status===x?"selected":""}
+                  >${x}</option>
+                `).join("")}
+              </select>
+            </td>
+
+            <td>
+              <input
+                value="${esc(d.reviewer)}"
+                onchange="docUpdate(${i},'reviewer',this.value)"
+              >
+            </td>
+
+            <td>
+              <button
+                class="btn small red"
+                onclick="deleteDocument(${i})"
+              >
+                Hapus
+              </button>
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  `;
 
 }
 
 
-function downloadBlob(blob,name){
+function addDocument(){
 
-    const url=
-        URL.createObjectURL(blob);
+  state.documents.push({
+    persil:"",
+    name:"",
+    number:"",
+    date:"",
+    status:"BELUM DIPERIKSA",
+    reviewer:""
+  });
 
-    const a=
-        document.createElement("a");
+  addAudit("DOCUMENT","Menambah dokumen");
 
-    a.href=url;
+  saveData();
 
-    a.download=name;
+  renderDocuments(document.getElementById("content"));
 
-    a.click();
+}
 
-    setTimeout(
-        ()=>URL.revokeObjectURL(url),
-        1000
-    );
+
+function docUpdate(i,key,value){
+
+  state.documents[i][key]=value;
+
+  addAudit(
+    "DOCUMENT",
+    `Dokumen ${i+1}: ${key} diubah`
+  );
+
+  saveData();
+
+}
+
+
+function deleteDocument(i){
+
+  if(!confirm("Hapus dokumen?"))return;
+
+  state.documents.splice(i,1);
+
+  addAudit("DOCUMENT","Menghapus dokumen");
+
+  saveData();
+
+  renderDocuments(document.getElementById("content"));
 
 }
 
 
 /* =========================================================
-   RESET
+   LEGAL REGISTER
 ========================================================= */
 
-function resetData(){
+function renderLegal(el){
 
-    if(!confirm(
-        "RESET seluruh database? Data akan hilang."
-    )) return;
+  el.innerHTML=`
 
-    localStorage.removeItem(STORAGE_KEY);
+  <div class="page-head">
 
-    DB={
-        project:{
-            name:"MASTER SPH",
-            totalPersil:56
-        },
-        persils:createInitialPersils(),
-        tasks:[],
-        redFlags:[],
-        parties:[],
-        logs:[],
-        checklist:{},
-        phaseProgress:Array(16).fill(0)
-    };
+    <div>
+      <h2>Legal Register</h2>
+      <p>
+        Daftar referensi regulasi utama.
+      </p>
+    </div>
 
-    saveDB();
+    <button class="btn" onclick="window.open(
+      'https://peraturan.bpk.go.id/',
+      '_blank'
+    )">
+      Buka Database Peraturan
+    </button>
 
-    renderAll();
+  </div>
+
+  <div class="danger">
+
+    <b>IMPORTANT LEGAL CONTROL</b>
+
+    <p style="font-size:12px">
+
+      Status regulasi dapat berubah. Sebelum digunakan
+      untuk mengambil keputusan atau melakukan tindakan
+      hukum, verifikasi naskah dan status terbaru pada
+      JDIH resmi/portal peraturan yang berwenang.
+
+    </p>
+
+  </div>
+
+  <br>
+
+  ${LEGAL.map(l=>`
+
+    <div class="card" style="margin-bottom:10px">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        gap:10px;
+        align-items:flex-start
+      ">
+
+        <div>
+
+          <h3>
+            ${esc(l.name)}
+          </h3>
+
+          <div class="muted" style="font-size:12px">
+            ${esc(l.title)}
+          </div>
+
+        </div>
+
+        ${statusBadge(l.status)}
+
+      </div>
+
+      <hr style="
+        border:0;
+        border-top:1px solid #eee;
+        margin:13px 0
+      ">
+
+      <div class="grid grid-2">
+
+        <div>
+          <b style="font-size:10px">DOMAIN</b>
+          <div style="font-size:12px">
+            ${esc(l.authority)}
+          </div>
+        </div>
+
+        <div>
+          <b style="font-size:10px">CATATAN</b>
+          <div style="font-size:12px">
+            ${esc(l.note)}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("")}
+
+  `;
+
+}
+
+
+/* =========================================================
+   AUTHORITY
+========================================================= */
+
+function renderAuthority(el){
+
+  el.innerHTML=`
+
+  <div class="page-head">
+
+    <div>
+      <h2>Matriks Kewenangan</h2>
+      <p>
+        Siapa yang boleh melakukan apa.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="danger">
+
+    <b>Prinsip dasar:</b>
+
+    <p style="font-size:12px">
+
+      Sistem ini tidak memberikan kewenangan kepada operator.
+      Kewenangan berasal dari hukum, jabatan, surat tugas,
+      penugasan, atau dasar lain yang sah sesuai konteks.
+
+    </p>
+
+  </div>
+
+  <br>
+
+  ${ROLES.map(r=>`
+
+    <div class="card" style="margin-bottom:12px">
+
+      <h3>${esc(r.role)}</h3>
+
+      <div class="grid grid-2">
+
+        <div class="success">
+
+          <b>Yang dapat dilakukan</b>
+
+          <ul style="font-size:12px;line-height:1.7">
+            ${r.allowed.map(x=>`<li>${esc(x)}</li>`).join("")}
+          </ul>
+
+        </div>
+
+        <div class="danger">
+
+          <b>Batasan / tidak boleh</b>
+
+          <ul style="font-size:12px;line-height:1.7">
+            ${r.forbidden.map(x=>`<li>${esc(x)}</li>`).join("")}
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("")}
+
+  `;
+
+}
+
+
+/* =========================================================
+   RISKS
+========================================================= */
+
+function renderRisks(el){
+
+  el.innerHTML=`
+
+  <div class="page-head">
+
+    <div>
+      <h2>Red Flag & Risk Register</h2>
+      <p>
+        Semua masalah yang dapat menghentikan proses.
+      </p>
+    </div>
+
+    <button
+      class="btn red"
+      onclick="addRisk()"
+    >
+      + Red Flag
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Persil</th>
+            <th>Risiko</th>
+            <th>Level</th>
+            <th>Status</th>
+            <th>Owner</th>
+            <th>Mitigasi</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+        ${state.risks.map((r,i)=>`
+
+          <tr>
+
+            <td>
+              <select onchange="riskUpdate(${i},'persil',this.value)">
+
+                <option value="">-</option>
+
+                ${state.persils.map(p=>`
+                  <option
+                    ${r.persil===p.code?"selected":""}
+                  >${esc(p.code)}</option>
+                `).join("")}
+
+              </select>
+            </td>
+
+            <td>
+              <textarea
+                style="min-height:60px"
+                onchange="riskUpdate(${i},'risk',this.value)"
+              >${esc(r.risk)}</textarea>
+            </td>
+
+            <td>
+
+              <select onchange="riskUpdate(${i},'level',this.value)">
+
+                ${[
+                  "RENDAH",
+                  "SEDANG",
+                  "TINGGI",
+                  "KRITIS"
+                ].map(x=>`
+                  <option
+                    ${r.level===x?"selected":""}
+                  >${x}</option>
+                `).join("")}
+
+              </select>
+
+            </td>
+
+            <td>
+
+              <select onchange="riskUpdate(${i},'status',this.value)">
+
+                ${[
+                  "OPEN",
+                  "MITIGASI",
+                  "ESCALATED",
+                  "CLOSED",
+                  "BLOCKED"
+                ].map(x=>`
+                  <option
+                    ${r.status===x?"selected":""}
+                  >${x}</option>
+                `).join("")}
+
+              </select>
+
+            </td>
+
+            <td>
+              <input
+                value="${esc(r.owner)}"
+                onchange="riskUpdate(${i},'owner',this.value)"
+              >
+            </td>
+
+            <td>
+              <textarea
+                style="min-height:60px"
+                onchange="riskUpdate(${i},'mitigation',this.value)"
+              >${esc(r.mitigation)}</textarea>
+            </td>
+
+            <td>
+              <button
+                class="btn small red"
+                onclick="deleteRisk(${i})"
+              >
+                Hapus
+              </button>
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+function addRisk(){
+
+  state.risks.push({
+    persil:"",
+    risk:"",
+    level:"SEDANG",
+    status:"OPEN",
+    owner:"",
+    mitigation:""
+  });
+
+  addAudit("RISK","Menambah red flag");
+
+  saveData();
+
+  renderRisks(document.getElementById("content"));
+
+}
+
+
+function riskUpdate(i,key,value){
+
+  state.risks[i][key]=value;
+
+  addAudit(
+    "RISK",
+    `Risk ${i+1}: ${key} diubah`
+  );
+
+  saveData();
+
+}
+
+
+function deleteRisk(i){
+
+  if(!confirm("Hapus risk?"))return;
+
+  state.risks.splice(i,1);
+
+  addAudit("RISK","Menghapus red flag");
+
+  saveData();
+
+  renderRisks(document.getElementById("content"));
+
+}
+
+
+/* =========================================================
+   TASKS
+========================================================= */
+
+function renderTasks(el){
+
+  el.innerHTML=`
+
+  <div class="page-head">
+
+    <div>
+      <h2>Task & Deadline</h2>
+      <p>Kontrol pekerjaan dan tanggung jawab.</p>
+    </div>
+
+    <button
+      class="btn primary"
+      onclick="addTask()"
+    >
+      + Task
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Persil</th>
+            <th>Owner</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+        ${state.tasks.map((t,i)=>`
+
+          <tr>
+
+            <td>
+              <input
+                value="${esc(t.title)}"
+                onchange="taskUpdate(${i},'title',this.value)"
+              >
+            </td>
+
+            <td>
+
+              <select onchange="taskUpdate(${i},'persil',this.value)">
+
+                <option value="">-</option>
+
+                ${state.persils.map(p=>`
+                  <option
+                    ${t.persil===p.code?"selected":""}
+                  >${esc(p.code)}</option>
+                `).join("")}
+
+              </select>
+
+            </td>
+
+            <td>
+              <input
+                value="${esc(t.owner)}"
+                onchange="taskUpdate(${i},'owner',this.value)"
+              >
+            </td>
+
+            <td>
+              <input
+                type="date"
+                value="${esc(t.deadline)}"
+                onchange="taskUpdate(${i},'deadline',this.value)"
+              >
+            </td>
+
+            <td>
+
+              <select onchange="taskUpdate(${i},'status',this.value)">
+
+                ${[
+                  "OPEN",
+                  "PROSES",
+                  "REVIEW",
+                  "SELESAI",
+                  "BLOCKED"
+                ].map(x=>`
+                  <option
+                    ${t.status===x?"selected":""}
+                  >${x}</option>
+                `).join("")}
+
+              </select>
+
+            </td>
+
+            <td>
+
+              <button
+                class="btn small red"
+                onclick="deleteTask(${i})"
+              >
+                Hapus
+              </button>
+
+            </td>
+
+          </tr>
+
+        `).join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+function addTask(){
+
+  state.tasks.push({
+    title:"",
+    persil:"",
+    owner:"",
+    deadline:"",
+    status:"OPEN"
+  });
+
+  addAudit("TASK","Menambah task");
+
+  saveData();
+
+  renderTasks(document.getElementById("content"));
+
+}
+
+
+function taskUpdate(i,key,value){
+
+  state.tasks[i][key]=value;
+
+  addAudit(
+    "TASK",
+    `Task ${i+1}: ${key} diubah`
+  );
+
+  saveData();
+
+}
+
+
+function deleteTask(i){
+
+  if(!confirm("Hapus task?"))return;
+
+  state.tasks.splice(i,1);
+
+  addAudit("TASK","Menghapus task");
+
+  saveData();
+
+  renderTasks(document.getElementById("content"));
+
+}
+
+
+/* =========================================================
+   AUDIT
+========================================================= */
+
+function renderAudit(el){
+
+  el.innerHTML=`
+
+  <div class="page-head">
+
+    <div>
+      <h2>Audit Trail</h2>
+      <p>
+        Catatan perubahan lokal pada aplikasi.
+      </p>
+    </div>
+
+    <button
+      class="btn red"
+      onclick="clearAudit()"
+    >
+      Bersihkan
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <div class="timeline">
+
+    ${(state.audit||[]).map(a=>`
+
+      <div class="timeline-item">
+
+        <div class="timeline-date">
+          ${esc(a.time)} • ${esc(a.type)}
+        </div>
+
+        <div class="timeline-text">
+          ${esc(a.message)}
+        </div>
+
+      </div>
+
+    `).join("")}
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
+
+function clearAudit(){
+
+  if(!confirm(
+    "Hapus seluruh audit trail lokal?"
+  ))return;
+
+  state.audit=[];
+
+  saveData();
+
+  renderAudit(document.getElementById("content"));
+
+}
+
+
+/* =========================================================
+   SOP
+========================================================= */
+
+function renderSOP(el){
+
+  el.innerHTML=`
+
+  <div class="page-head">
+
+    <div>
+      <h2>SOP & Legal Gate</h2>
+      <p>
+        Prinsip operasi yang wajib dipatuhi.
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="grid grid-2">
+
+    <div class="card">
+
+      <h3>01 — Four-Eyes Principle</h3>
+
+      <p style="font-size:12px">
+
+        Pekerjaan kritis tidak idealnya hanya diperiksa
+        oleh orang yang mengerjakannya. Harus ada reviewer
+        yang independen/berwenang sesuai kebutuhan.
+
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>02 — No Evidence, No Pass</h3>
+
+      <p style="font-size:12px">
+
+        Checklist tanpa bukti tidak dianggap sebagai
+        penyelesaian substantif.
+
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>03 — Authority First</h3>
+
+      <p style="font-size:12px">
+
+        Sebelum tindakan dilakukan, tentukan siapa yang
+        mempunyai kewenangan untuk melakukannya.
+
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>04 — Red Flag = Stop</h3>
+
+      <p style="font-size:12px">
+
+        Risiko kritis atau masalah hukum yang belum
+        diselesaikan menyebabkan proses dihentikan
+        dan dieskalasikan.
+
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>05 — Current Law Check</h3>
+
+      <p style="font-size:12px">
+
+        Jangan menggunakan nomor peraturan lama tanpa
+        memeriksa status, perubahan, dan pencabutannya.
+
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>06 — Auditability</h3>
+
+      <p style="font-size:12px">
+
+        Setiap keputusan penting harus dapat ditelusuri:
+        siapa, kapan, berdasarkan apa, dan menghasilkan apa.
+
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <br>
+
+
+  <div class="card">
+
+    <h3>Universal Legal Gate</h3>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Gate</th>
+            <th>Pertanyaan</th>
+            <th>Jika Tidak</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>G1</td>
+            <td>Apakah pihak telah teridentifikasi?</td>
+            <td>BLOCK</td>
+          </tr>
+
+          <tr>
+            <td>G2</td>
+            <td>Apakah objek telah teridentifikasi?</td>
+            <td>BLOCK</td>
+          </tr>
+
+          <tr>
+            <td>G3</td>
+            <td>Apakah dokumen material tersedia?</td>
+            <td>BLOCK</td>
+          </tr>
+
+          <tr>
+            <td>G4</td>
+            <td>Apakah data dapat diverifikasi?</td>
+            <td>BLOCK / CLARIFY</td>
+          </tr>
+
+          <tr>
+            <td>G5</td>
+            <td>Apakah kewenangan pelaksana jelas?</td>
+            <td>ESCALATE</td>
+          </tr>
+
+          <tr>
+            <td>G6</td>
+            <td>Apakah ada sengketa/kasus/red flag?</td>
+            <td>BLOCK / ESCALATE</td>
+          </tr>
+
+          <tr>
+            <td>G7</td>
+            <td>Apakah dasar hukum telah diverifikasi?</td>
+            <td>LEGAL REVIEW</td>
+          </tr>
+
+          <tr>
+            <td>G8</td>
+            <td>Apakah output fase telah dibuat?</td>
+            <td>REWORK</td>
+          </tr>
+
+          <tr>
+            <td>G9</td>
+            <td>Apakah reviewer telah melakukan review?</td>
+            <td>REVIEW</td>
+          </tr>
+
+          <tr>
+            <td>G10</td>
+            <td>Apakah pihak berwenang telah mengambil tindakan yang diperlukan?</td>
+            <td>ESCALATE</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+  `;
 
 }
 
@@ -3238,256 +3461,327 @@ function resetData(){
    PRESENTATION
 ========================================================= */
 
-let currentSlide=0;
+function renderPresentation(el){
 
-function presentationSlides(){
+  el.innerHTML=`
 
-    const total=
-        DB.persils.length;
+  <div class="page-head">
 
-    const done=
-        DB.persils
-        .filter(x=>x.status==="SELESAI")
-        .length;
+    <div>
+      <h2>Presentation Mode</h2>
+      <p>
+        Ringkasan project untuk briefing/presentasi.
+      </p>
+    </div>
 
-    const problems=
-        DB.persils
-        .filter(x=>x.status==="BERMASALAH")
-        .length;
+    <button
+      class="btn primary"
+      onclick="window.print()"
+    >
+      Print / PDF
+    </button>
 
-    const progress=
-        total
-        ?
-        Math.round(
-            DB.persils.reduce(
-                (a,b)=>a+(Number(b.progress)||0),
-                0
-            )/total
-        )
-        :
-        0;
-
-    return [
-
-        {
-            title:"MASTER SPH",
-            html:`
-                <p>PROJECT OPERATION SYSTEM</p>
-                <h1>56 PERSIL</h1>
-                <p>16 FASE PROSES</p>
-            `
-        },
-
-        {
-            title:"PROJECT PROGRESS",
-            html:`
-                <h1>${progress}%</h1>
-                <p>Overall progress proyek</p>
-            `
-        },
-
-        {
-            title:"STATUS PERSIL",
-            html:`
-                <h2>SELESAI</h2>
-                <h1>${done}</h1>
-                <p>dari ${total} persil</p>
-            `
-        },
-
-        {
-            title:"PERMASALAHAN",
-            html:`
-                <h2>RED FLAG</h2>
-                <h1>${problems}</h1>
-                <p>persil berstatus bermasalah</p>
-            `
-        },
-
-        {
-            title:"16 FASE",
-            html:`
-                <h2>01 → 16</h2>
-                <p>
-                    Intake → Identifikasi → Objek →
-                    Dokumen → Verifikasi → Kewenangan →
-                    Risiko → Klarifikasi → Draft →
-                    Review → Profesional → Persiapan →
-                    Penandatanganan → Tindak Lanjut →
-                    Arsip → Closing
-                </p>
-            `
-        },
-
-        {
-            title:"PENUTUP",
-            html:`
-                <h1>STATUS PROYEK</h1>
-                <p>
-                    Semua pekerjaan harus memiliki
-                    status, PIC, bukti, dan dokumentasi.
-                </p>
-            `
-        }
-
-    ];
-
-}
+  </div>
 
 
-function startPresentation(){
+  <div class="card">
 
-    currentSlide=0;
+    <h2 style="font-size:28px">
+      ${esc(state.project.name)}
+    </h2>
 
-    document
-        .getElementById("presentation")
-        .classList.add("show");
+    <p class="muted">
+      ${esc(state.project.description)}
+    </p>
 
-    renderSlide();
+    <hr style="border:0;border-top:1px solid #eee">
 
-}
+    <div class="grid grid-4">
 
+      <div>
+        <b>56</b>
+        <div class="muted">Persil</div>
+      </div>
 
-function closePresentation(){
+      <div>
+        <b>16</b>
+        <div class="muted">Fase</div>
+      </div>
 
-    document
-        .getElementById("presentation")
-        .classList.remove("show");
+      <div>
+        <b>${state.risks.length}</b>
+        <div class="muted">Risk</div>
+      </div>
 
-}
+      <div>
+        <b>${state.tasks.length}</b>
+        <div class="muted">Task</div>
+      </div>
 
+    </div>
 
-function renderSlide(){
+  </div>
 
-    const slides=
-        presentationSlides();
+  <br>
 
-    const slide=
-        slides[currentSlide];
+  ${PHASES.map(p=>`
 
-    document.getElementById("slide").innerHTML=`
+    <div class="card" style="margin-bottom:10px">
 
-        <div class="muted">
-            ${slide.title}
+      <div style="display:flex;gap:12px">
+
+        <div class="phase-number">
+          ${String(p.id).padStart(2,"0")}
         </div>
 
-        ${slide.html}
+        <div>
 
-    `;
+          <h3>
+            ${esc(p.title)}
+          </h3>
 
-    document.getElementById("slideNumber").innerText=
-        `${currentSlide+1} / ${slides.length}`;
+          <p style="font-size:12px">
+            ${esc(p.desc)}
+          </p>
+
+          <div class="muted" style="font-size:11px">
+            Output: ${esc(p.output)}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("")}
+
+  `;
 
 }
 
 
-function nextSlide(){
+/* =========================================================
+   QUICK ENTRY
+========================================================= */
 
-    const slides=
-        presentationSlides();
+function prepareQuickPersil(){
 
-    currentSlide=
-        Math.min(
-            currentSlide+1,
-            slides.length-1
+  const select=document.getElementById("quickPersil");
+
+  if(!select)return;
+
+  select.innerHTML=`
+
+    <option value="">
+      Tidak terkait persil
+    </option>
+
+    ${state.persils.map(p=>`
+      <option value="${esc(p.code)}">
+        ${esc(p.code)}
+      </option>
+    `).join("")}
+
+  `;
+
+}
+
+
+function addQuickEntry(){
+
+  const type=document.getElementById("quickType").value;
+  const persil=document.getElementById("quickPersil").value;
+  const title=document.getElementById("quickTitle").value;
+  const note=document.getElementById("quickNote").value;
+
+  if(!title.trim()){
+
+    alert("Judul wajib diisi.");
+
+    return;
+
+  }
+
+  if(type==="task"){
+
+    state.tasks.push({
+      title,
+      persil,
+      owner:"",
+      deadline:"",
+      status:"OPEN"
+    });
+
+  }
+
+  if(type==="risk"){
+
+    state.risks.push({
+      persil,
+      risk:title+" — "+note,
+      level:"SEDANG",
+      status:"OPEN",
+      owner:"",
+      mitigation:""
+    });
+
+  }
+
+  if(type==="note"){
+
+    state.notes.push({
+      persil,
+      title,
+      note,
+      time:new Date().toLocaleString("id-ID")
+    });
+
+  }
+
+  addAudit(
+    "QUICK",
+    `${type}: ${title}`
+  );
+
+  saveData();
+
+  document.getElementById("quickTitle").value="";
+  document.getElementById("quickNote").value="";
+
+  closeModal("quickModal");
+
+}
+
+
+/* =========================================================
+   EXPORT / IMPORT
+========================================================= */
+
+function exportData(){
+
+  const data=JSON.stringify(
+    state,
+    null,
+    2
+  );
+
+  const blob=new Blob(
+    [data],
+    {type:"application/json"}
+  );
+
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+
+  a.href=url;
+
+  a.download=
+    "MASTER-SPH-BACKUP-"+
+    new Date().toISOString().slice(0,10)+
+    ".json";
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+  addAudit("SYSTEM","Export JSON");
+
+}
+
+
+function importData(event){
+
+  const file=event.target.files[0];
+
+  if(!file)return;
+
+  const reader=new FileReader();
+
+  reader.onload=function(){
+
+    try{
+
+      const imported=JSON.parse(
+        reader.result
+      );
+
+      if(
+        !imported.persils ||
+        !imported.project
+      ){
+
+        throw new Error(
+          "Format data tidak valid"
         );
 
-    renderSlide();
+      }
 
-}
+      if(!confirm(
+        "Import akan mengganti data saat ini. Lanjutkan?"
+      ))return;
 
+      state=imported;
 
-function previousSlide(){
+      saveData();
 
-    currentSlide=
-        Math.max(
-            currentSlide-1,
-            0
-        );
+      location.reload();
 
-    renderSlide();
+    }catch(error){
 
-}
-
-
-document.addEventListener(
-    "keydown",
-    function(e){
-
-        if(
-            !document
-            .getElementById("presentation")
-            .classList.contains("show")
-        ) return;
-
-        if(e.key==="ArrowRight")
-            nextSlide();
-
-        if(e.key==="ArrowLeft")
-            previousSlide();
-
-        if(e.key==="Escape")
-            closePresentation();
+      alert(
+        "Import gagal: "+
+        error.message
+      );
 
     }
+
+  };
+
+  reader.readAsText(file);
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  ()=>{
+    showPage("dashboard");
+    prepareQuickPersil();
+  }
 );
 
 
-/* =========================================================
-   HELPERS
-========================================================= */
+/*
+===========================================================
+LEGAL / TECHNICAL DISCLAIMER
+===========================================================
 
-function escapeHTML(value){
+1. Aplikasi ini adalah alat administrasi dan kontrol project.
+2. Bukan sistem resmi ATR/BPN.
+3. Bukan pengganti PPAT.
+4. Bukan pengganti Notaris.
+5. Bukan pengganti Advokat/Legal Reviewer.
+6. Bukan pengganti Kantor Pertanahan.
+7. Checklist tidak membuktikan keabsahan suatu dokumen.
+8. Status SELESAI bukan jaminan legalitas.
+9. Status VERIFIED adalah status internal aplikasi,
+   bukan pengesahan pejabat negara.
+10. Setiap tindakan harus mengikuti regulasi yang berlaku
+    pada saat tindakan dilakukan.
+11. Jika terdapat sengketa, konflik, indikasi pemalsuan,
+    sita, blokir, ketidaksesuaian data, atau masalah
+    kewenangan, proses harus dihentikan/escalated.
+12. Peraturan dapat berubah sehingga legal register harus
+    diperiksa dan diperbarui.
 
-    return String(value??"")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-function escapeAttr(value){
-
-    return escapeHTML(value);
-
-}
-
-
-/* =========================================================
-   RENDER ALL
-========================================================= */
-
-function renderAll(){
-
-    renderPhases();
-
-    renderPersils();
-
-    renderTasks();
-
-    renderRedFlags();
-
-    renderParties();
-
-    renderLogs();
-
-    renderGlobalChecklist();
-
-    updateDashboard();
-
-}
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-loadDB();
-
-renderAll();
+===========================================================
+*/
 
 </script>
 
